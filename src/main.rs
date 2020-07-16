@@ -1,31 +1,20 @@
-use std::io;
-use rand;
+use std::io::prelude::*;
+use std::net::TcpListener;
+use std::net::TcpStream;
 
 fn main() {
-    println!("Guess the number!");
+    let listener = TcpListener::bind("127.0.0.1:5000").unwrap();
 
-    println!("Please input your guess.");
-
-    let mut guess = String::new();
-
-    let target = rand::random::<i8>() % 101;
-
-    //println!("Random : {}",target);
-
-    io::stdin()
-        .read_line(&mut guess)
-        .expect("Failed to read line");
-
-    println!("You guessed: {}", guess);
-
-    //let guess
-    while guess.trim().parse::<i8>().expect("Conversion error") != target
-    {
-        io::stdin()
-            .read_line(&mut guess)
-            .expect("Failed to read line");
-
-        println!("You guessed: {}", guess);
+    for stream in listener.incoming() {
+        let stream :TcpStream = stream.unwrap();
+        handle_connection(stream);
     }
+}
 
+fn handle_connection(mut stream: TcpStream) {
+    let mut buffer = [0; 512];
+
+    stream.read(&mut buffer).unwrap();
+
+    println!("Request: {}", String::from_utf8_lossy(&buffer[..]));
 }
