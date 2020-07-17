@@ -7,4 +7,4 @@ an echo application in Rust (without complying to the standarts for now).
 ### 15.07.2020 Wednesday
 Done some debugging with the practice branch. Created an application that connects to the 127.0.0.1:5000 address via TCP.
 ### 16.07.2020 Thursday
-Learning about creating a socket and etablishing a connection with a custom protocol.
+Learning about creating a socket and etablishing a connection with a custom protocol. Will read the standarts to create a TM data structure.
