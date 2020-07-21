@@ -10,3 +10,5 @@ Done some debugging with the practice branch. Created an application that connec
 Learning about creating a socket and etablishing a connection with a custom protocol. Will read the standarts to create a TM data structure.
 ### 17.07.2020 Friday
 Learned futures of structs and modules to create an encapsulated packet data structure.
+### 20.07.2020 Monday
+Learned about references and patterns. Still have to make a decision about the hierarchical structure.
