@@ -2,6 +2,9 @@
 
 pub mod headers{
     use byteorder::{ByteOrder,LittleEndian};
+    /*
+    Little endian is the byte order used.
+    */
 
     #[derive(Debug)]
     pub struct PrimaryHeader{
@@ -58,7 +61,15 @@ pub mod headers{
                 data_len: data_len_
             }
         }
-
+        // Returns a static 6 byte u8 array
+        pub fn to_bytes(&self) -> [u8;6]{
+            let mut res:[u8;6] = [0;6];
+            // TODO write res[0..4]
+            // writing the data length is trivial
+            LittleEndian::write_u16(&mut res[4..6],self.data_len);
+            res
+        }
 
     }
+    
 }

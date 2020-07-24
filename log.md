@@ -14,4 +14,4 @@ Learned futures of structs and modules to create an encapsulated packet data str
 Learned about references and patterns. Still have to make a decision about the hierarchical structure.
 ### 24.07.2020 Friday
 Created a module called headers and made a struct called "PrimaryHeader" and implemented its constructor which will have byte array and returns the struct.
-Later parameter checks should be done for the constructor.
+Later parameter checks should be done for the constructor. A method for the struct PrimaryHeader is also defined but currently acts as a stub function.
