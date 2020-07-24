@@ -4,6 +4,9 @@ version = "0.1.0"
 authors = ["Selman Özleyen <32667648+SelmanOzleyen@users.noreply.github.com>"]
 edition = "2018"
 
+[workspace]
+members = ["spp"]
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [profile.dev]
@@ -17,3 +20,5 @@ debug = false
 
 [dependencies]
 rand = "0.6.0"
+spp = { path = "./spp"}
+
