@@ -37,7 +37,7 @@ pub mod packets{
 
             Ok(SpacePacket{
                 primary_header:primary_header,
-                data:data[6..].to_vec()
+                data:data[..].to_vec()
             })
         }
 
@@ -103,7 +103,8 @@ pub mod packets{
             if packet.len() as u8 != PrimaryHeader::PH_LEN {
                 panic!("PrimaryHeader::new: given array should have length 6.");
             }
-
+            
+            // Read the first 4 bytes from the packet
             let packet_int = BigEndian::read_u32(&packet[0..4]);            
 
             let ver_no_:u8 = get_bits_u32(packet_int, PrimaryHeader::VER_NO_POS, PrimaryHeader::TYPE_FLAG_POS) as u8;
