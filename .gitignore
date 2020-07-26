@@ -1,2 +1,5 @@
 /target
 /src/bin/play.rs
+/.vscode
+/.idea
+/packet.bin

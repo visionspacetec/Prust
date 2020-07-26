@@ -1,7 +1,8 @@
-use std::io::prelude::*;
+//use std::io::prelude::*;
 //use std::env;
 use std::net::TcpListener;
 use std::net::TcpStream;
+use spp::packets;
 
 fn main() {
     //let args:Vec<String> = env::args().collect();
@@ -19,8 +20,7 @@ fn main() {
 }
 
 fn handle_connection(mut stream: TcpStream) {
-    let mut buffer = [0; 512];
+    let sp = packets::SpacePacket::from_read(&mut stream);
 
-    stream.read(&mut buffer).unwrap();
-    println!("{}", String::from_utf8_lossy(&buffer[..]));
+    println!("{}",sp.unwrap());
 }

@@ -1,15 +1,64 @@
 
 
-pub mod headers{
-    use byteorder::{ByteOrder,LittleEndian};
-    /*
-    Little endian is the byte order used.
-    */
+pub mod packets{
+    use byteorder::{ByteOrder,BigEndian};
+    use std::io::{Error,ErrorKind,Read};
 
     #[derive(Debug)]
-    pub struct PrimaryHeader{
+    pub struct SpacePacket{
+        primary_header:PrimaryHeader,
+        data:Vec<u8>
+    }
+
+    impl SpacePacket{
+        pub fn from_bytes(packet:&[u8]) -> Self {
+            if !(packet.len() > 6) {
+                panic!("Packet has incomplete data.");
+            };
+            SpacePacket{
+                primary_header:PrimaryHeader::from_bytes(&packet[0..6]),
+                data:packet[6..].to_vec()
+            }
+        }
         
+        pub fn from_read(stream:&mut impl Read) -> Result<Self,Error>{
+            let mut primary_header = [0; 6];
+            stream.read(&mut primary_header)?;
+            let primary_header = PrimaryHeader::from_bytes(&primary_header);
+            if primary_header.get_data_len() < 1 {
+                return Err(Error::new(ErrorKind::InvalidData,"Given data array is too short."));
+            };
+
+            let mut data:Vec<u8> = vec![0;primary_header.get_data_len()];
+            let read_bytes = stream.read(&mut data.as_mut_slice())?;
+            if read_bytes != data.len() {
+                return Err(Error::new(ErrorKind::InvalidData,"Didn't get the expected number of bytes"));
+            }
+
+            Ok(SpacePacket{
+                primary_header:primary_header,
+                data:data[6..].to_vec()
+            })
+        }
+
+    }
+
+    impl std::fmt::Display for SpacePacket {
+        fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+            write!(f, "SpacePacket {{ \n")?;
+            write!(f, "     {:?},\n", self.primary_header)?;
+            write!(f, "     Data {:X?}\n",self.data.as_slice())?;
+            write!(f, "}}}}")
+        }
+    }
+
+    /// Big endian is the byte order used in these packages
+    #[derive(Debug)]
+    pub struct PrimaryHeader{
+        // These fields are sorted their order below.
+
         ver_no:u8, // 3 bits
+
         // packet identification
         type_flag:bool,
         sec_header_flag:bool,
@@ -17,39 +66,56 @@ pub mod headers{
 
         // packet sequence control
         seq_flags: (bool,bool), // 2 bits
-        packet_name: u16, // 14 bits at most
+        packet_name: u16, // 14 bits
         
         data_len: u16, // 16 bits
         
     }
-    
+
     // TODO check parameters
-    fn get_bits_u32(num:u32,len:u8,start:u8,end:u8) -> u32{
-        let x = len - end;
+    fn get_bits_u32(num:u32,start:u8,end:u8) -> u32{
+        let x = 32 - end;
         let mut res = num >> x;
-        res = res & ((1 << (end - start)) -1);
+        res = res & ((1 << (end - start)) - 1);
         res
     }
 
 
     impl PrimaryHeader{
-        // TODO write endianness
-        
-        pub fn new(packet:&str) -> Self{
-            // TODO check length of packet
+        const VER_NO_POS:u8 = 0;
+        const TYPE_FLAG_POS:u8 = 3;
+        const SEC_HEADER_FLAG_POS:u8 = 4;
+        const APID_POS:u8 = 5;
+        const SEQ_FLAGS_POS:u8 = 16;
+        const PACKET_NAME_POS:u8 = 18;
+        const PACKET_DATA_LEN_POS:u8 = 32;
 
-            let packet_int = LittleEndian::read_u32(&packet.as_bytes()[0..4]);            
+        const PH_LEN:u8 = 6;
 
-            let ver_no_:u8 = get_bits_u32(packet_int,32,0,3) as u8;
-            let type_flag_:bool = 1 == get_bits_u32(packet_int,32,3,4);
-            let sec_header_flag_:bool = 1 == get_bits_u32(packet_int,32,4,5);
-            let apid_:u16 = get_bits_u32(packet_int,32,5,16) as u16;
+        /// Creates a PrimaryHeader structure from the given 6 byte array
+        /// 
+        /// # Panics
+        ///
+        /// Panics when `packet.len() != 6`.
+        /// 
+        pub fn from_bytes(packet:&[u8]) -> Self{
+            // TODO: Return result
+            if packet.len() as u8 != PrimaryHeader::PH_LEN {
+                panic!("PrimaryHeader::new: given array should have length 6.");
+            }
+
+            let packet_int = BigEndian::read_u32(&packet[0..4]);            
+
+            let ver_no_:u8 = get_bits_u32(packet_int, PrimaryHeader::VER_NO_POS, PrimaryHeader::TYPE_FLAG_POS) as u8;
+            let type_flag_:bool = 1 == get_bits_u32(packet_int ,PrimaryHeader::TYPE_FLAG_POS,PrimaryHeader::SEC_HEADER_FLAG_POS);
+            let sec_header_flag_:bool = 1 == get_bits_u32(packet_int,PrimaryHeader::SEC_HEADER_FLAG_POS,PrimaryHeader::APID_POS);
+            let apid_:u16 = get_bits_u32(packet_int,PrimaryHeader::APID_POS,PrimaryHeader::SEQ_FLAGS_POS) as u16;
             let seq_flags_:(bool,bool) = (
-                                            get_bits_u32(packet_int,32,16,17) == 1,
-                                            get_bits_u32(packet_int,32,17,18) == 1
+                                            get_bits_u32(packet_int,PrimaryHeader::SEQ_FLAGS_POS, PrimaryHeader::SEQ_FLAGS_POS+1) == 1,
+                                            get_bits_u32(packet_int,PrimaryHeader::SEQ_FLAGS_POS+1, PrimaryHeader::PACKET_NAME_POS) == 1
                                         );
-            let packet_name_:u16 = get_bits_u32(packet_int,32,18,32) as u16;
-            let data_len_: u16 = LittleEndian::read_u16(&packet.as_bytes()[4..6]);
+            let packet_name_:u16 = get_bits_u32(packet_int,PrimaryHeader::PACKET_NAME_POS,PrimaryHeader::PACKET_DATA_LEN_POS) as u16;
+            let data_len_: u16 = BigEndian::read_u16(&packet[4..6]);
 
             PrimaryHeader{
                 ver_no: ver_no_,
@@ -64,12 +130,39 @@ pub mod headers{
         // Returns a static 6 byte u8 array
         pub fn to_bytes(&self) -> [u8;6]{
             let mut res:[u8;6] = [0;6];
-            // TODO write res[0..4]
+            
+            // first two bytes of packet
+            let mut packet_part:u16 = self.ver_no as u16;
+            packet_part = packet_part << (16 - PrimaryHeader::TYPE_FLAG_POS);
+            if self.type_flag {
+                packet_part += 1 << (16 - PrimaryHeader::SEC_HEADER_FLAG_POS);
+            }
+            if self.sec_header_flag {
+                packet_part += 1 << (16 - PrimaryHeader::APID_POS);
+            }
+            packet_part += self.apid;
+            
+            BigEndian::write_u16(&mut res[0..2],packet_part);
+
+            packet_part = self.packet_name;
+            
+            if self.seq_flags.0 {
+                packet_part += 1 << (32 - (PrimaryHeader::SEQ_FLAGS_POS + 1))
+            }
+            if self.seq_flags.1 {
+                packet_part += 1 << (32 - (PrimaryHeader::PACKET_NAME_POS))
+            }
+
+            BigEndian::write_u16(&mut res[2..4],packet_part);
+
             // writing the data length is trivial
-            LittleEndian::write_u16(&mut res[4..6],self.data_len);
+            BigEndian::write_u16(&mut res[4..6],self.data_len);
             res
         }
 
+        pub fn get_data_len(&self) -> usize {
+            self.data_len as usize
+        }
     }
     
 }
