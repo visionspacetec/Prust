@@ -15,3 +15,5 @@ Learned about references and patterns. Still have to make a decision about the h
 ### 24.07.2020 Friday
 Created a module called headers and made a struct called "PrimaryHeader" and implemented its constructor which will have byte array and returns the struct.
 Later parameter checks should be done for the constructor. A method for the struct PrimaryHeader is also defined but currently acts as a stub function.
+### 28.07.2020 Monday
+Implemented getters and setters for the space packet.

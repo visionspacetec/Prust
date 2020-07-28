@@ -29,7 +29,7 @@ pub mod packets{
                 return Err(Error::new(ErrorKind::InvalidData,"Given data array is too short."));
             };
 
-            let mut data:Vec<u8> = vec![0;primary_header.get_data_len()];
+            let mut data:Vec<u8> = vec![0;primary_header.get_data_len()+1];
             let read_bytes = stream.read(&mut data.as_mut_slice())?;
             if read_bytes != data.len() {
                 return Err(Error::new(ErrorKind::InvalidData,"Didn't get the expected number of bytes"));
@@ -40,7 +40,59 @@ pub mod packets{
                 data:data[..].to_vec()
             })
         }
+         
+        pub fn set_ver_no(&mut self,ver_no:u8){
+            self.primary_header.ver_no = ver_no;
+        }
 
+        pub fn get_ver_no(&self) -> u8{
+            self.primary_header.ver_no
+        }
+
+        pub fn set_type_flag(&mut self,type_flag:bool){
+            self.primary_header.type_flag = type_flag;
+        }
+
+        pub fn get_type_flag(&self) -> bool{
+            self.primary_header.type_flag
+        }
+
+        pub fn set_sec_header_flag(&mut self,sec_header_flag:bool){
+            self.primary_header.sec_header_flag = sec_header_flag;
+        }
+
+        pub fn get_sec_header_flag(&self) -> bool {
+            self.primary_header.sec_header_flag
+        }
+
+        pub fn set_apid(&mut self,apid:u16){
+            self.primary_header.apid = apid;
+        }
+
+        pub fn get_apid(&self) -> u16{
+            self.primary_header.apid
+        }
+
+        pub fn set_seq_flags(&mut self,seq_1:bool,seq_2:bool) {
+            self.primary_header.seq_flags.0 = seq_1;
+            self.primary_header.seq_flags.1 = seq_2;
+        }
+
+        pub fn get_seq_flags(&self) -> (bool, bool) {
+            self.primary_header.seq_flags
+        }
+
+        pub fn get_packet_name(&self) -> u16 {
+            self.primary_header.packet_name
+        }
+
+        pub fn set_packet_name(&mut self,packet_name:u16) {
+            self.primary_header.packet_name = packet_name;
+        }
+
+        pub fn get_data_len(&self) -> u16 {
+            self.primary_header.data_len
+        }
     }
 
     impl std::fmt::Display for SpacePacket {
@@ -48,6 +100,7 @@ pub mod packets{
             write!(f, "SpacePacket {{ \n")?;
             write!(f, "     {:?},\n", self.primary_header)?;
             write!(f, "     Data {:X?}\n",self.data.as_slice())?;
+            write!(f, "     PH_HEX {:X?}\n",self.primary_header.to_bytes())?; // delete this
             write!(f, "}}}}")
         }
     }
@@ -128,23 +181,25 @@ pub mod packets{
                 data_len: data_len_
             }
         }
-        // Returns a static 6 byte u8 array
+        // Returns a fixed size 6 byte u8 array
         pub fn to_bytes(&self) -> [u8;6]{
             let mut res:[u8;6] = [0;6];
             
             // first two bytes of packet
             let mut packet_part:u16 = self.ver_no as u16;
             packet_part = packet_part << (16 - PrimaryHeader::TYPE_FLAG_POS);
+            // setting the type_flag fields
             if self.type_flag {
                 packet_part += 1 << (16 - PrimaryHeader::SEC_HEADER_FLAG_POS);
             }
             if self.sec_header_flag {
                 packet_part += 1 << (16 - PrimaryHeader::APID_POS);
             }
+            // adding the apid
             packet_part += self.apid;
-            
+            // writing the calculated 2 bytes
             BigEndian::write_u16(&mut res[0..2],packet_part);
-
+            // since this field ends with the LSB it is directly assigned
             packet_part = self.packet_name;
             
             if self.seq_flags.0 {
