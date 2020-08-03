@@ -357,11 +357,11 @@ pub mod packets{
                 assert_eq!(ph_bytes[i],*byte);
             };
             
-            let _sp = SpacePacket::new(9,true,true,7,(true,true),34,26,vec![0;27]).expect_err("Didn't give err.");
-            let _sp = SpacePacket::new(0,true,true,2049,(true,true),34,26,vec![0;27]).expect_err("Didn't give err.");
-            let _sp = SpacePacket::new(0,true,true,7,(true,true),1 << 14 + 1,26,vec![0;27]).expect_err("Didn't give err.");
-            let _sp = SpacePacket::new(0,true,true,7,(true,true),34,27,vec![0;27]).expect_err("Didn't give err.");
-            let _sp = SpacePacket::new(0,true,true,7,(true,true),34,26,vec![0;26]).expect_err("Didn't give err.");
+            let _sp = SpacePacket::new(9,true,true,7,(true,true),34,26,vec![0;27]).expect_err("Didn't give an error.");
+            let _sp = SpacePacket::new(0,true,true,2049,(true,true),34,26,vec![0;27]).expect_err("Didn't give an error.");
+            let _sp = SpacePacket::new(0,true,true,7,(true,true),1 << 14 + 1,26,vec![0;27]).expect_err("Didn't give an error.");
+            let _sp = SpacePacket::new(0,true,true,7,(true,true),34,27,vec![0;27]).expect_err("Didn't give an error.");
+            let _sp = SpacePacket::new(0,true,true,7,(true,true),34,26,vec![0;26]).expect_err("Didn't give an error.");
         }
 
         #[test]
@@ -374,7 +374,7 @@ pub mod packets{
             arg2.append(&mut data2);
 
             SpacePacket::from_bytes(&arg1).unwrap();
-            SpacePacket::from_bytes(&arg2).expect_err("Didn't give err");
+            SpacePacket::from_bytes(&arg2).expect_err("Didn't give error");
         }
 
         #[test]
