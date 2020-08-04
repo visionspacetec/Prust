@@ -22,10 +22,12 @@ pub mod packets{
         /// Returns InvalidData error if given byte array is not longer than 6 bytes.
         /// 
         pub fn from_bytes(packet:&[u8]) -> Result<Self,Error> {
+            // a packet should be least 7 bytes
             if !(packet.len() > 6) {
                 return Err(Error::new(ErrorKind::InvalidData,"Packet has incomplete data."));
             };
             let primary_header = PrimaryHeader::from_bytes(&packet[0..6])?;
+            // data packet length should be 1 + data_len field
             if packet.len() - 6 != primary_header.data_len as usize + 1 {
                 return Err(Error::new(ErrorKind::InvalidData,"Given byte array is conflicts as a packet."));
             }
@@ -63,28 +65,29 @@ pub mod packets{
             })
         }
 
-        /// Create a SpacePacket struct from an object that implements read.
+        /// Create a SpacePacket struct from an object that implements Read trait.
+        /// All error results are propagated to caller for example in case of an interrupt,
+        /// caller may need to call this method again.
         /// 
         /// Note: Sync issues should be handled by the caller.
-        ///
+        /// 
         /// # Errors
         /// 
         /// Returns InvalidData when given byte array is not longer than 6 bytes
         /// 
         pub fn from_read(stream:&mut impl Read) -> Result<Self,Error>{
             let mut primary_header = [0; 6];
+            // read the primary header to this vec
             stream.read(&mut primary_header)?;
+            // create PrimaryHeader struct
             let primary_header = PrimaryHeader::from_bytes(&primary_header)?;
-            if primary_header.get_data_len() < 1 {
-                return Err(Error::new(ErrorKind::InvalidData,"Given data array is too short."));
-            };
 
             let mut data:Vec<u8> = vec![0;primary_header.get_data_len()+1];
             let read_bytes = stream.read(&mut data.as_mut_slice())?;
+            // if the bytes read is not the same as the expected count.
             if read_bytes != data.len() {
                 return Err(Error::new(ErrorKind::InvalidData,"Didn't get the expected number of bytes"));
             }
-
             Ok(SpacePacket{
                 primary_header:primary_header,
                 data:data[..].to_vec()
@@ -233,6 +236,7 @@ pub mod packets{
 
 
     impl PrimaryHeader{
+        /* Places and the length of the fields in the primary header */
         const VER_NO_POS:u8 = 0;
         const VER_NO_BITS:u8 = 3;
         const TYPE_FLAG_POS:u8 = 3;
@@ -247,7 +251,7 @@ pub mod packets{
         const PACKET_NAME_BITS:u8 = 14;
         const PACKET_DATA_LEN_POS:u8 = 32;
         const _PACKET_DATA_LEN_BITS:u8 = 16;
-
+        /* primary header length */
         const PH_LEN:u8 = 6;
 
 
@@ -258,14 +262,14 @@ pub mod packets{
         /// Sends error when `packet.len() != 6`.
         /// 
         pub fn from_bytes(packet:&[u8]) -> Result<Self,Error>{
-            
+            // the length of a primary header is constant so it will return an error if it is not 6
             if packet.len() as u8 != PrimaryHeader::PH_LEN {
                 return Err(Error::new(ErrorKind::InvalidData,"Given array should have length 6."));
             }
-            
-            // Read the first 4 bytes from the packet
+            // Read the first 4 bytes from the packet as an u32 integer
             let packet_int = BigEndian::read_u32(&packet[0..4]);            
-
+            // parsing the u32 packet_int it got by the help of the get_bits_u32 method
+            // indicate their position in the bit array and store them
             let ver_no_:u8 = get_bits_u32(packet_int, PrimaryHeader::VER_NO_POS, PrimaryHeader::TYPE_FLAG_POS) as u8;
             let type_flag_:bool = 1 == get_bits_u32(packet_int ,PrimaryHeader::TYPE_FLAG_POS,PrimaryHeader::SEC_HEADER_FLAG_POS);
             let sec_header_flag_:bool = 1 == get_bits_u32(packet_int,PrimaryHeader::SEC_HEADER_FLAG_POS,PrimaryHeader::APID_POS);
@@ -275,8 +279,9 @@ pub mod packets{
                                             get_bits_u32(packet_int,PrimaryHeader::SEQ_FLAGS_POS+1, PrimaryHeader::PACKET_NAME_POS) == 1
                                         );
             let packet_name_:u16 = get_bits_u32(packet_int,PrimaryHeader::PACKET_NAME_POS,PrimaryHeader::PACKET_DATA_LEN_POS) as u16;
+            // read the data len directly as bytes since it is 2 bytes
             let data_len_: u16 = BigEndian::read_u16(&packet[4..6]);
-
+            // return the created struct
             Ok(PrimaryHeader{
                 ver_no: ver_no_,
                 type_flag: type_flag_,
@@ -321,64 +326,105 @@ pub mod packets{
             BigEndian::write_u16(&mut res[4..6],self.data_len);
             res
         }
-
+        // getter for the data_len field of the PrimaryHeader
         pub fn get_data_len(&self) -> usize {
             self.data_len as usize
         }
     }
-    /// Test module
+    /// Test module for SpacePacket struct and its inner struct PrimaryHeader.
     #[cfg(test)]
     mod tests {
         use super::*;
 
+        /* BEGIN spp::PrimaryHeader::get_bits_u32*/
         #[test]
-        fn get_bits_u32_test() {
+        fn get_bits_u32_test_for_one_digit_case_1() {
             assert_eq!(0,get_bits_u32(12,0,1));
-            assert_eq!(1,get_bits_u32(1,31,32));
+        }
+        #[test]
+        fn get_bits_u32_test_for_one_digit_case_2() {
+            assert_eq!(1,get_bits_u32(1,31,32)); 
+        }
+        #[test]
+        fn get_bits_u32_test_for_five_digit_case() {
             assert_eq!(11,get_bits_u32(22,27,31));
         }
 
         #[test]
         #[should_panic]
-        fn get_bits_u32_test_pan(){
+        /// A test showing that this function requires end > start in parameters
+        fn get_bits_u32_test_should_panic_when_end_is_not_bigger_case(){
             assert_eq!(3,get_bits_u32(1,31,31));
         }
+        /* END spp::PrimaryHeader::get_bits_u32*/
 
+
+        
         #[test]
-        fn new_test() {
+        /// A test that creates a SpacePacket struct with "new" method then converts it to a
+        /// byte array with "to_bytes" method and comparing it with the expected bytes
+        /// Note: This case tests both to_bytes and new methods for the SpacePacket struct 
+        fn space_packet_new_and_to_bytes_test_creating_from_options_and_comparing_bytes_case(){
+            // PrimaryHeader bytes
             let ph_bytes = vec![0x18,0x07,0xc0,0x22,0,0x1a];
-
+            // Data field bytes
             let sp_data:Vec<u8> = vec![0, 0, 0x2A, 0, 0x1, 0, 0x1, 0x1, 0, 0x1, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0x22, 0xC0, 0x1, 0x1, 0x1, 0xD, 0xA7, 0xC];
-            
+            // Creating with giving the attributes in rust
             let sp = SpacePacket::new(0,true,true,7,(true,true),34,26,sp_data).unwrap();
-            
+            // Comparing the bytes of the packet by bytes
             for (i,byte) in sp.primary_header.to_bytes().iter().enumerate(){
                 assert_eq!(ph_bytes[i],*byte);
             };
-            
+        }
+        /* BEGIN spp::SpacePacket::new*/
+        #[test]
+        /// Test case where the given parameter to new ver_no is bigger than its max value. We expect the return of an error.
+        fn space_packet_new_test_expecting_an_error_returning_for_invalid_ver_no_case() {            
             let _sp = SpacePacket::new(9,true,true,7,(true,true),34,26,vec![0;27]).expect_err("Didn't give an error.");
+        }
+        #[test]
+        /// Test case where the given parameter to new apid is bigger than its max value. We expect the return of an error.
+        fn space_packet_new_test_expecting_an_error_returning_for_invalid_apid_case() {            
             let _sp = SpacePacket::new(0,true,true,2049,(true,true),34,26,vec![0;27]).expect_err("Didn't give an error.");
+        }
+        #[test]
+        /// Test case where the given parameter packet_name is bigger than its max value. We expect the return of an error.
+        fn space_packet_new_test_expecting_an_error_returning_for_invalid_packet_name_case() {            
             let _sp = SpacePacket::new(0,true,true,7,(true,true),1 << 14 + 1,26,vec![0;27]).expect_err("Didn't give an error.");
-            let _sp = SpacePacket::new(0,true,true,7,(true,true),34,27,vec![0;27]).expect_err("Didn't give an error.");
+        }
+        #[test]
+         /// Test case where the given parameter data_len yo new is same as the given vector data_len. We expect the return of an error.
+        fn space_packet_new_test_expecting_an_error_returning_for_invalid_data_len_equal_to_vec_size_case() {            
             let _sp = SpacePacket::new(0,true,true,7,(true,true),34,26,vec![0;26]).expect_err("Didn't give an error.");
         }
+        /* END spp::SpacePacket::new*/
 
+
+        /* BEGIN SpacePacket::from_bytes*/
         #[test]
-        fn from_bytes_test(){
+        /// Creating an SpacePacket struct from the given bytes successfully
+        fn from_bytes_test_create_spp_success_case(){
             let mut arg1 = vec![0x18,0x07,0xc0,0x22,0,0x1a];
             let mut data1 = vec![0;27];
             arg1.append(&mut data1);
+
+            SpacePacket::from_bytes(&arg1).unwrap();
+        }
+        #[test]
+        /// Creating an SpacePacket struct from the given bytes with failure because data length is too much
+        fn from_bytes_test_create_spp_failure_case(){
             let mut arg2 = vec![0x18,0x07,0xc0,0x22,0,0x1a];
             let mut data2 = vec![0;28];
             arg2.append(&mut data2);
 
-            SpacePacket::from_bytes(&arg1).unwrap();
-            SpacePacket::from_bytes(&arg2).expect_err("Didn't give error");
+            SpacePacket::from_bytes(&arg2).expect_err("Didn't give an error");
         }
-
+        /* END SpacePacket::from_bytes*/
         #[test]
-        fn getter_setters_test(){
+        /// If there is a failure here check setters and getters.
+        /// All the parameter check of setters and getters are tested here.
+        fn getter_setters_test_cases(){
             let mut sp = SpacePacket::new(0,false,false,0,(false,false),0,0,vec![0]).unwrap();
             
             sp.set_apid(1).unwrap();
