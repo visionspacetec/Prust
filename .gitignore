@@ -3,3 +3,5 @@
 /.vscode
 /.idea
 /packet.bin
+/prust-embedded/blink-stm32l476
+/prust-embedded/echo-stm32l476
