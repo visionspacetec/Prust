@@ -1,13 +1,16 @@
-
+#![cfg_attr(not(test),no_std)]
 /// Module for Space Packet Protocol
 pub mod packets{
     use byteorder::{ByteOrder,BigEndian};
-    use std::io::{Error,ErrorKind,Read};
+    
+    extern crate alloc; // link the allocator
+    use alloc::vec::Vec;
+
+    //use std::io::{Error,ErrorKind,Read};
 
 
     /// Send packet will be represented in this struct.
     /// Storing operations will be done in Big Endian byte order.
-    #[derive(Debug)]
     pub struct SpacePacket{
         primary_header:PrimaryHeader,
         data:Vec<u8>
@@ -21,19 +24,20 @@ pub mod packets{
         /// 
         /// Returns InvalidData error if given byte array is not longer than 6 bytes.
         /// 
-        pub fn from_bytes(packet:&[u8]) -> Result<Self,Error> {
+        pub fn from_bytes(packet:&[u8]) -> Result<Self,()> {
             // a packet should be least 7 bytes
             if !(packet.len() > 6) {
-                return Err(Error::new(ErrorKind::InvalidData,"Packet has incomplete data."));
+                return Err(());
             };
             let primary_header = PrimaryHeader::from_bytes(&packet[0..6])?;
             // data packet length should be 1 + data_len field
             if packet.len() - 6 != primary_header.data_len as usize + 1 {
-                return Err(Error::new(ErrorKind::InvalidData,"Given byte array is conflicts as a packet."));
+                return Err(());
             }
+            let data:Vec<u8> = Vec::with_capacity((packet.len() - 6) as usize);
             Ok(SpacePacket{
                 primary_header,
-                data:packet[6..].to_vec()
+                data
             })
         }
         
@@ -44,13 +48,13 @@ pub mod packets{
         /// Gives an error if ver_no > 8 or apid > 2^11 or packet_name > 2^14 or data.len is not equal
         /// to the data_len field given.
         pub fn new(ver_no:u8, type_flag:bool, sec_header_flag:bool,
-            apid:u16, seq_flags:(bool,bool), packet_name:u16, data_len:u16, data:Vec<u8>) -> Result <Self,Error>
+            apid:u16, seq_flags:(bool,bool), packet_name:u16, data_len:u16, data:Vec<u8>) -> Result <Self,()>
         {       
             // check the parameters
             if ver_no > (1 << PrimaryHeader::VER_NO_BITS) ||  apid > (1 << PrimaryHeader::APID_BITS)
                 || packet_name > (1 << PrimaryHeader::PACKET_NAME_BITS) || data.len() != data_len as usize + 1
             {
-                return Err(Error::from(ErrorKind::InvalidData));
+                return Err(());
             }
             Ok(SpacePacket{
                 primary_header:PrimaryHeader{
@@ -65,44 +69,14 @@ pub mod packets{
             })
         }
 
-        /// Create a SpacePacket struct from an object that implements Read trait.
-        /// All error results are propagated to caller for example in case of an interrupt,
-        /// caller may need to call this method again.
-        /// 
-        /// Note: Sync issues should be handled by the caller.
-        /// 
-        /// # Errors
-        /// 
-        /// Returns InvalidData when given byte array is not longer than 6 bytes
-        /// 
-        pub fn from_read(stream:&mut impl Read) -> Result<Self,Error>{
-            let mut primary_header = [0; 6];
-            // read the primary header to this vec
-            stream.read(&mut primary_header)?;
-            // create PrimaryHeader struct
-            let primary_header = PrimaryHeader::from_bytes(&primary_header)?;
-
-            let mut data:Vec<u8> = vec![0;primary_header.get_data_len()+1];
-            let read_bytes = stream.read(&mut data.as_mut_slice())?;
-            // if the bytes read is not the same as the expected count.
-            if read_bytes != data.len() {
-                return Err(Error::new(ErrorKind::InvalidData,"Didn't get the expected number of bytes"));
-            }
-            Ok(SpacePacket{
-                primary_header:primary_header,
-                data:data[..].to_vec()
-            })
-        }
-        
-
         /// Sets the packet version number of the CCSDS space packet.
         /// 
         /// # Errors
         /// 
         /// Returns an error if ver_no is bigger than 8. Because ver_no is used in its least significant 3 bits.
-        pub fn set_ver_no(&mut self,ver_no:u8) -> Result<(),Error>{
+        pub fn set_ver_no(&mut self,ver_no:u8) -> Result<(),()>{
             if ver_no > (1 << PrimaryHeader::VER_NO_BITS) {
-                return Err(Error::from(ErrorKind::InvalidData));
+                return Err(());
             }
             self.primary_header.ver_no = ver_no;
             Ok(())
@@ -138,9 +112,9 @@ pub mod packets{
         /// # Errors
         /// 
         /// Returns an error if apid is bigger than 2^11 = 2048. Because apid is used in its least significant 11 bits.
-        pub fn set_apid(&mut self,apid:u16) ->  Result<(),Error>{
+        pub fn set_apid(&mut self,apid:u16) ->  Result<(),()>{
             if apid > (1 << PrimaryHeader::APID_BITS) {
-                return Err(Error::from(ErrorKind::InvalidData));
+                return Err(());
             }
             self.primary_header.apid = apid;
             Ok(())
@@ -167,9 +141,9 @@ pub mod packets{
         /// # Errors
         /// 
         /// Returns an error if packet_name is bigger than 2^14 = 16384. Because packet_name is used in its least significant 14 bits.
-        pub fn set_packet_name(&mut self,packet_name:u16) -> Result<(),Error> {
+        pub fn set_packet_name(&mut self,packet_name:u16) -> Result<(),()> {
             if packet_name > (1 << PrimaryHeader::PACKET_NAME_BITS) {
-                return Err(Error::from(ErrorKind::InvalidData));
+                return Err(());
             }
             self.primary_header.packet_name = packet_name;
             Ok(())
@@ -187,11 +161,11 @@ pub mod packets{
     }
 
     // Method for debugging
-    impl std::fmt::Display for SpacePacket {
-        fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    impl core::fmt::Display for SpacePacket {
+        fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
             write!(f, "SpacePacket {{ \n")?;
             write!(f, "     {:?},\n", self.primary_header)?;
-            write!(f, "     Data {:X?}\n",self.data.as_slice())?;
+            write!(f, "     Data {:X?}\n",self.data)?;
             write!(f, "     PH_HEX {:X?}\n",self.primary_header.to_bytes())?; // delete this
             write!(f, "}}}}")
         }
@@ -261,10 +235,10 @@ pub mod packets{
         ///
         /// Sends error when `packet.len() != 6`.
         /// 
-        pub fn from_bytes(packet:&[u8]) -> Result<Self,Error>{
+        pub fn from_bytes(packet:&[u8]) -> Result<Self,()>{
             // the length of a primary header is constant so it will return an error if it is not 6
             if packet.len() as u8 != PrimaryHeader::PH_LEN {
-                return Err(Error::new(ErrorKind::InvalidData,"Given array should have length 6."));
+                return Err(());
             }
             // Read the first 4 bytes from the packet as an u32 integer
             let packet_int = BigEndian::read_u32(&packet[0..4]);            
@@ -450,3 +424,7 @@ pub mod packets{
     }
 }
 
+// TODO
+// - Add error types
+// - Explain how to run the project in readme.md
+// - Explain how to test it and the macro attributes used
