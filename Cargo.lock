@@ -191,16 +191,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "de96540e0ebde571dc55c73d60ef407c653844e6f9a1e2fdbd40c07b9252d812"
 
 [[package]]
-name = "panic-semihosting"
-version = "0.5.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c03864ac862876c16a308f5286f4aa217f1a69ac45df87ad3cd2847f818a642c"
-dependencies = [
- "cortex-m",
- "cortex-m-semihosting",
-]
-
-[[package]]
 name = "proc-macro2"
 version = "1.0.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -223,7 +213,6 @@ dependencies = [
  "libc_alloc",
  "nb 1.0.0",
  "panic-halt",
- "panic-semihosting",
  "spp",
  "stm32l4xx-hal",
 ]
@@ -271,7 +260,6 @@ checksum = "388a1df253eca08550bef6c72392cfe7c30914bf41df5269b68cbd6ff8f570a3"
 name = "spp"
 version = "0.1.0"
 dependencies = [
- "alloc-cortex-m",
  "byteorder",
 ]
 

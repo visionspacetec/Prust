@@ -11,11 +11,11 @@ pub mod packets{
 
     /// Send packet will be represented in this struct.
     /// Storing operations will be done in Big Endian byte order.
+    #[derive(Debug)]
     pub struct SpacePacket{
         primary_header:PrimaryHeader,
         data:Vec<u8>
     }
-
     impl SpacePacket{
 
         /// Create a SpacePacket struct from a given byte array
@@ -34,7 +34,7 @@ pub mod packets{
             if packet.len() - 6 != primary_header.data_len as usize + 1 {
                 return Err(());
             }
-            let data:Vec<u8> = Vec::with_capacity((packet.len() - 6) as usize);
+            let data:Vec<u8> = Vec::from(&packet[6..]);
             Ok(SpacePacket{
                 primary_header,
                 data

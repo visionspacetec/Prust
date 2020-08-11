@@ -37,7 +37,7 @@ static ALLOCATOR: CortexMHeap = CortexMHeap::empty();
 // Helper functions to check the bits if its ok to read from usart
 fn is_not_ok_to_read_usart2() -> bool {
     let isr = unsafe { &(*hal::stm32::USART2::ptr()).isr.read() };
-    isr.rxne().bit_is_clear()
+    isr.rxne().bit_is_clear() && isr.ore().bit_is_clear()
 }
 
 fn is_not_ok_to_write_usart2() -> bool {
@@ -45,6 +45,19 @@ fn is_not_ok_to_write_usart2() -> bool {
     isr.txe().bit_is_clear()
 }
 
+// Some debugging functions. Also to illustrate how registers are manipulated
+/* 
+fn set_oversampling8() {
+    unsafe { &(*hal::stm32::USART2::ptr()).cr1.modify(|_,w| w.over8().set_bit()) };
+}
+
+fn is_oversampling8() -> bool {
+    *unsafe { &(*hal::stm32::USART2::ptr()).cr1.read().over8().is_oversampling8()}
+}
+
+fn get_baudrate() -> u32 {
+    *unsafe { &(*hal::stm32::USART2::ptr()).brr.read().bits()}
+} */
 
 #[cfg(not(test))] // this is main if test is not set
 #[entry] // set entry point
@@ -63,14 +76,22 @@ fn main() -> ! {
     let mut acr = flash.acr;
 
     let mut gpioa = dp.GPIOA.split(&mut ahb2);
-    let cfg = serial::Config::default().baudrate(57_600.bps());
-    let clocks = rcc.cfgr.sysclk(80.mhz()).freeze(&mut acr); 
+    
+    //let cfg = serial::Config::default().baudrate(115_200.bps());
+    let cfg = serial::Config::default().baudrate(2_000_000.bps());
 
+    let clocks = rcc.cfgr.sysclk(72.mhz());
+    //clocks.pclk1(72.mhz());
+
+    let clocks = clocks.freeze(&mut acr); 
+    
     let mut usart2 = hal::serial::Serial::usart2(dp.USART2,
         (gpioa.pa2.into_af7(&mut gpioa.moder,&mut gpioa.afrl),
         gpioa.pa3.into_af7(&mut gpioa.moder,&mut gpioa.afrl)),
         cfg,clocks,
         &mut apb1r1);
+    
+    //hprintln!("pclk1{:?},os8:{},{:#b}",clocks.pclk1(),is_oversampling8(),get_baudrate()).unwrap();
     
     /* Allocate a 1KB Heapless buffer*/
     let mut buffer: heapless::Vec<u8, consts::U1024> = heapless::Vec::new();
