@@ -1,13 +1,9 @@
 #![cfg_attr(not(test),no_std)]
 /// Module for Space Packet Protocol
 pub mod packets{
-    use byteorder::{ByteOrder,BigEndian};
-    
+    use byteorder::{ByteOrder,BigEndian}; // For writing the numbers to byte arrays
     extern crate alloc; // link the allocator
     use alloc::vec::Vec;
-
-    //use std::io::{Error,ErrorKind,Read};
-
 
     /// Send packet will be represented in this struct.
     /// Storing operations will be done in Big Endian byte order.
@@ -332,8 +328,6 @@ pub mod packets{
         }
         /* END spp::PrimaryHeader::get_bits_u32*/
 
-
-        
         #[test]
         /// A test that creates a SpacePacket struct with "new" method then converts it to a
         /// byte array with "to_bytes" method and comparing it with the expected bytes

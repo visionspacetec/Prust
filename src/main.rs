@@ -1,19 +1,15 @@
-#![cfg_attr(not(test),no_std)] // #![no_std] if not testing
-#![cfg_attr(not(test),no_main)] // #![no_main] if not testing
+#![no_std] // #![no_std] if not testing
+#![no_main] // #![no_main] if not testing
 #![feature(alloc_error_handler)] // for defining alloc_error_handler
-#![cfg_attr(test, allow(unused_imports,dead_code))] // allow these when testing
 
 extern crate alloc; // linking alloc
-
 use nb; // for non blocking operations
 
-
 // uncomment when debugging
-#[cfg(not(test))] // only compile when test is not set because std has its own panic handler
 //use panic_semihosting as _;
 use panic_halt as _; // you can put a breakpoint on `rust_begin_unwind` to catch panics
 // useful when debugging
-//use cortex_m_semihosting::{ hprintln};
+// use cortex_m_semihosting::{ hprintln};
 
 
 use cortex_m_rt::entry; // for declaring main an entry point
@@ -22,6 +18,8 @@ use crate::hal::{prelude::*,stm32,serial};
 
 // SPP packets
 use spp::packets;
+mod packet_parser; // includes packet_parser.rs
+use packet_parser::*;
 
 use arrayvec::ArrayString;
 use heapless::consts;
@@ -34,32 +32,7 @@ use alloc::alloc::Layout; // for alloc error handler
 static ALLOCATOR: CortexMHeap = CortexMHeap::empty();
 
 
-// Helper functions to check the bits if its ok to read from usart
-fn is_not_ok_to_read_usart2() -> bool {
-    let isr = unsafe { &(*hal::stm32::USART2::ptr()).isr.read() };
-    isr.rxne().bit_is_clear() && isr.ore().bit_is_clear()
-}
-
-fn is_not_ok_to_write_usart2() -> bool {
-    let isr = unsafe { &(*hal::stm32::USART2::ptr()).isr.read() };
-    isr.txe().bit_is_clear()
-}
-
-// Some debugging functions. Also to illustrate how registers are manipulated
-/* 
-fn set_oversampling8() {
-    unsafe { &(*hal::stm32::USART2::ptr()).cr1.modify(|_,w| w.over8().set_bit()) };
-}
-
-fn is_oversampling8() -> bool {
-    *unsafe { &(*hal::stm32::USART2::ptr()).cr1.read().over8().is_oversampling8()}
-}
-
-fn get_baudrate() -> u32 {
-    *unsafe { &(*hal::stm32::USART2::ptr()).brr.read().bits()}
-} */
-
-#[cfg(not(test))] // this is main if test is not set
+//#[cfg(not(test))] // this is main if test is not set
 #[entry] // set entry point
 fn main() -> ! {
     // initializing allocator befor using it
@@ -96,7 +69,6 @@ fn main() -> ! {
     /* Allocate a 1KB Heapless buffer*/
     let mut buffer: heapless::Vec<u8, consts::U1024> = heapless::Vec::new();
     loop {
-
         buffer.clear();
         for _i in 0..6 {
 
@@ -144,7 +116,7 @@ fn main() -> ! {
 }
 
 
-#[cfg(not(test))] // only compile when the test flag is not set
+//#[cfg(not(test))] // only compile when the test flag is not set
 #[alloc_error_handler]
 /// Out Of Memory Handler
 fn oom(_: Layout) -> ! {
