@@ -11,11 +11,13 @@ use alloc::vec::Vec;
 use nb; // for non blocking operations
 //use cortex_m_semihosting::hprintln;
 use core::cell::RefCell;
+use cortex_m::interrupt::Mutex; // for sharing LED
+
 
 static LED: Mutex<RefCell<Option<stm32l4xx_hal::gpio::gpioa::PA5<stm32l4xx_hal::gpio::Output<stm32l4xx_hal::gpio::PushPull>>>>> =
     Mutex::new(RefCell::new(None));
 
-#[macro_use]
+/// Utility module for the temporary problem
 pub mod util{
     use super::*;
     // Helper functions to check the bits if its ok to read from usart
@@ -51,7 +53,7 @@ pub mod util{
         res
     }
 
-    /// FuncId in ascii is "turn_led"
+    /// FuncId = "turn_led"
     pub fn turn_led(args:&Vec::<u8>){
         cortex_m::interrupt::free(|cs|{
             if args[0] != 0 { LED.borrow(cs).borrow_mut().as_mut().unwrap().set_high().unwrap()}
@@ -61,22 +63,7 @@ pub mod util{
 }
 
 use util::*;
-use cortex_m::interrupt::Mutex;
-/* lazy_static!{
-    pub static ref LED:Mutex<RefCell<stm32l4xx_hal::gpio::gpioa::PA5<stm32l4xx_hal::gpio::Output<stm32l4xx_hal::gpio::PushPull>>>> = {
-        let dp;
-        //unsafe {
-            dp = stm32::Peripherals::steal().unwrap(); // get the device peripheral
-        //}
 
-        let rcc = dp.RCC.constrain();
-        let mut ahb2 = rcc.ahb2;
-        let mut gpioa = dp.GPIOA.split(&mut ahb2);
-        let led = gpioa.pa5.into_push_pull_output(&mut gpioa.moder,&mut gpioa.otyper);
-        drop(dp);
-        Mutex::new(RefCell::new(led))
-    };
-} */
 
 // Function reads the packet and parses it and sends parsed packet.
 pub fn handle_packets() -> ! {
@@ -97,12 +84,8 @@ pub fn handle_packets() -> ! {
     
     // Could set to 115_200.bps for debugging
     let cfg = serial::Config::default().baudrate(115_200.bps());
-
     let clocks = rcc.cfgr.sysclk(72.mhz());
-
     let clocks = clocks.freeze(&mut acr); 
-    
-    
     
     let mut usart2 = hal::serial::Serial::usart2(dp.USART2,
         (gpioa.pa2.into_af7(&mut gpioa.moder,&mut gpioa.afrl),
@@ -111,6 +94,7 @@ pub fn handle_packets() -> ! {
         &mut apb1r1);
     
     let led = gpioa.pa5.into_push_pull_output(&mut gpioa.moder,&mut gpioa.otyper);
+    // set global shared variable led
     cortex_m::interrupt::free(|cs| LED.borrow(cs).replace(Some(led)));
     
     /* Allocate a 1KB Heapless buffer*/

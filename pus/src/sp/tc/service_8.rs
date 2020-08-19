@@ -140,17 +140,12 @@ impl SpacePacket<TcPacket<Service8_1>>{
     pub fn to_bytes(&self) -> Vec<u8>{
         let arr_len = PrimaryHeader::PH_LEN + 1 + self.primary_header.data_len as usize;
         let mut bytes = Vec::with_capacity(arr_len);
-        debug!("arr:{:?},len:{}",bytes,bytes.len());
         bytes.extend(self.primary_header.to_bytes().to_vec());
-        debug!("arr:{:?},len:{}",bytes,bytes.len());
         bytes.extend(self.data.header.to_bytes().to_vec());
-        debug!("arr:{:?},len:{}",bytes,bytes.len());
         bytes.extend(self.data.user_data.data.func_id.bytes());
-        debug!("arr:{:?},len:{}",bytes,bytes.len());
         for _i in self.data.user_data.data.func_id.len()..FUNC_ID_LEN{
             bytes.push(0);
         }
-        
         bytes.push(self.data.user_data.data.n);
         bytes.extend(self.data.user_data.data.args_field.to_vec());
         // add the two bytes then modify them to the true value.
@@ -166,5 +161,4 @@ impl SpacePacket<TcPacket<Service8_1>>{
         let to_exec = func_map.get(func_id.as_str()).unwrap();
         to_exec(&self.data.user_data.data.args_field);
     }
-    
 }

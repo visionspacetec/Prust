@@ -31,5 +31,4 @@ fn main(){
 
     let mes = tm.to_bytes();
     serialport.write(mes.as_slice()).unwrap();
-
 }

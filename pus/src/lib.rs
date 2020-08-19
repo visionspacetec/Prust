@@ -26,6 +26,7 @@ macro_rules! debug {
     })
 }
 
+/// Macro for mapping function_id to function pointer
 #[macro_export]
 macro_rules! map(
     { $($key:expr => $value:expr),+ } => {
@@ -41,6 +42,5 @@ macro_rules! map(
 
 /// Module for Generic CCSDS Space Packet. SpacePacket struct has only primary header and data field. 
 pub mod sp;
-
 
 // TODO : Implement Own Error Types
