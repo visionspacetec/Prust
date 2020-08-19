@@ -60,6 +60,28 @@ Warning: With this baudrate debugger cannot be used because of speed limits of s
 ## Tests
 For unit testing the spp crate enter;
 ```
-cd spp
+cd pus
 cargo test --target=x86_64-unknown-linux-gnu
+
 ```
+## Service Provider
+To open the server for TC packs run
+ ```
+ openocd
+ ```
+ and run
+ ```
+ cargo run --bin serve
+ ```
+Once the program is loaded you can close openocd and the gdb debugger and press the reset button of the board. The
+server should be running.  
+To send a query go to the /client directory and enter.  
+```
+cd client
+cargo run turn_led 0
+```
+or
+```
+cargo run turn_led 1
+```
+to send a TM packet.

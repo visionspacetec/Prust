@@ -1,0 +1,15 @@
+[package]
+name = "client"
+version = "0.1.0"
+authors = ["SelmanOzleyen <selman.ozleyen2017@gtu.edu.tr>"]
+edition = "2018"
+
+[features]
+debug = ["pus/debug"]
+
+[dependencies]
+libudev = "0.2.0"
+hashbrown = "0.8.2"
+serialport = {version = "3.3.0"}
+pus = {path = "../pus"}
+

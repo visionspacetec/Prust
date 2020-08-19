@@ -1,18 +1,20 @@
-#![no_std] // #![no_std] if not testing
-#![no_main] // #![no_main] if not testing
+#![no_std]
+#![no_main]
 #![feature(alloc_error_handler)] // for defining alloc_error_handler
+/* #[macro_use]
+extern crate lazy_static; */
 
 extern crate alloc; // linking alloc
 // comment when debugging
 use panic_halt as _; // you can put a breakpoint on `rust_begin_unwind` to catch panics
 /* Uncomment these and comment above for enabling printing to gdb terminal */
-// use panic_semihosting as _;
-// use cortex_m_semihosting::{ hprintln};
+//use panic_semihosting as _;
+//use cortex_m_semihosting::{hprintln};
 
 use cortex_m_rt::entry; // for declaring main an entry point
 
 mod packet_parser; // includes packet_parser.rs
-use packet_parser::*; // gets the helper functions
+use packet_parser::handle_packets; // gets the helper functions
 
 use alloc_cortex_m::CortexMHeap; // for declaring global allocator
 use alloc::alloc::Layout; // for alloc error handler 
