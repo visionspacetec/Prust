@@ -29,7 +29,7 @@ cargo build
 To deploy the program to the board there are two alternatives.
 First one is to use cargo flash tool like this;
 ```
-cargo flash --chip stm32l476rgt --release
+cargo flash --bin serve --chip stm32l476rgt --release
 ```
 Second one includes using openocd and gdb. First run openocd server;
 ```
@@ -37,7 +37,7 @@ openocd
 ```
 Then after the expected message type;
 ```
-cargo run --release
+cargo run --bin serve --release
 ```
 Now the debugger is connected but we won't need it anymore since the program is loaded to the board, so we can close both terminals after ensuring
 the programs ran expectedly at the start. After pressing the Reset button on the board (black button), all is done!
