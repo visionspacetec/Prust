@@ -9,7 +9,7 @@ use hashbrown::HashMap; // for storing function names
 extern crate alloc; // link the allocator
 use alloc::vec::Vec;
 use nb; // for non blocking operations
-use cortex_m_semihosting::hprintln;
+//use cortex_m_semihosting::hprintln;
 use core::cell::RefCell;
 
 static LED: Mutex<RefCell<Option<stm32l4xx_hal::gpio::gpioa::PA5<stm32l4xx_hal::gpio::Output<stm32l4xx_hal::gpio::PushPull>>>>> =

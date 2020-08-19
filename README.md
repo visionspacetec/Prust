@@ -11,6 +11,7 @@ rustup override set nightly
 ```
 For cargo and rust dependencies you can type;
 ```
+apt install pkg-config
 cargo install cargo-flash
 cargo install cargo-binutils
 rustup component add llvm-tools-preview
@@ -74,7 +75,10 @@ To open the server for TC packs run
  cargo run --bin serve
  ```
 Once the program is loaded you can close openocd and the gdb debugger and press the reset button of the board. The
-server should be running.  
+server should be running. You can also use cargo flash to deploy the binary. 
+```
+cargo flash --bin serve --chip stm32l476rgt --release
+```
 To send a query go to the /client directory and enter.  
 ```
 cd client
