@@ -1,5 +1,8 @@
 use stm32l4xx_hal as hal; // HAL alias
 use hal::{prelude::*,stm32,serial};
+use hal::gpio::gpioa::*;
+use hal::gpio::*;
+
 // pus sp
 use pus::*;
 // Data structure utilities
@@ -13,17 +16,14 @@ use nb; // for non blocking operations
 use core::cell::RefCell;
 use cortex_m::interrupt::Mutex; // for sharing LED
 
-use hal::gpio::gpioa::*;
-use hal::gpio::*;
-
-static LED1: Mutex<RefCell<Option<PA5<Output<PushPull>>>>> = Mutex::new(RefCell::new(None));
-static LED2: Mutex<RefCell<Option<PA6<Output<PushPull>>>>> = Mutex::new(RefCell::new(None));
-static LED3: Mutex<RefCell<Option<PA7<Output<PushPull>>>>> = Mutex::new(RefCell::new(None));
-static LED4: Mutex<RefCell<Option<PA8<Output<PushPull>>>>> = Mutex::new(RefCell::new(None));
+static SHARED_PER: Mutex<RefCell<Option<util::SharedPeripherals>>> = Mutex::new(RefCell::new(None));
 
 /// Utility module for the temporary problem
 pub mod util{
     use super::*;
+    use stm32::USART2;
+    use serial::Serial;
+    
     // Helper functions to check the bits if its ok to read from usart
     pub fn is_not_ok_to_read_usart2() -> bool {
         let isr = unsafe { &(*hal::stm32::USART2::ptr()).isr.read() };
@@ -59,51 +59,91 @@ pub mod util{
 
     /// FuncId = "turn_led"
     pub fn turn_led(args:&Vec::<u8>){
-        cortex_m::interrupt::free(|cs|{
+        cortex_m::interrupt::free(|cs| {
             if args[0] != 0 { 
-                LED1.borrow(cs).borrow_mut().as_mut().unwrap().set_high().unwrap();
+                SHARED_PER.borrow(cs).borrow_mut().as_mut().unwrap().led1.set_high().unwrap();
             }
             else {
-                LED1.borrow(cs).borrow_mut().as_mut().unwrap().set_low().unwrap();
+                SHARED_PER.borrow(cs).borrow_mut().as_mut().unwrap().led1.set_low().unwrap();
             } 
-        });
+        })
+    
     }
 
     pub fn set_led(args:&Vec::<u8>){
         cortex_m::interrupt::free(|cs|{
             if args[0] == 0{
                 if args[1] != 0 { 
-                    LED1.borrow(cs).borrow_mut().as_mut().unwrap().set_high().unwrap();
+                    SHARED_PER.borrow(cs).borrow_mut().as_mut().unwrap().led1.set_high().unwrap();
                 }
                 else {
-                    LED1.borrow(cs).borrow_mut().as_mut().unwrap().set_low().unwrap();
+                    SHARED_PER.borrow(cs).borrow_mut().as_mut().unwrap().led1.set_low().unwrap();
                 }  
             } else if args[0] == 1 {
                 if args[1] != 0 { 
-                    LED2.borrow(cs).borrow_mut().as_mut().unwrap().set_high().unwrap();
+                    SHARED_PER.borrow(cs).borrow_mut().as_mut().unwrap().led2.set_high().unwrap();
                 }
                 else {
-                    LED2.borrow(cs).borrow_mut().as_mut().unwrap().set_low().unwrap();
-                }  
+                    SHARED_PER.borrow(cs).borrow_mut().as_mut().unwrap().led2.set_low().unwrap();
+                }   
             }else if args[0] == 2 {
                 if args[1] != 0 { 
-                    LED3.borrow(cs).borrow_mut().as_mut().unwrap().set_high().unwrap();
+                    SHARED_PER.borrow(cs).borrow_mut().as_mut().unwrap().led3.set_high().unwrap();
                 }
                 else {
-                    LED3.borrow(cs).borrow_mut().as_mut().unwrap().set_low().unwrap();
-                }  
+                    SHARED_PER.borrow(cs).borrow_mut().as_mut().unwrap().led3.set_low().unwrap();
+                }    
             }
             else if args[0] == 3 {
                 if args[1] != 0 { 
-                    LED4.borrow(cs).borrow_mut().as_mut().unwrap().set_high().unwrap();
+                    SHARED_PER.borrow(cs).borrow_mut().as_mut().unwrap().led4.set_high().unwrap();
                 }
                 else {
-                    LED4.borrow(cs).borrow_mut().as_mut().unwrap().set_low().unwrap();
-                }  
+                    SHARED_PER.borrow(cs).borrow_mut().as_mut().unwrap().led4.set_low().unwrap();
+                }    
             }
+        })
+    }
+    /// Change Here If An External Function Needs To Access Peripheral Data
+    pub struct SharedPeripherals{
+        pub led1:PA5<Output<PushPull>>,
+        pub led2:PA6<Output<PushPull>>,
+        pub led3:PA7<Output<PushPull>>,
+        pub led4:PA8<Output<PushPull>>,
+    } 
 
-            
+    pub fn init() -> Serial<USART2, (PA2<Alternate<AF7, Input<Floating>>>, PA3<Alternate<AF7, Input<Floating>>>)>{
+        let dp = stm32::Peripherals::take().unwrap(); // get the device peripheral
+    
+        let rcc = dp.RCC.constrain(); // get the Rcc's abstract struct
+        let mut ahb2 = rcc.ahb2;
+        let mut apb1r1 =rcc.apb1r1;
+        let flash = dp.FLASH.constrain();
+        let mut acr = flash.acr;
+
+        let mut gpioa = dp.GPIOA.split(&mut ahb2);
+
+        // Could set to 115_200.bps for debugging
+        let cfg = serial::Config::default().baudrate(115_200.bps());
+        let clocks = rcc.cfgr.sysclk(72.mhz());
+        let clocks = clocks.freeze(&mut acr); 
+        
+        let usart2 = hal::serial::Serial::usart2(dp.USART2,
+            (gpioa.pa2.into_af7(&mut gpioa.moder,&mut gpioa.afrl),
+            gpioa.pa3.into_af7(&mut gpioa.moder,&mut gpioa.afrl)),
+            cfg,clocks,
+            &mut apb1r1);
+        
+        let led1 = gpioa.pa5.into_push_pull_output(&mut gpioa.moder,&mut gpioa.otyper);
+        let led2 = gpioa.pa6.into_push_pull_output(&mut gpioa.moder,&mut gpioa.otyper);
+        let led3 = gpioa.pa7.into_push_pull_output(&mut gpioa.moder,&mut gpioa.otyper);
+        let led4 = gpioa.pa8.into_push_pull_output(&mut gpioa.moder,&mut gpioa.otyper);
+        
+        // Replacing the Shared Peripheral
+        cortex_m::interrupt::free(|cs|{
+            SHARED_PER.borrow(cs).replace(Some(util::SharedPeripherals{led1,led2,led3,led4}));
         });
+        usart2
     }
 }
 
@@ -118,36 +158,7 @@ pub fn handle_packets() -> ! {
         util::create_func_id("set_led") => util::set_led as fn(&Vec::<u8>)
     );
     
-    let dp = stm32::Peripherals::take().unwrap(); // get the device peripheral
-
-    let rcc = dp.RCC.constrain(); // get the Rcc's abstract struct
-    let mut ahb2 = rcc.ahb2;
-    let mut apb1r1 =rcc.apb1r1;
-    let flash = dp.FLASH.constrain();
-    let mut acr = flash.acr;
-
-    let mut gpioa = dp.GPIOA.split(&mut ahb2);
-    
-    // Could set to 115_200.bps for debugging
-    let cfg = serial::Config::default().baudrate(115_200.bps());
-    let clocks = rcc.cfgr.sysclk(72.mhz());
-    let clocks = clocks.freeze(&mut acr); 
-    
-    let mut usart2 = hal::serial::Serial::usart2(dp.USART2,
-        (gpioa.pa2.into_af7(&mut gpioa.moder,&mut gpioa.afrl),
-        gpioa.pa3.into_af7(&mut gpioa.moder,&mut gpioa.afrl)),
-        cfg,clocks,
-        &mut apb1r1);
-    
-    let led1 = gpioa.pa5.into_push_pull_output(&mut gpioa.moder,&mut gpioa.otyper);
-    let led2 = gpioa.pa6.into_push_pull_output(&mut gpioa.moder,&mut gpioa.otyper);
-    let led3 = gpioa.pa7.into_push_pull_output(&mut gpioa.moder,&mut gpioa.otyper);
-    let led4 = gpioa.pa8.into_push_pull_output(&mut gpioa.moder,&mut gpioa.otyper);
-    // set global shared variable led
-    cortex_m::interrupt::free(|cs| LED1.borrow(cs).replace(Some(led1)));
-    cortex_m::interrupt::free(|cs| LED2.borrow(cs).replace(Some(led2)));
-    cortex_m::interrupt::free(|cs| LED3.borrow(cs).replace(Some(led3)));
-    cortex_m::interrupt::free(|cs| LED4.borrow(cs).replace(Some(led4)));
+    let mut usart2 = util::init(); // SharedPheriperal
     
     /* Allocate a 1KB Heapless buffer*/
     let mut buffer: heapless::Vec<u8, consts::U1024> = heapless::Vec::new();
@@ -185,7 +196,6 @@ pub fn handle_packets() -> ! {
 
         }
         let data_len = data_len + 6;
-        //hprintln!("{:?}",&buffer[0..data_len]);
         let space_packet = sp::SpacePacket::< pus::sp::tc::TcPacket< pus::sp::tc::service_8::Service8_1>>::from_bytes(&buffer[0..data_len]).unwrap();
         // print packet
         space_packet.exec_func(&funcs);
