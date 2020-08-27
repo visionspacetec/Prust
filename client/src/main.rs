@@ -8,13 +8,17 @@ use std::env;
  
 fn main(){
     let args: Vec<String> = env::args().collect();
-    let switch:u8 = args[2].parse().unwrap();
+    
+    let mut tc_args = Vec::<u8>::new();
+    for i in &args[2..] {
+        tc_args.push(i.parse().unwrap());
+    }
     let tm = SpacePacket::<TcPacket::<Service8_1>>::new(
         2,
         0,
         args[1].clone(),
         1,
-        vec![switch]
+        tc_args
     ).unwrap();
 
     let s = SerialPortSettings {

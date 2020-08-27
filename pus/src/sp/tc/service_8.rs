@@ -1,9 +1,7 @@
 use super::*;
-use crate::{sp::PEC_LEN,FuncId};
+use crate::{sp::PEC_LEN,FuncId,FUNC_ID_LEN};
 
 const SERVICE_TYPE:u8 = 8;
-const FUNC_ID_LEN:usize = 16;
-
 
 /// User data. Used as application data on TC and source data as TM.
 pub struct Service8_1{

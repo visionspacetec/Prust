@@ -13,9 +13,13 @@ use nb; // for non blocking operations
 use core::cell::RefCell;
 use cortex_m::interrupt::Mutex; // for sharing LED
 
+use hal::gpio::gpioa::*;
+use hal::gpio::*;
 
-static LED: Mutex<RefCell<Option<stm32l4xx_hal::gpio::gpioa::PA5<stm32l4xx_hal::gpio::Output<stm32l4xx_hal::gpio::PushPull>>>>> =
-    Mutex::new(RefCell::new(None));
+static LED1: Mutex<RefCell<Option<PA5<Output<PushPull>>>>> = Mutex::new(RefCell::new(None));
+static LED2: Mutex<RefCell<Option<PA6<Output<PushPull>>>>> = Mutex::new(RefCell::new(None));
+static LED3: Mutex<RefCell<Option<PA7<Output<PushPull>>>>> = Mutex::new(RefCell::new(None));
+static LED4: Mutex<RefCell<Option<PA8<Output<PushPull>>>>> = Mutex::new(RefCell::new(None));
 
 /// Utility module for the temporary problem
 pub mod util{
@@ -56,8 +60,49 @@ pub mod util{
     /// FuncId = "turn_led"
     pub fn turn_led(args:&Vec::<u8>){
         cortex_m::interrupt::free(|cs|{
-            if args[0] != 0 { LED.borrow(cs).borrow_mut().as_mut().unwrap().set_high().unwrap()}
-            else { LED.borrow(cs).borrow_mut().as_mut().unwrap().set_low().unwrap()} 
+            if args[0] != 0 { 
+                LED1.borrow(cs).borrow_mut().as_mut().unwrap().set_high().unwrap();
+            }
+            else {
+                LED1.borrow(cs).borrow_mut().as_mut().unwrap().set_low().unwrap();
+            } 
+        });
+    }
+
+    pub fn set_led(args:&Vec::<u8>){
+        cortex_m::interrupt::free(|cs|{
+            if args[0] == 0{
+                if args[1] != 0 { 
+                    LED1.borrow(cs).borrow_mut().as_mut().unwrap().set_high().unwrap();
+                }
+                else {
+                    LED1.borrow(cs).borrow_mut().as_mut().unwrap().set_low().unwrap();
+                }  
+            } else if args[0] == 1 {
+                if args[1] != 0 { 
+                    LED2.borrow(cs).borrow_mut().as_mut().unwrap().set_high().unwrap();
+                }
+                else {
+                    LED2.borrow(cs).borrow_mut().as_mut().unwrap().set_low().unwrap();
+                }  
+            }else if args[0] == 2 {
+                if args[1] != 0 { 
+                    LED3.borrow(cs).borrow_mut().as_mut().unwrap().set_high().unwrap();
+                }
+                else {
+                    LED3.borrow(cs).borrow_mut().as_mut().unwrap().set_low().unwrap();
+                }  
+            }
+            else if args[0] == 3 {
+                if args[1] != 0 { 
+                    LED4.borrow(cs).borrow_mut().as_mut().unwrap().set_high().unwrap();
+                }
+                else {
+                    LED4.borrow(cs).borrow_mut().as_mut().unwrap().set_low().unwrap();
+                }  
+            }
+
+            
         });
     }
 }
@@ -69,7 +114,8 @@ use util::*;
 pub fn handle_packets() -> ! {
     // init function map
     let funcs:HashMap<FuncId,fn(&Vec::<u8>)> = pus::map!(
-        util::create_func_id("turn_led") => util::turn_led as fn(&Vec::<u8>)
+        util::create_func_id("turn_led") => util::turn_led as fn(&Vec::<u8>),
+        util::create_func_id("set_led") => util::set_led as fn(&Vec::<u8>)
     );
     
     let dp = stm32::Peripherals::take().unwrap(); // get the device peripheral
@@ -93,9 +139,15 @@ pub fn handle_packets() -> ! {
         cfg,clocks,
         &mut apb1r1);
     
-    let led = gpioa.pa5.into_push_pull_output(&mut gpioa.moder,&mut gpioa.otyper);
+    let led1 = gpioa.pa5.into_push_pull_output(&mut gpioa.moder,&mut gpioa.otyper);
+    let led2 = gpioa.pa6.into_push_pull_output(&mut gpioa.moder,&mut gpioa.otyper);
+    let led3 = gpioa.pa7.into_push_pull_output(&mut gpioa.moder,&mut gpioa.otyper);
+    let led4 = gpioa.pa8.into_push_pull_output(&mut gpioa.moder,&mut gpioa.otyper);
     // set global shared variable led
-    cortex_m::interrupt::free(|cs| LED.borrow(cs).replace(Some(led)));
+    cortex_m::interrupt::free(|cs| LED1.borrow(cs).replace(Some(led1)));
+    cortex_m::interrupt::free(|cs| LED2.borrow(cs).replace(Some(led2)));
+    cortex_m::interrupt::free(|cs| LED3.borrow(cs).replace(Some(led3)));
+    cortex_m::interrupt::free(|cs| LED4.borrow(cs).replace(Some(led4)));
     
     /* Allocate a 1KB Heapless buffer*/
     let mut buffer: heapless::Vec<u8, consts::U1024> = heapless::Vec::new();

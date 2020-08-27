@@ -37,47 +37,31 @@ openocd
 ```
 Then after the expected message type;
 ```
-cargo run --bin serve --release
+cargo run --release
 ```
 Now the debugger is connected but we won't need it anymore since the program is loaded to the board, so we can close both terminals after ensuring
 the programs ran expectedly at the start. After pressing the Reset button on the board (black button), all is done!
 
-## Sending and Receiving a File
-First enter this command with the proper baudrate (2000000).
-Warning: No error handling is done in this version and all send packets are assumed to be valid.
-```
-stty -F /dev/ttyACM0 speed 2000000 cs8 -cstopb -echo
-```
-then 
-```
-cat packet.bin > /dev/ttyACM0
-```
-to receive
-```
-cat /dev/ttyACM0 > packet.txt
-```
-Warning: With this baudrate debugger cannot be used because of speed limits of semihosting feature.
-
-## Tests
+## Testing PUS crate
 For unit testing the spp crate enter;
 ```
 cd pus
-cargo test --target=x86_64-unknown-linux-gnu
+cargo utest
 
 ```
 ## Service Provider
-To open the server for TC packs run
+To open the server (service provider). 
  ```
  openocd
  ```
  and run
  ```
- cargo run --bin serve
+ cargo run
  ```
 Once the program is loaded you can close openocd and the gdb debugger and press the reset button of the board. The
 server should be running. You can also use cargo flash to deploy the binary. 
 ```
-cargo flash --bin serve --chip stm32l476rgt --release
+cargo flash --chip stm32l476rgt --release
 ```
 To send a query go to the /client directory and enter.  
 ```
@@ -88,4 +72,4 @@ or
 ```
 cargo run turn_led 1
 ```
-to send a TM packet.
+to send a TC packet.

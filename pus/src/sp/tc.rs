@@ -11,9 +11,9 @@ pub struct TcPacketHeader{
     pus_ver_no:u8, 
     /// TODO don't ignore
     acknowledgement_flags:(bool,bool,bool,bool),
-    /// Service type of the TM command.
+    /// Service type of the TC pack.
     service_type:u8,
-    /// Message Subtype of the TM command.
+    /// Message Subtype of the TC pack.
     message_subtype:u8,
     /// TODO don't ignore
     source_id:u16

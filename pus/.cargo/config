@@ -1,5 +1,6 @@
 [alias]
 debug = ["build","--features","debug","--target=x86_64-unknown-linux-gnu"]
+utest = ["test","--target=x86_64-unknown-linux-gnu"]
 
 [build]
 target = "thumbv7em-none-eabihf" # Cortex-M4F and Cortex-M7F (with FPU)
