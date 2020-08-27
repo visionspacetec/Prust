@@ -2,8 +2,10 @@
 //! Packets defined here are compliant to ECSS-E-ST-70-41C.
 
 use byteorder::{ByteOrder,BigEndian}; // For writing the numbers to byte arrays
+#[allow(unused_imports)]
 use crate::sp::{SpacePacket,SpacePacketDataField,PrimaryHeader,TxUserData}; // Including Generic Packet
 extern crate alloc; // link the allocator
+#[allow(unused_imports)]
 use alloc::{string::String,vec::Vec};
 /// Header of the TmPackets, secondary header of a SpacePacket.
 pub struct TmPacketHeader{
@@ -41,12 +43,13 @@ impl TmPacketHeader {
         Ok(TmPacketHeader{
             pus_ver_no:TmPacketHeader::PUS_VER_NO,
             // TODO fill
-            0,
+            time_ref_status:0,
             service_type,
             message_subtype,
+            message_type_counter:0,
             destination_id,
             // TODO fill
-            0
+            abs_time:0
         })
     }
     /// Creates TmPacketHeader structure a byte array
@@ -66,7 +69,7 @@ impl TmPacketHeader {
         let message_type_counter = BigEndian::read_u16(&buffer[3..5]);
         let destination_id = BigEndian::read_u16(&buffer[5..7]);
         // TODO: chech the size
-        let abs_time = BigEndian::read_u16(&buffer[7..9]);
+        let abs_time = BigEndian::read_u16(&buffer[7..7+TmPacketHeader::ABS_TIME_LEN]);
         // TODO: check dest_id_id, flags and ver_no
         // TODO: use constants
         let ver_no = ver_no_and_status >> 4;
@@ -106,7 +109,9 @@ pub trait TmData{
 /// This part represents packet data field of the CCSDS 133. 0-B-1 packet.
 pub struct TmPacket<T: TmData>{
     /// Secondary Header of CCSDS packet.
+    #[allow(dead_code)]
     header:TmPacketHeader,
+    #[allow(dead_code)]
     user_data: TxUserData<T>
 }
 

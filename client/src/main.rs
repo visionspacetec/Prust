@@ -8,7 +8,6 @@ use std::env;
  
 fn main(){
     let args: Vec<String> = env::args().collect();
-    
     let mut tc_args = Vec::<u8>::new();
     for i in &args[2..] {
         tc_args.push(i.parse().unwrap());

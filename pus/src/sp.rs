@@ -364,3 +364,4 @@ pub struct TxUserData<T>{
 const PEC_LEN:usize = 2;
 /// Module for Telecommand packet compliant to PUS.
 pub mod tc;
+pub mod tm;

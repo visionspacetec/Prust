@@ -108,3 +108,40 @@ fn getter_setters_test_cases(){
 
     assert_eq!(0,sp.get_data_len());
 }
+
+#[test]
+fn builder_data_loss_check_tc_header(){
+    let tc_sec_header = tc::TcPacketHeader::new(
+        (true,false,true,false),
+        8,
+        1,
+        12
+    ).unwrap();
+
+    let tc_bytes = tc_sec_header.to_bytes();
+    let dup_pack = tc::TcPacketHeader::from_bytes(&tc_bytes);
+    let dup_pack_bytes = dup_pack.unwrap().to_bytes();
+
+    assert_eq!(tc_bytes.len(),dup_pack_bytes.len());
+    for i in 0..tc_bytes.len() {
+        assert_eq!(dup_pack_bytes[i],tc_bytes[i]);
+    }
+}
+
+#[test]
+fn builder_data_loss_check_tm_header(){
+    let tm_sec_header = tm::TmPacketHeader::new(
+        1,
+        1,
+        12
+    ).unwrap();
+
+    let tm_bytes = tm_sec_header.to_bytes();
+    let dup_pack = tm::TmPacketHeader::from_bytes(&tm_bytes);
+    let dup_pack_bytes = dup_pack.unwrap().to_bytes();
+
+    assert_eq!(tm_bytes.len(),dup_pack_bytes.len());
+    for i in 0..tm_bytes.len() {
+        assert_eq!(dup_pack_bytes[i],tm_bytes[i]);
+    }
+}
