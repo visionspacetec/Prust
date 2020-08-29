@@ -1,6 +1,7 @@
 use byteorder::{ByteOrder,BigEndian}; // For writing the numbers to byte arrays
 extern crate alloc; // link the allocator
 use alloc::vec::Vec;
+use tm::service_1::RequestId; // Return struct of the trait Request
 
 pub trait SpacePacketDataField{}
 
@@ -360,8 +361,27 @@ pub struct TxUserData<T>{
     /// Application (TC) or Source (TM) data field.
     data:T
 }
+/// Trait Indicating The Packet is a PUS request type.
+pub trait Request {
+    fn to_request(&self) -> tm::service_1::RequestId;
+}
+
+/// Trait implementation that will create RequestId from generic SpacePacket
+impl <T:SpacePacketDataField> Request for SpacePacket<T>{
+    fn to_request(&self) -> crate::sp::tm::service_1::RequestId{
+        RequestId{
+            ver_no:self.primary_header.ver_no,
+            packet_type:self.primary_header.type_flag,
+            sec_header_flag:self.primary_header.sec_header_flag,
+            apid:self.primary_header.apid,
+            seq_flags:self.primary_header.seq_flags,
+            packet_seq_count:self.primary_header.packet_name
+        }
+    }
+}
 /// packet_error_control len
 const PEC_LEN:usize = 2;
 /// Module for Telecommand packet compliant to PUS.
 pub mod tc;
+/// Module for Telemetry packet compliant to PUS.
 pub mod tm;
