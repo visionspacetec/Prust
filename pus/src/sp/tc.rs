@@ -2,26 +2,25 @@
 //! Packets defined here are compliant to ECSS-E-ST-70-41C.
 
 use byteorder::{ByteOrder,BigEndian}; // For writing the numbers to byte arrays
-use crate::sp::{SpacePacket,SpacePacketDataField,PrimaryHeader,TxUserData}; // Including Generic Packet
+use crate::sp::{SpacePacketDataField,TxUserData}; // Including Generic Packet
 extern crate alloc; // link the allocator
-use alloc::{string::String,vec::Vec};
 /// Header of the TcPackets, secondary header of a SpacePacket.
 pub struct TcPacketHeader{
     /// Only 4 least significant bits used. When creating always set to 2.
-    pus_ver_no:u8, 
+    pub(crate) pus_ver_no:u8, 
     /// TODO don't ignore
-    acknowledgement_flags:(bool,bool,bool,bool),
+    pub(crate) acknowledgement_flags:(bool,bool,bool,bool),
     /// Service type of the TC pack.
-    service_type:u8,
+    pub(crate) service_type:u8,
     /// Message Subtype of the TC pack.
-    message_subtype:u8,
+    pub(crate) message_subtype:u8,
     /// TODO don't ignore
-    source_id:u16
+    pub(crate) source_id:u16
 }
 /// implementation of TcPacketHeader. While creating the TcPacketHeader PUS standard are checked according to TC rules generally.
 impl TcPacketHeader {
-    const PUS_VER_NO:u8 = 2; 
-    const TC_HEADER_LEN:usize = 5;
+    pub(crate) const PUS_VER_NO:u8 = 2; 
+    pub(crate) const TC_HEADER_LEN:usize = 5;
 
     /// Method to create a TcPacketHeader with specified parameters.
     pub fn new(
@@ -98,12 +97,10 @@ pub trait TcData{
 /// This part represents packet data field of the CCSDS 133. 0-B-1 packet.
 pub struct TcPacket<T: TcData>{
     /// Secondary Header of CCSDS packet.
-    header:TcPacketHeader,
-    user_data: TxUserData<T>
+    pub(crate) header:TcPacketHeader,
+    pub(crate) user_data: TxUserData<T>
 }
 
 impl<T:TcData> SpacePacketDataField for TcPacket<T>{
     /* intentionally empty*/
 }
-
-pub mod service_8;

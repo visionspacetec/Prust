@@ -1,8 +1,10 @@
+//! Each packet transporting a function management message shall be of service type 8.
 use super::*;
 use crate::{sp::{PEC_LEN},FuncId,FUNC_ID_LEN};
+use tc::{TcData,TcPacket,TcPacketHeader};
 
 
-const SERVICE_TYPE:u8 = 8;
+pub(crate) const SERVICE_TYPE:u8 = 8;
 
 /// User data. Used as application data on TC and source data as TM.
 pub struct Service8_1{
@@ -72,7 +74,17 @@ impl SpacePacket<TcPacket<Service8_1>>{
             }
         )
     }
-    
+    pub fn new_service_8_1(
+        apid:u16,
+        packet_name:u16,
+        func_id:String,
+        n:u8,
+        args_field:Vec<u8>) -> Result<Self,()>
+        {
+            SpacePacket::<TcPacket::<Service8_1>>::new(apid,packet_name,func_id,n,args_field)
+        }
+
+
     ///
     /// # Errors
     /// 

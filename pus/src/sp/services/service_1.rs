@@ -1,6 +1,10 @@
+//! Each packet transporting a request verification report shall be of service type 1.
 use super::*;
 use crate::error;
-use crate::sp::{Request,PEC_LEN};
+use crate::sp::{
+    tm::{TmData,TmPacketHeader,TmPacket},
+    Request,PEC_LEN
+};
 
 const SERVICE_TYPE:u8 = 1;
 
@@ -70,8 +74,8 @@ impl RequestId {
 
 /// Failure Notice Field Struct. Used in all fail response packs. TM[1,x] packs where x = {2,4,6,8,10}.
 struct FailureNotice{
-    err_code:u8,
-    err_data:Vec<u8>
+    pub(crate) err_code:u8,
+    pub(crate) err_data:Vec<u8>
 }
 impl FailureNotice{
     /// Creates a Failure Notice Field Struct.

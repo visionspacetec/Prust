@@ -196,7 +196,7 @@ pub fn handle_packets() -> ! {
 
         }
         let data_len = data_len + 6;
-        let space_packet = sp::SpacePacket::< pus::sp::tc::TcPacket< pus::sp::tc::service_8::Service8_1>>::from_bytes(&buffer[0..data_len]).unwrap();
+        let space_packet = sp::SpacePacket::< pus::sp::tc::TcPacket< pus::sp::services::service_8::Service8_1>>::from_bytes(&buffer[0..data_len]).unwrap();
         // print packet
         space_packet.exec_func(&funcs);
     }   

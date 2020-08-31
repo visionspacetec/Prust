@@ -149,10 +149,9 @@ fn builder_data_loss_check_tm_header(){
 #[test]
 /// Case for checking the SeviceSuccesCase builder crudely
 fn builder_for_service_success_case(){
-    use crate::sp::tc::service_8::Service8_1;
-    use crate::sp::tc::TcPacket;
-    use crate::sp::tm::{TmPacket,service_1::{ServiceSuccess}};
-    let tc = SpacePacket::<TcPacket::<Service8_1>>::new(
+    use crate::sp::services::{service_1::*};
+    use crate::sp::tm::TmPacket;
+    let tc = SpacePacket::<_>::new_service_8_1(
         2,
         1,
         "turn_led".to_string(),
@@ -178,10 +177,9 @@ fn builder_for_service_success_case(){
 #[test]
 /// Case for checking the SeviceFailCase builder crudely
 fn builder_for_service_fail_case(){
-    use crate::sp::tc::service_8::Service8_1;
-    use crate::sp::tc::TcPacket;
-    use crate::sp::tm::{TmPacket,service_1::{ServiceFail}};
-    let tc = SpacePacket::<TcPacket::<Service8_1>>::new(
+    use crate::sp::services::{service_1::*};
+    use crate::sp::tm::TmPacket;
+    let tc = SpacePacket::<_>::new_service_8_1(
         2,
         1,
         "turn_led".to_string(),
@@ -205,10 +203,9 @@ fn builder_for_service_fail_case(){
 #[test]
 /// Case for checking the SeviceSuccesStepCase builder crudely
 fn builder_for_service_success_step_case(){
-    use crate::sp::tc::service_8::Service8_1;
-    use crate::sp::tc::TcPacket;
-    use crate::sp::tm::{TmPacket,service_1::{Service1_5}};
-    let tc = SpacePacket::<TcPacket::<Service8_1>>::new(
+    use crate::sp::services::{service_1::*};
+    use crate::sp::tm::TmPacket;
+    let tc = SpacePacket::<_>::new_service_8_1(
         2,
         1,
         "turn_led".to_string(),
@@ -231,10 +228,9 @@ fn builder_for_service_success_step_case(){
 #[test]
 /// Case for checking the SeviceFailStepCase builder crudely
 fn builder_for_service_fail_step_case(){
-    use crate::sp::tc::service_8::Service8_1;
-    use crate::sp::tc::TcPacket;
-    use crate::sp::tm::{TmPacket,service_1::{Service1_6}};
-    let tc = SpacePacket::<TcPacket::<Service8_1>>::new(
+    use crate::sp::services::{service_1::*};
+    use crate::sp::tm::TmPacket;
+    let tc = SpacePacket::<_>::new_service_8_1(
         2,
         1,
         "turn_led".to_string(),
@@ -252,6 +248,20 @@ fn builder_for_service_fail_step_case(){
     assert_eq!(tm_bytes_1.len(),tm_bytes_2.len());
     for i in 0..tm_bytes_1.len() {
         assert_eq!(tm_bytes_1[i],tm_bytes_2[i]);
+    } 
+}
+#[test]
+fn housekeeping_service_3_1_tc_data_field_generation_case(){
+    use crate::sp::services::service_3::service_3_1::Service3_1;
+
+    let tc1 = Service3_1::new(0,0,1,vec![1]).unwrap();
+    let tc1_bytes = tc1.to_bytes();
+    let tc2 = Service3_1::from_bytes(&tc1_bytes).unwrap();
+    let tc2_bytes = tc2.to_bytes();
+    assert_eq!(tc1_bytes.len(),tc2_bytes.len());
+    for i in 0..tc1_bytes.len() {
+        assert_eq!(tc1_bytes[i],tc2_bytes[i]);
     }
+
 }
 

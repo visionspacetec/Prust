@@ -2,35 +2,33 @@
 //! Packets defined here are compliant to ECSS-E-ST-70-41C.
 
 use byteorder::{ByteOrder,BigEndian}; // For writing the numbers to byte arrays
-#[allow(unused_imports)]
-use crate::sp::{SpacePacket,SpacePacketDataField,PrimaryHeader,TxUserData}; // Including Generic Packet
+use crate::sp::{SpacePacketDataField,TxUserData}; // Including Generic Packet
 extern crate alloc; // link the allocator
-#[allow(unused_imports)]
-use alloc::{string::String,vec::Vec};
+
 /// Header of the TmPackets, secondary header of a SpacePacket.
 pub struct TmPacketHeader{
     /// Only 4 least significant bits are used. When creating always set to 2.
-    pus_ver_no:u8,
+    pub(crate) pus_ver_no:u8,
     /// Only 4 least significant bits are used. 
     /// TODO don't ignore
-    time_ref_status:u8,
+    pub(crate) time_ref_status:u8,
     /// Service type of the TM pack.
-    service_type:u8,
+    pub(crate) service_type:u8,
     /// Message Subtype of the TM pack.
-    message_subtype:u8,
+    pub(crate) message_subtype:u8,
     /// If not capable of counting set to 0.
-    message_type_counter:u16,
+    pub(crate) message_type_counter:u16,
     /// TODO don't ignore
-    destination_id:u16,
+    pub(crate) destination_id:u16,
     /// TODO decide on time
     /// TODO change val type
-    abs_time:u16
+    pub(crate) abs_time:u16
 }
 /// implementation of TmPacketHeader. While creating the TmPacketHeader PUS standard are checked according to TM rules generally.
 impl TmPacketHeader {
-    const PUS_VER_NO:u8 = 2; 
-    const TM_HEADER_LEN:usize = 9;
-    const ABS_TIME_LEN:usize = 2;
+    pub(crate) const PUS_VER_NO:u8 = 2; 
+    pub(crate) const TM_HEADER_LEN:usize = 9;
+    pub(crate) const ABS_TIME_LEN:usize = 2;
 
     /// Method to create a TmPacketHeader with specified parameters.
     pub fn new(
@@ -109,15 +107,10 @@ pub trait TmData{
 /// This part represents packet data field of the CCSDS 133. 0-B-1 packet.
 pub struct TmPacket<T: TmData>{
     /// Secondary Header of CCSDS packet.
-    #[allow(dead_code)]
-    header:TmPacketHeader,
-    #[allow(dead_code)]
-    user_data: TxUserData<T>
+    pub(crate)header:TmPacketHeader,
+    pub(crate) user_data: TxUserData<T>
 }
 
 impl<T:TmData> SpacePacketDataField for TmPacket<T>{
     /* intentionally empty*/
 }
-
-// Each packet transporting a request verification report shall be of service type 1.
-pub mod service_1;

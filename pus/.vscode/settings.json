@@ -1,8 +1,5 @@
 {
-    "rust.cfg_test": false,
-    "rust.all_targets": false,
-    "rust.sysroot": "/home/Documents/Prust/pus/target/sysroot",
     "rust-client.engine":"rust-analyzer",
-    "rust.target": "thumbv7em-none-eabihf",
-    "rust.unstable_features": true
+    "rust-analyzer.cargo.target": "thumbv7em-none-eabihf",
+    "rust-analyzer.checkOnSave.allTargets": false,
 }
