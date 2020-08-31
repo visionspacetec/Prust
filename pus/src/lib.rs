@@ -13,12 +13,12 @@ pub type FuncId = arrayvec::ArrayString::<[u8;FUNC_ID_LEN]>;
 #[allow_internal_unstable(print_internals, format_args_nl)]
 macro_rules! debug {
     () => ({
-            #[cfg(feature="debug")]{
+            #[cfg(any(feature="debug",test))]{
                 $crate::std::print!("\n");
             }
     });
     ($($arg:tt)*) => ({
-        #[cfg(feature="debug")]{
+        #[cfg(any(feature="debug",test))]{
             {
                 std::io::_print(std::format_args_nl!($($arg)*));
             }
@@ -42,6 +42,7 @@ macro_rules! map(
 
 /// Module for Generic CCSDS Space Packet. SpacePacket struct has only primary header and data field. 
 pub mod sp;
-
+/// Module for error codes
+pub mod error;
 
 // TODO : Implement Own Error Types

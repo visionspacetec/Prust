@@ -18,7 +18,7 @@ impl TcData for Service8_1 {
 
 /// Implementations of SpacePacket specific to PUS and TC[8,1]
 /// 
-/// #Errors
+/// # Errors
 /// 
 /// If not a valid CCSDS 133. 0-B-1 packet for TC[8,1].
 /// See page 483 of ECSS-E-ST-70-41C.

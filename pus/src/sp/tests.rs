@@ -145,3 +145,113 @@ fn builder_data_loss_check_tm_header(){
         assert_eq!(dup_pack_bytes[i],tm_bytes[i]);
     }
 }
+
+#[test]
+/// Case for checking the SeviceSuccesCase builder crudely
+fn builder_for_service_success_case(){
+    use crate::sp::tc::service_8::Service8_1;
+    use crate::sp::tc::TcPacket;
+    use crate::sp::tm::{TmPacket,service_1::{ServiceSuccess}};
+    let tc = SpacePacket::<TcPacket::<Service8_1>>::new(
+        2,
+        1,
+        "turn_led".to_string(),
+        1,
+        vec![1]
+    ).unwrap();
+
+    let tm_1_1 = SpacePacket::<TmPacket::<ServiceSuccess>>::new(
+        &tc,
+        1,
+        0,
+        0
+    ).unwrap();
+    
+    let tm_bytes_1 = tm_1_1.to_bytes().to_vec();
+    let tm2 = SpacePacket::<TmPacket::<ServiceSuccess>>::from_bytes(&tm_bytes_1).unwrap();
+    let tm_bytes_2 = tm2.to_bytes();
+    assert_eq!(tm_bytes_1.len(),tm_bytes_2.len());
+    for i in 0..tm_bytes_1.len() {
+        assert_eq!(tm_bytes_1[i],tm_bytes_2[i]);
+    }
+}
+#[test]
+/// Case for checking the SeviceFailCase builder crudely
+fn builder_for_service_fail_case(){
+    use crate::sp::tc::service_8::Service8_1;
+    use crate::sp::tc::TcPacket;
+    use crate::sp::tm::{TmPacket,service_1::{ServiceFail}};
+    let tc = SpacePacket::<TcPacket::<Service8_1>>::new(
+        2,
+        1,
+        "turn_led".to_string(),
+        1,
+        vec![1]
+    ).unwrap();
+
+    let tm_1_1 = SpacePacket::<TmPacket::<ServiceFail>>::new_service_1_2(
+        &tc,
+        1,1,0,vec![]).unwrap();
+    
+    let tm_bytes_1 = tm_1_1.to_bytes().to_vec();
+    let tm2 = SpacePacket::<TmPacket::<ServiceFail>>::from_bytes(&tm_bytes_1).unwrap();
+    let tm_bytes_2 = tm2.to_bytes();
+    assert_eq!(tm_bytes_1.len(),tm_bytes_2.len());
+    for i in 0..tm_bytes_1.len() {
+        assert_eq!(tm_bytes_1[i],tm_bytes_2[i]);
+    }
+}
+
+#[test]
+/// Case for checking the SeviceSuccesStepCase builder crudely
+fn builder_for_service_success_step_case(){
+    use crate::sp::tc::service_8::Service8_1;
+    use crate::sp::tc::TcPacket;
+    use crate::sp::tm::{TmPacket,service_1::{Service1_5}};
+    let tc = SpacePacket::<TcPacket::<Service8_1>>::new(
+        2,
+        1,
+        "turn_led".to_string(),
+        1,
+        vec![1]
+    ).unwrap();
+
+    let tm_1_1 = SpacePacket::<_>::new_service_1_5(
+        &tc,
+        1,1,0).unwrap();
+    
+    let tm_bytes_1 = tm_1_1.to_bytes().to_vec();
+    let tm2 = SpacePacket::<TmPacket::<Service1_5>>::from_bytes(&tm_bytes_1).unwrap();
+    let tm_bytes_2 = tm2.to_bytes();
+    assert_eq!(tm_bytes_1.len(),tm_bytes_2.len());
+    for i in 0..tm_bytes_1.len() {
+        assert_eq!(tm_bytes_1[i],tm_bytes_2[i]);
+    }
+}
+#[test]
+/// Case for checking the SeviceFailStepCase builder crudely
+fn builder_for_service_fail_step_case(){
+    use crate::sp::tc::service_8::Service8_1;
+    use crate::sp::tc::TcPacket;
+    use crate::sp::tm::{TmPacket,service_1::{Service1_6}};
+    let tc = SpacePacket::<TcPacket::<Service8_1>>::new(
+        2,
+        1,
+        "turn_led".to_string(),
+        1,
+        vec![1]
+    ).unwrap();
+
+    let tm_1_1 = SpacePacket::<_>::new_service_1_6(
+        &tc,
+        1,1,0,vec![],1).unwrap();
+    
+    let tm_bytes_1 = tm_1_1.to_bytes().to_vec();
+    let tm2 = SpacePacket::<TmPacket::<Service1_6>>::from_bytes(&tm_bytes_1).unwrap();
+    let tm_bytes_2 = tm2.to_bytes();
+    assert_eq!(tm_bytes_1.len(),tm_bytes_2.len());
+    for i in 0..tm_bytes_1.len() {
+        assert_eq!(tm_bytes_1[i],tm_bytes_2[i]);
+    }
+}
+
