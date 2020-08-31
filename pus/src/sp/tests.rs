@@ -264,4 +264,19 @@ fn housekeeping_service_3_1_tc_data_field_generation_case(){
     }
 
 }
+#[test]
+fn housekeeping_service_3_1_tc_space_pack_generation_case(){
+    use crate::sp::services::service_3::service_3_1::Service3_1;
+    use crate::sp::tc::*;
+    let tc1 = SpacePacket::new_service_3_1(
+        0,0,0,0,2,alloc::vec![1,2]
+    ).unwrap();
+    let tc1_bytes = tc1.to_bytes();
+    let tc2 = SpacePacket::<TcPacket::<Service3_1>>::from_bytes(&tc1_bytes).unwrap();
+    let tc2_bytes = tc2.to_bytes();
+    assert_eq!(tc1_bytes.len(),tc2_bytes.len());
+    for i in 0..tc1_bytes.len() {
+        assert_eq!(tc1_bytes[i],tc2_bytes[i]);
+    }
+}
 

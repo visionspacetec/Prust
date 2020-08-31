@@ -74,15 +74,16 @@ impl SpacePacket<TcPacket<Service8_1>>{
             }
         )
     }
+    
     pub fn new_service_8_1(
         apid:u16,
         packet_name:u16,
         func_id:String,
         n:u8,
         args_field:Vec<u8>) -> Result<Self,()>
-        {
+    {
             SpacePacket::<TcPacket::<Service8_1>>::new(apid,packet_name,func_id,n,args_field)
-        }
+    }
 
 
     ///

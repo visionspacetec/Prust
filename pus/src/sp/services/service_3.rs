@@ -8,4 +8,5 @@ use crate::sp::{
     Request,PEC_LEN
 }; */
 
+const SERVICE_TYPE:u8 = 3;
 pub mod service_3_1;
