@@ -1,3 +1,4 @@
+use super::*;
 use byteorder::{ByteOrder,BigEndian}; // For writing the numbers to byte arrays
 extern crate alloc; // link the allocator
 use alloc::vec::Vec;
@@ -25,9 +26,9 @@ impl <T:SpacePacketDataField> SpacePacket<T>{
     /// # Errors
     /// 
     /// Returns an error if ver_no is bigger than 8. Because ver_no is used in its least significant 3 bits.
-    pub fn set_ver_no(&mut self,ver_no:u8) -> Result<(),()>{
+    pub fn set_ver_no(&mut self,ver_no:u8) -> Result<(),Error>{
         if ver_no > (1 << PrimaryHeader::VER_NO_BITS) {
-            return Err(());
+            return Err(Error::InvalidVersionNo);
         }
         self.primary_header.ver_no = ver_no;
         Ok(())
@@ -63,9 +64,9 @@ impl <T:SpacePacketDataField> SpacePacket<T>{
     /// # Errors
     /// 
     /// Returns an error if apid is bigger than 2^11 = 2048. Because apid is used in its least significant 11 bits.
-    pub fn set_apid(&mut self,apid:u16) ->  Result<(),()>{
+    pub fn set_apid(&mut self,apid:u16) ->  Result<(),Error>{
         if apid > (1 << PrimaryHeader::APID_BITS) {
-            return Err(());
+            return Err(Error::InvalidApid);
         }
         self.primary_header.apid = apid;
         Ok(())
@@ -92,9 +93,9 @@ impl <T:SpacePacketDataField> SpacePacket<T>{
     /// # Errors
     /// 
     /// Returns an error if packet_name is bigger than 2^14 = 16384. Because packet_name is used in its least significant 14 bits.
-    pub fn set_packet_name(&mut self,packet_name:u16) -> Result<(),()> {
+    pub fn set_packet_name(&mut self,packet_name:u16) -> Result<(),Error> {
         if packet_name > (1 << PrimaryHeader::PACKET_NAME_BITS) {
-            return Err(());
+            return Err(Error::InvalidPacketName);
         }
         self.primary_header.packet_name = packet_name;
         Ok(())
@@ -119,15 +120,15 @@ impl SpacePacket<Vec<u8>>{
     /// 
     /// Returns InvalidData error if given byte array is not longer than 6 bytes.
     /// 
-    pub fn from_bytes(packet:&[u8]) -> Result<Self,()> {
+    pub fn from_bytes(packet:&[u8]) -> Result<Self,Error> {
         // a packet should be least 7 bytes
         if !(packet.len() > 6) {
-            return Err(());
+            return Err(Error::InvalidPacket);
         };
         let primary_header = PrimaryHeader::from_bytes(&packet[0..6])?;
         // data packet length should be 1 + data_len field
         if packet.len() - 6 != primary_header.data_len as usize + 1 {
-            return Err(());
+            return Err(Error::InvalidPacket);
         }
         let data:Vec<u8> = Vec::from(&packet[6..]);
         Ok(SpacePacket{
@@ -148,13 +149,13 @@ impl SpacePacket<Vec<u8>>{
         apid:u16,
         seq_flags:(bool,bool),
         packet_name:u16,
-        data:Vec<u8>) -> Result <Self,()>
+        data:Vec<u8>) -> Result <Self,Error>
     {       
         // check the parameters
         if ver_no > (1 << PrimaryHeader::VER_NO_BITS) ||  apid > (1 << PrimaryHeader::APID_BITS)
             || packet_name > (1 << PrimaryHeader::PACKET_NAME_BITS) || data.len() == 0
         {
-            return Err(());
+            return Err(Error::InvalidPacket);
         }
         Ok(SpacePacket{
             primary_header:PrimaryHeader::new(
@@ -255,13 +256,13 @@ impl PrimaryHeader{
         seq_flags:(bool,bool),
         packet_name:u16,
         data_len:u16
-    ) -> Result <Self,()>
+    ) -> Result <Self,Error>
     {       
         // check the parameters
         if ver_no > (1 << PrimaryHeader::VER_NO_BITS) ||  apid > (1 << PrimaryHeader::APID_BITS)
             || packet_name > (1 << PrimaryHeader::PACKET_NAME_BITS)
         {
-            return Err(());
+            return Err(Error::InvalidPacket);
         }
         Ok(
             PrimaryHeader{
@@ -281,10 +282,10 @@ impl PrimaryHeader{
     ///
     /// Sends error when `packet.len() != 6`.
     /// 
-    pub fn from_bytes(packet:&[u8]) -> Result<Self,()>{
+    pub fn from_bytes(packet:&[u8]) -> Result<Self,Error>{
         // the length of a primary header is constant so it will return an error if it is not 6
         if packet.len() != PrimaryHeader::PH_LEN {
-            return Err(());
+            return Err(Error::InvalidPacket);
         }
         // Read the first 4 bytes from the packet as an u32 integer
         let packet_int = BigEndian::read_u32(&packet[0..4]);            

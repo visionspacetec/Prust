@@ -3,6 +3,8 @@
 
 use byteorder::{ByteOrder,BigEndian}; // For writing the numbers to byte arrays
 use crate::sp::{SpacePacketDataField,TxUserData}; // Including Generic Packet
+use crate::error::*;
+
 extern crate alloc; // link the allocator
 /// Header of the TcPackets, secondary header of a SpacePacket.
 pub struct TcPacketHeader{
@@ -28,7 +30,7 @@ impl TcPacketHeader {
         service_type:u8,
         message_subtype:u8,
         source_id:u16
-    )-> Result<Self,()>
+    )-> Result<Self,Error>
     {
         // TODO : Do checks for source_id and acknowledgement flags.
         Ok(TcPacketHeader{
@@ -45,10 +47,10 @@ impl TcPacketHeader {
     /// 
     /// Returns error when `packet.len() != 5`.
     /// 
-    pub fn from_bytes(buffer:&[u8]) -> Result<Self,()>{
+    pub fn from_bytes(buffer:&[u8]) -> Result<Self,Error>{
         // the length of a primary header is constant so it will return an error if it is not 5
         if buffer.len() != TcPacketHeader::TC_HEADER_LEN {
-            return Err(());
+            return Err(Error::InvalidPacket);
         }
         let ver_no_and_flags = buffer[0];
         let service_type = buffer[1];

@@ -12,7 +12,7 @@ impl SpacePacket<TmPacket<ServiceSuccessStep>>{
         destination_id:u16,
         packet_name:u16,
         step_id:u16
-    ) -> Result<Self,()>{
+    ) -> Result<Self,Error>{
         SpacePacket::<TmPacket::<ServiceSuccessStep>>::new(request,destination_id,packet_name,step_id)
     }
 
@@ -27,7 +27,7 @@ impl SpacePacket<TmPacket<ServiceSuccessStep>>{
         destination_id:u16,
         packet_name:u16,
         step_id:u16
-    ) -> Result<Self,() >
+    ) -> Result<Self,Error>
         {
             let req_id = request.to_request();
             let data_len = TmPacketHeader::TM_HEADER_LEN + REQ_ID_LEN + crate::sp::PEC_LEN - 1;
@@ -66,15 +66,15 @@ impl SpacePacket<TmPacket<ServiceSuccessStep>>{
     /// 
     /// if buffer.len() !=  PH_LEN (6) +  TM_HEADER_LEN (9) + REQUEST_ID_LEN (4) + PEC_LEN (2) + STEP_ID_LEN (2)
     /// /// or if the byte array is not compliant to TM[1,5].
-    pub fn from_bytes(buffer:&[u8]) -> Result<Self,()> {
+    pub fn from_bytes(buffer:&[u8]) -> Result<Self,Error> {
         if buffer.len() != PrimaryHeader::PH_LEN + TmPacketHeader::TM_HEADER_LEN + REQ_ID_LEN + PEC_LEN + STEP_ID_LEN{
-            return Err(());
+            return Err(Error::InvalidPacket);
         }
         let primary_header = PrimaryHeader::from_bytes(&buffer[..PrimaryHeader::PH_LEN])?;
         // If the primary header is not defined properly, give an error accordingly.
         // It has to be have sec_header_flag set, version no to 0, and for TM type_flag should be clear.
         if !primary_header.sec_header_flag || primary_header.ver_no != 0 || primary_header.type_flag {
-            return Err(());
+            return Err(Error::InvalidPacket);
         };
         let sec_header = TmPacketHeader::from_bytes(
             &buffer[PrimaryHeader::PH_LEN..PrimaryHeader::PH_LEN+TmPacketHeader::TM_HEADER_LEN]
@@ -83,7 +83,7 @@ impl SpacePacket<TmPacket<ServiceSuccessStep>>{
         if sec_header.service_type != SERVICE_TYPE 
         || sec_header.message_subtype != 5 
         {
-            return Err(());
+            return Err(Error::InvalidPacket);
         };
         let range_start = PrimaryHeader::PH_LEN+TmPacketHeader::TM_HEADER_LEN;
         let request_id = RequestId::from_bytes(&buffer[range_start..range_start+REQ_ID_LEN])?;

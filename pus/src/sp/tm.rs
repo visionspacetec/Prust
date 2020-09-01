@@ -1,6 +1,6 @@
 //! Module that contains PUS TM packet implementations of SpacePacket struct.
 //! Packets defined here are compliant to ECSS-E-ST-70-41C.
-
+use super::*;
 use byteorder::{ByteOrder,BigEndian}; // For writing the numbers to byte arrays
 use crate::sp::{SpacePacketDataField,TxUserData}; // Including Generic Packet
 extern crate alloc; // link the allocator
@@ -35,7 +35,7 @@ impl TmPacketHeader {
         service_type:u8,
         message_subtype:u8,
         destination_id:u16
-    )-> Result<Self,()>
+    )-> Result<Self,Error>
     {
         // TODO : Do checks for destination_id and acknowledgement flags.
         Ok(TmPacketHeader{
@@ -56,10 +56,10 @@ impl TmPacketHeader {
     /// 
     /// Returns error when `packet.len() != TM_HEADER_LEN`.
     /// 
-    pub fn from_bytes(buffer:&[u8]) -> Result<Self,()>{
+    pub fn from_bytes(buffer:&[u8]) -> Result<Self,Error>{
         // the length of a primary header is constant so it will return an error if it is not TM_HEADER_LEN
         if buffer.len() != TmPacketHeader::TM_HEADER_LEN {
-            return Err(());
+            return Err(Error::InvalidPacket);
         }
         let ver_no_and_status = buffer[0];
         let service_type = buffer[1];

@@ -2,7 +2,7 @@
 #![cfg_attr(not(any(test,feature="debug")),no_std)] // #![no_std] if not testing
 #[macro_use]
 extern crate arrayref;
-
+use error::*;
 pub const FUNC_ID_LEN:usize = 16;
 // Type alias for storing func_id
 pub type FuncId = arrayvec::ArrayString::<[u8;FUNC_ID_LEN]>;

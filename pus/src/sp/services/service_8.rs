@@ -27,33 +27,33 @@ impl TcData for Service8_1 {
 impl SpacePacket<TcPacket<Service8_1>>{
     const MES_SUBTYPE:u8 = 1;
 
-    pub fn from_bytes(buffer:&[u8]) -> Result<Self,()> {
+    pub fn from_bytes(buffer:&[u8]) -> Result<Self,Error> {
         if buffer.len() < 7 {
-            return Err(());
+            return Err(Error::InvalidPacket);
         }
         let primary_header = PrimaryHeader::from_bytes(&buffer[..PrimaryHeader::PH_LEN])?;
         // If the primary header is not defined properly, give an error accordingly.
         // It has to be have sec_header_flag set, version no to 0, and for TC type_flag should be set.
         if !primary_header.sec_header_flag || primary_header.ver_no != 0 || !primary_header.type_flag {
-            return Err(());
+            return Err(Error::InvalidPacket);
         };
         let sec_header = TcPacketHeader::from_bytes(
             &buffer[PrimaryHeader::PH_LEN..PrimaryHeader::PH_LEN+TcPacketHeader::TC_HEADER_LEN]
         )?;
         if sec_header.service_type != SERVICE_TYPE || sec_header.message_subtype != SpacePacket::MES_SUBTYPE {
-            return Err(());
+            return Err(Error::InvalidPacket);
         }
         // slice for the range of func_len
         let range_start = TcPacketHeader::TC_HEADER_LEN+PrimaryHeader::PH_LEN;
         let func_range = range_start..range_start+FUNC_ID_LEN;
         let func_id_slice = &buffer[func_range];
         if !func_id_slice.is_ascii() {
-            return Err(());
+            return Err(Error::InvalidPacket);
         }
         let func_fixed_slice = array_ref![buffer,range_start,FUNC_ID_LEN];
         let func_id = FuncId::from_byte_string(func_fixed_slice);
         if func_id.is_err(){
-            return Err(());
+            return Err(Error::InvalidPacket);
         }
         let func_id = func_id.unwrap();
         let range_start = range_start + FUNC_ID_LEN + 1;
@@ -80,7 +80,7 @@ impl SpacePacket<TcPacket<Service8_1>>{
         packet_name:u16,
         func_id:String,
         n:u8,
-        args_field:Vec<u8>) -> Result<Self,()>
+        args_field:Vec<u8>) -> Result<Self,Error>
     {
             SpacePacket::<TcPacket::<Service8_1>>::new(apid,packet_name,func_id,n,args_field)
     }
@@ -97,7 +97,7 @@ impl SpacePacket<TcPacket<Service8_1>>{
         packet_name:u16,
         func_id:String,
         n:u8,
-        args_field:Vec<u8>) -> Result<Self,()>
+        args_field:Vec<u8>) -> Result<Self,Error>
         {
             // +1 is for N field
             let data_len:usize = PrimaryHeader::PH_LEN  + 
@@ -118,12 +118,12 @@ impl SpacePacket<TcPacket<Service8_1>>{
                 1,0
             )?;
             if !func_id.is_ascii() || func_id.len() > FUNC_ID_LEN{
-                return Err(());
+                return Err(Error::InvalidFuncId);
             }
             // Convert to fixed size string structure
             let func_id = FuncId::from(func_id.as_str());
             if func_id.is_err(){
-                return Err(());
+                return Err(Error::InvalidFuncId);
             }
             let mut func_id = func_id.unwrap();
             // Add 0 for remaining parts

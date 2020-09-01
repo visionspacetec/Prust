@@ -50,10 +50,10 @@ impl RequestId {
         bytes
     }
 
-    fn from_bytes(buffer:&[u8]) -> Result<Self,()>{
+    fn from_bytes(buffer:&[u8]) -> Result<Self,Error>{
         // TODO do other checks here
         if buffer.len() != REQ_ID_LEN {
-            return Err(());
+            return Err(Error::InvalidPacket);
         };
         // first 3 bits
         let ver_no = buffer[0] >> 5;
@@ -80,18 +80,18 @@ struct FailureNotice{
 impl FailureNotice{
     /// Creates a Failure Notice Field Struct.
     /// TODO check values
-    pub fn new(err_code:u8,err_data:Vec<u8>) -> Result<Self,()>{
+    pub fn new(err_code:u8,err_data:Vec<u8>) -> Result<Self,Error>{
         Ok(FailureNotice{
             err_code,err_data
         })
     }
-    pub fn from_bytes(buffer:&[u8])->Result<Self,()>{
+    pub fn from_bytes(buffer:&[u8])->Result<Self,Error>{
         if buffer.len() < FAILURE_NOTICE_MIN_LEN || (buffer[0] as usize) >= error::ERR_CODE_COUNT {
-            return Err(());
+            return Err(Error::InvalidPacket);
         };
         let data_len = error::ERR_CODE_DATA_LEN[buffer[0] as usize];
         if buffer.len() - 1 != data_len as usize {
-            return Err(());
+            return Err(Error::InvalidPacket);
         }
         let err_code = buffer[0];
         let err_data = buffer[1..].to_vec();
@@ -115,12 +115,12 @@ struct StepId{
 impl StepId{
     /// Creates a Step Id Field Struct.
     /// TODO learn context
-    pub fn new(step_id:u16) ->Result<Self,()>{
+    pub fn new(step_id:u16) ->Result<Self,Error>{
         Ok(StepId{step_id})
     }
-    pub fn from_bytes(buffer:&[u8]) -> Result<Self,()>{
+    pub fn from_bytes(buffer:&[u8]) -> Result<Self,Error>{
         if buffer.len() != STEP_ID_LEN{
-            return Err(());
+            return Err(Error::InvalidPacket);
         }
         let step_id = BigEndian::read_u16(&buffer);
         Ok(StepId{

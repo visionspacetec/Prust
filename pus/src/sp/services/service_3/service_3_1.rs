@@ -25,9 +25,9 @@ impl Service3_1 {
         collection_interval:u8,
         n1:u8,
         parameter_ids:Vec<u8>
-    ) -> Result<Self,()> {
+    ) -> Result<Self,Error> {
         if parameter_ids.len() != n1 as usize{
-            return Err(());
+            return Err(Error::InvalidPacket);
         }
         Ok(
             Service3_1{
@@ -41,15 +41,15 @@ impl Service3_1 {
         collection_interval:u8,
         n1:u8,
         parameter_ids:Vec<u8>,
-    ) -> Result<Self,()> 
+    ) -> Result<Self,Error> 
     {
         Service3_1::new(housekeeping_report_id,collection_interval,n1,parameter_ids)
     }
     
-    pub(crate) fn from_bytes(buffer:&[u8]) -> Result<Self,()>{
+    pub(crate) fn from_bytes(buffer:&[u8]) -> Result<Self,Error>{
         if buffer.len() < CONST_LEN_TOT
         || buffer.len() != CONST_LEN_TOT + buffer[2] as usize {
-            return Err(());
+            return Err(Error::InvalidPacket);
         }
         let housekeeping_report_id = buffer[0];
         let collection_interval = buffer[1];
@@ -57,7 +57,7 @@ impl Service3_1 {
         let parameter_ids = buffer[3..buffer.len()-1].to_vec();
         let nfa = buffer[buffer.len()-1];
         if nfa != 0 {
-            return Err(());
+            return Err(Error::InvalidPacket);
         }
         Ok(
             Service3_1{
@@ -108,7 +108,7 @@ impl SpacePacket<TcPacket<Service3_1>>{
         collection_interval:u8,
         n1:u8,
         parameter_ids:Vec<u8>
-    ) -> Result<Self,()> {
+    ) -> Result<Self,Error> {
         SpacePacket::<TcPacket::<Service3_1>>::new(apid,packet_name,housekeeping_report_id,collection_interval,n1,parameter_ids)
     }
 
@@ -121,10 +121,10 @@ impl SpacePacket<TcPacket<Service3_1>>{
         collection_interval:u8,
         n1:u8,
         parameter_ids:Vec<u8>
-    ) -> Result<Self,()> {
+    ) -> Result<Self,Error> {
 
         if parameter_ids.len() != n1 as usize{
-            return Err(());
+            return Err(Error::InvalidPacket);
         }
         let data_len = Service3_1::get_packet_len(n1);
         let primary_header = PrimaryHeader::new(
@@ -172,21 +172,21 @@ impl SpacePacket<TcPacket<Service3_1>>{
         bytes
     }
     
-    pub fn from_bytes(buffer:&[u8]) -> Result<Self,()> {
+    pub fn from_bytes(buffer:&[u8]) -> Result<Self,Error> {
         if buffer.len() < CONST_LEN_TOT {
-            return Err(());
+            return Err(Error::InvalidPacket);
         }
         let primary_header = PrimaryHeader::from_bytes(&buffer[..PrimaryHeader::PH_LEN])?;
         // If the primary header is not defined properly, give an error accordingly.
         // It has to be have sec_header_flag set, version no to 0, and for TC type_flag should be set.
         if !Service3_1::header_is_tc_3_1(&primary_header) {
-            return Err(());
+            return Err(Error::InvalidPacket);
         };
         let sec_header = TcPacketHeader::from_bytes(
             &buffer[PrimaryHeader::PH_LEN..PrimaryHeader::PH_LEN+TcPacketHeader::TC_HEADER_LEN]
         )?;
         if !Service3_1::sec_header_is_tc_3_1(&sec_header) {
-            return Err(());
+            return Err(Error::InvalidPacket);
         }
         let range_start = TcPacketHeader::TC_HEADER_LEN+PrimaryHeader::PH_LEN;
         let service_data:Service3_1 = Service3_1::from_bytes(&buffer[range_start..buffer.len()-PEC_LEN])?;

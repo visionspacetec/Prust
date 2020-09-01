@@ -11,7 +11,7 @@ impl SpacePacket<TmPacket<ServiceSuccess>>{
         request:&T,
         destination_id:u16,
         packet_name:u16
-    ) -> Result<Self,()>{
+    ) -> Result<Self,Error>{
         SpacePacket::<TmPacket::<ServiceSuccess>>::new(request,1,destination_id,packet_name)
     }
 
@@ -20,7 +20,7 @@ impl SpacePacket<TmPacket<ServiceSuccess>>{
         request:&T,
         destination_id:u16,
         packet_name:u16
-    ) -> Result<Self,()>{
+    ) -> Result<Self,Error>{
         SpacePacket::<TmPacket::<ServiceSuccess>>::new(request,3,destination_id,packet_name)
     }
 
@@ -29,7 +29,7 @@ impl SpacePacket<TmPacket<ServiceSuccess>>{
         request:&T,
         destination_id:u16,
         packet_name:u16
-    ) -> Result<Self,()>{
+    ) -> Result<Self,Error>{
         SpacePacket::<TmPacket::<ServiceSuccess>>::new(request,7,destination_id,packet_name)
     }
 
@@ -44,13 +44,13 @@ impl SpacePacket<TmPacket<ServiceSuccess>>{
         message_subtype:u8,
         destination_id:u16,
         packet_name:u16
-    ) -> Result<Self,() >
+    ) -> Result<Self,Error >
         {
             let req_id = request.to_request();
             let data_len = TmPacketHeader::TM_HEADER_LEN + REQ_ID_LEN + crate::sp::PEC_LEN - 1;
             let data_len = data_len as u16;
             if message_subtype != 1 && message_subtype != 3 && message_subtype != 7 {
-                return Err(());
+                return Err(Error::InvalidPacket);
             }
             // TODO: Implement this feature
             let packet_error_control = 0;
@@ -85,15 +85,15 @@ impl SpacePacket<TmPacket<ServiceSuccess>>{
     /// 
     /// if buffer.len() !=  PH_LEN (6) +  TM_HEADER_LEN (9) + PEC_LEN (2) +REQUEST_ID_LEN (4)
     /// or not compliant to message subtype is not 1,3 or 7
-    pub fn from_bytes(buffer:&[u8]) -> Result<Self,()> {
+    pub fn from_bytes(buffer:&[u8]) -> Result<Self,Error> {
         if buffer.len() != PrimaryHeader::PH_LEN + TmPacketHeader::TM_HEADER_LEN + REQ_ID_LEN + PEC_LEN{
-            return Err(());
+            return Err(Error::InvalidPacket);
         }
         let primary_header = PrimaryHeader::from_bytes(&buffer[..PrimaryHeader::PH_LEN])?;
         // If the primary header is not defined properly, give an error accordingly.
         // It has to be have sec_header_flag set, version no to 0, and for TM type_flag should be clear.
         if !primary_header.sec_header_flag || primary_header.ver_no != 0 || primary_header.type_flag {
-            return Err(());
+            return Err(Error::InvalidPacket);
         };
         let sec_header = TmPacketHeader::from_bytes(
             &buffer[PrimaryHeader::PH_LEN..PrimaryHeader::PH_LEN+TmPacketHeader::TM_HEADER_LEN]
@@ -104,7 +104,7 @@ impl SpacePacket<TmPacket<ServiceSuccess>>{
             || sec_header.message_subtype == 3 
             || sec_header.message_subtype == 7)
         {
-            return Err(());
+            return Err(Error::InvalidPacket);
         };
         let req_id_start = PrimaryHeader::PH_LEN+TmPacketHeader::TM_HEADER_LEN;
         let req_id = RequestId::from_bytes(&buffer[req_id_start..req_id_start+REQ_ID_LEN])?;

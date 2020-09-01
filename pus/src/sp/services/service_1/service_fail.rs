@@ -13,7 +13,7 @@ impl SpacePacket<TmPacket<ServiceFail>>{
         packet_name:u16,
         err_code:u8,
         err_data:Vec<u8>
-    ) -> Result<Self,()>{
+    ) -> Result<Self,Error>{
         SpacePacket::<TmPacket::<ServiceFail>>::new(request,2,destination_id,packet_name,err_code,err_data)
     }
     /// Wrapper for "new" function specific to TM[1,4].
@@ -23,7 +23,7 @@ impl SpacePacket<TmPacket<ServiceFail>>{
         packet_name:u16,
         err_code:u8,
         err_data:Vec<u8>
-    ) -> Result<Self,()>{
+    ) -> Result<Self,Error>{
         SpacePacket::<TmPacket::<ServiceFail>>::new(request,4,destination_id,packet_name,err_code,err_data)
     }
     /// Wrapper for "new" function specific to TM[1,8].
@@ -33,7 +33,7 @@ impl SpacePacket<TmPacket<ServiceFail>>{
         packet_name:u16,
         err_code:u8,
         err_data:Vec<u8>
-    ) -> Result<Self,()>{
+    ) -> Result<Self,Error>{
         SpacePacket::<TmPacket::<ServiceFail>>::new(request,8,destination_id,packet_name,err_code,err_data)
     }
     /// Wrapper for "new" function specific to TM[1,10].
@@ -43,7 +43,7 @@ impl SpacePacket<TmPacket<ServiceFail>>{
         packet_name:u16,
         err_code:u8,
         err_data:Vec<u8>
-    ) -> Result<Self,()>{
+    ) -> Result<Self,Error>{
         SpacePacket::<TmPacket::<ServiceFail>>::new(request,10,destination_id,packet_name,err_code,err_data)
     }
     
@@ -58,13 +58,13 @@ impl SpacePacket<TmPacket<ServiceFail>>{
         destination_id:u16,
         packet_name:u16,
         err_code:u8,
-        err_data:Vec<u8>) -> Result<Self,() >
+        err_data:Vec<u8>) -> Result<Self,Error >
     {
         let req_id = request.to_request();
         let data_len = TmPacketHeader::TM_HEADER_LEN + REQ_ID_LEN + err_data.len() + crate::sp::PEC_LEN;
         let data_len = data_len as u16;
         if message_subtype != 2 && message_subtype != 4 && message_subtype != 8 && message_subtype != 10 {
-            return Err(());
+            return Err(Error::InvalidPacket);
         }
         // TODO: Implement this feature
         let packet_error_control = 0;
@@ -103,15 +103,15 @@ impl SpacePacket<TmPacket<ServiceFail>>{
     /// 
     /// if buffer.len() !=  PH_LEN (6) +  TM_HEADER_LEN (9) + REQUEST_ID_LEN (4) + PEC_LEN(2)
     /// or if the byte array is not compliant to TM[1,2], TM[1,4], TM[1,8], TM[1,10].
-    pub fn from_bytes(buffer:&[u8]) -> Result<Self,()> {
+    pub fn from_bytes(buffer:&[u8]) -> Result<Self,Error> {
         if buffer.len() < PrimaryHeader::PH_LEN + TmPacketHeader::TM_HEADER_LEN + REQ_ID_LEN + FAILURE_NOTICE_MIN_LEN + PEC_LEN{
-            return Err(());
+            return Err(Error::InvalidPacket);
         }
         let primary_header = PrimaryHeader::from_bytes(&buffer[..PrimaryHeader::PH_LEN])?;
         // If the primary header is not defined properly, give an error accordingly.
         // It has to be have sec_header_flag set, version no to 0, and for TM type_flag should be clear.
         if !primary_header.sec_header_flag || primary_header.ver_no != 0 || primary_header.type_flag {
-            return Err(());
+            return Err(Error::InvalidPacket);
         };
         let sec_header = TmPacketHeader::from_bytes(
             &buffer[PrimaryHeader::PH_LEN..PrimaryHeader::PH_LEN+TmPacketHeader::TM_HEADER_LEN]
@@ -123,13 +123,13 @@ impl SpacePacket<TmPacket<ServiceFail>>{
             || sec_header.message_subtype == 8 
             || sec_header.message_subtype == 10 )
         {
-            return Err(());
+            return Err(Error::InvalidPacket);
         };
         let req_id_start = PrimaryHeader::PH_LEN+TmPacketHeader::TM_HEADER_LEN;
         let request_id = RequestId::from_bytes(&buffer[req_id_start..req_id_start+REQ_ID_LEN])?;
         let failure_notice_start = req_id_start+REQ_ID_LEN;
         if buffer[failure_notice_start] as usize > error::ERR_CODE_COUNT {
-            return Err(());
+            return Err(Error::InvalidPacket);
         }
         let failure_notice_len = error::ERR_CODE_DATA_LEN[buffer[failure_notice_start] as usize] + 1;
         let failure_notice = FailureNotice::from_bytes(&buffer[failure_notice_start..failure_notice_start+failure_notice_len])?;
