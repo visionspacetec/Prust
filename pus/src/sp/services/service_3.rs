@@ -10,3 +10,5 @@ use crate::sp::{
 
 const SERVICE_TYPE:u8 = 3;
 pub mod service_3_1;
+pub mod service_3_27;
+pub mod service_3_25;

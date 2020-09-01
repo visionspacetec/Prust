@@ -279,4 +279,34 @@ fn housekeeping_service_3_1_tc_space_pack_generation_case(){
         assert_eq!(tc1_bytes[i],tc2_bytes[i]);
     }
 }
+#[test]
+fn housekeeping_service_3_27_tc_space_pack_generation_case(){
+    use crate::sp::services::service_3::service_3_27::Service3_27;
+    use crate::sp::tc::*;
+    let tc1 = SpacePacket::new_service_3_27(
+        0,0,1,vec![1]
+    ).unwrap();
+    let tc1_bytes = tc1.to_bytes();
+    let tc2 = SpacePacket::<TcPacket::<Service3_27>>::from_bytes(&tc1_bytes).unwrap();
+    let tc2_bytes = tc2.to_bytes();
+    assert_eq!(tc1_bytes.len(),tc2_bytes.len());
+    for i in 0..tc1_bytes.len() {
+        assert_eq!(tc1_bytes[i],tc2_bytes[i]);
+    }
+}
+#[test]
+fn housekeeping_service_3_25_tc_space_pack_generation_case(){
+    use crate::sp::services::service_3::service_3_25::Service3_25;
+    use crate::sp::tm::*;
+    let tm1 = SpacePacket::new_service_3_25(
+        0,0,1,vec![1,2,3]
+    ).unwrap();
+    let tm1_bytes = tm1.to_bytes();
+    let tm2 = SpacePacket::<TmPacket::<Service3_25>>::from_bytes(&tm1_bytes).unwrap();
+    let tm2_bytes = tm2.to_bytes();
+    assert_eq!(tm1_bytes.len(),tm2_bytes.len());
+    for i in 0..tm1_bytes.len() {
+        assert_eq!(tm1_bytes[i],tm2_bytes[i]);
+    }
+}
 
