@@ -25,6 +25,7 @@ impl SpacePacket<TmPacket<ServiceSuccess>>{
     }
 
     /// Wrapper for "new" function specific to TM[1,7].
+    /// TM[1,7] successful completion of execution verification report
     pub fn new_service_1_7 <T:Request>(
         request:&T,
         destination_id:u16,

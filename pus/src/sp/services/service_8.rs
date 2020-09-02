@@ -2,7 +2,8 @@
 use super::*;
 use crate::{sp::{PEC_LEN},FuncId,FUNC_ID_LEN};
 use tc::{TcData,TcPacket,TcPacketHeader};
-
+use crate::sp::alloc::borrow::ToOwned;
+use crate::sp::alloc::string::ToString;
 
 pub(crate) const SERVICE_TYPE:u8 = 8;
 
@@ -118,12 +119,12 @@ impl SpacePacket<TcPacket<Service8_1>>{
                 1,0
             )?;
             if !func_id.is_ascii() || func_id.len() > FUNC_ID_LEN{
-                return Err(Error::InvalidFuncId);
+                return Err(Error::InvalidFuncId(func_id.as_str().to_owned()));
             }
             // Convert to fixed size string structure
             let func_id = FuncId::from(func_id.as_str());
             if func_id.is_err(){
-                return Err(Error::InvalidFuncId);
+                return Err(Error::CapacityError);
             }
             let mut func_id = func_id.unwrap();
             // Add 0 for remaining parts
@@ -168,9 +169,14 @@ impl SpacePacket<TcPacket<Service8_1>>{
         bytes
     }
 
-    pub fn exec_func(&self,func_map:&hashbrown::HashMap::<FuncId,fn(&Vec::<u8>)>){
+    pub fn exec_func(&self,func_map:&hashbrown::HashMap::<FuncId,fn(&Vec::<u8>)->Result<(),Error>>) -> Result<(),Error>{
         let func_id = self.data.user_data.data.func_id;
-        let to_exec = func_map.get(func_id.as_str()).unwrap();
-        to_exec(&self.data.user_data.data.args_field);
+        if let Some (to_exec) = func_map.get(func_id.as_str()){
+            to_exec(&self.data.user_data.data.args_field)?;
+            Ok(())
+        }
+        else {
+            Err(Error::InvalidFuncId(func_id.as_str().to_string().to_owned()))
+        }
     }
 }

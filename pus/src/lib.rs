@@ -1,4 +1,6 @@
 #![feature(allow_internal_unstable)]
+#![feature(try_trait)]
+#![feature(arbitrary_enum_discriminant)]
 #![cfg_attr(not(any(test,feature="debug")),no_std)] // #![no_std] if not testing
 #[macro_use]
 extern crate arrayref;

@@ -3,6 +3,26 @@
 //! These builder functions returns error if it is not a valid CCSDS 133. 0-B-1 packet for TTM[1,2], TM[1,4], TM[1,8], TM[1,10].
 //! See page 483 of ECSS-E-ST-70-41C.
 use super::*;
+use crate::sp::alloc::borrow::ToOwned;
+
+pub fn get_err_code_n_data(err:Error) -> (u8,Vec<u8>){
+    match err {
+        Error::UnsupportedRequest =>                             {(0,Vec::default())}
+        Error::InvalidPacket =>                                  {(1,Vec::default())}
+        Error::InvalidPacketName =>                              {(2,Vec::default())}
+        Error::InvalidVersionNo =>                               {(3,Vec::default())}
+        Error::CorruptData =>                                    {(4,Vec::default())}
+        Error::InvalidApid =>                                    {(5,Vec::default())}
+        Error::InvalidFuncId(s) =>                       {(6,s.to_owned().into())}
+        Error::PeripheralError =>                                {(7,Vec::default())}
+        Error::BorrowMutError(_) =>                              {(8,Vec::default())}
+        Error::NoneError =>                                      {(9,Vec::default())}
+        Error::UnitType =>                                       {(10,Vec::default())}
+        Error::InvalidArg =>                                     {(11,Vec::default())}
+        Error::CapacityError =>                                  {(12,Vec::default())}
+    }
+}
+
 
 impl SpacePacket<TmPacket<ServiceFail>>{
     
@@ -27,6 +47,8 @@ impl SpacePacket<TmPacket<ServiceFail>>{
         SpacePacket::<TmPacket::<ServiceFail>>::new(request,4,destination_id,packet_name,err_code,err_data)
     }
     /// Wrapper for "new" function specific to TM[1,8].
+    /// TM[1,8] failed completion of execution verification report
+    
     pub fn new_service_1_8 <T:Request>(
         request:&T,
         destination_id:u16,
@@ -165,6 +187,10 @@ impl SpacePacket<TmPacket<ServiceFail>>{
         let pec_start = arr_len - crate::sp::PEC_LEN;
         BigEndian::write_u16(&mut bytes[pec_start..],self.data.user_data.packet_error_control);
         bytes
+    }
+
+    pub fn get_err(&self)->(u8,Vec<u8>){
+        (self.data.user_data.data.failure_notice.err_code,self.data.user_data.data.failure_notice.err_data.to_vec())
     }
 }
 

@@ -380,6 +380,17 @@ impl <T:SpacePacketDataField> Request for SpacePacket<T>{
         }
     }
 }
+
+
+
+pub fn get_service_type(header:&PrimaryHeader,buf:&[u8]) -> (u8,u8){
+    if header.type_flag{
+        (0,0)
+    } else {
+        (buf[PrimaryHeader::PH_LEN+1],buf[PrimaryHeader::PH_LEN+2])
+    }
+}
+
 /// packet_error_control len
 const PEC_LEN:usize = 2;
 pub mod services;

@@ -13,8 +13,8 @@ use panic_halt as _; // you can put a breakpoint on `rust_begin_unwind` to catch
 
 use cortex_m_rt::entry; // for declaring main an entry point
 
-mod packet_parser; // includes packet_parser.rs
-use packet_parser::handle_packets; // gets the helper functions
+mod server; // includes server.rs
+use server::handle_packets; // gets the helper functions
 
 use alloc_cortex_m::CortexMHeap; // for declaring global allocator
 use alloc::alloc::Layout; // for alloc error handler 
