@@ -16,6 +16,9 @@ pub fn create_func_id(name:&str) -> FuncId{
 
 /// FuncId = "turn_led"
 pub fn turn_led(args:&Vec::<u8>) -> Result<(),Error>{
+    if args.len() != 1 {
+        return Err(Error::InvalidArg);
+    }
     cortex_m::interrupt::free(|cs| -> Result<(),Error> {
         if args[0] != 0 {
             SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led1.set_high()?;
@@ -81,6 +84,9 @@ pub fn set_led(args:&Vec::<u8>) -> Result<(),Error>{
 
 /// FuncId = "new_led"
 pub fn new_led(args:&Vec::<u8>) -> Result<(),Error>{
+    if args.len() != 1 {
+        return Err(Error::InvalidArg);
+    }
     cortex_m::interrupt::free(|cs| -> Result<(),Error> {
         if args[0] != 0 {
             SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led5.set_high()?;

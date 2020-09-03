@@ -143,6 +143,9 @@ This will be our function.
 ```rust
 /// FuncId = "new_led"
 pub fn new_led(args:&Vec::<u8>) -> Result<(),Error>{
+    if args.len() != 1 {
+        return Err(Error::InvalidArg);
+    }
     cortex_m::interrupt::free(|cs| -> Result<(),Error> {
         if args[0] != 0 {
             SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led5.set_high()?;
@@ -162,8 +165,22 @@ cortex_m::interrupt::free(|cs| -> Result<(),Error> {
 })
 ```
 Most of our functions will have this form. Here cs a variable to show the scope of the critical section and it will be needed to borrow our shared variables.
-Some of the error types can be converted to error type defined in the pus crate so "?" can be used to propagate the error. Finally set_low/high is being called on our object to change the pin output. All the errors are propagated and if the function executes succesfully unit type Ok(()) should be returned.   
-
+Some of the error types can be converted to error type defined in the pus crate so "?" can be used to propagate the error. Finally set_low/high is being called on our object to change the pin output. All the errors are propagated and if the function executes succesfully unit type Ok(()) should be returned. If we never checked the arg array the function would have the potential to panic. In case of a panic where the error is not propagated the entire service provider will crash.
+```rust
+/// FuncId = "new_led"
+pub fn new_led(args:&Vec::<u8>) -> Result<(),Error>{
+    cortex_m::interrupt::free(|cs| -> Result<(),Error> {
+        if args[0] != 0 {
+            SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led5.set_high()?;
+            Ok(())
+        }
+        else {
+            SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led5.set_low()?;
+            Ok(())
+        } 
+    })
+}
+```
 Final step is to add the function name and function pointer to the function map. In server.rs there will be a function called handle packets.
 The function name and pointer should be added like this:
 ``` rust

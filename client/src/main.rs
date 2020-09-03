@@ -79,6 +79,7 @@ fn main(){
         let (code,data) = res_pack.get_err();
         println!("Error Type:{:?}\nError Data:{:?}",error_names[code as usize],String::from_utf8(data).unwrap());
     } else{
+        println!("Other");
         println!("{:?}",buf);
     }
 
