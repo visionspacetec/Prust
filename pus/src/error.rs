@@ -1,7 +1,5 @@
 extern crate alloc;
-use alloc::string::String;
-// Data needed for reporting the error by every error code (in terms of bytes).
-// For example zero data for error code 0 = ERR_CODE_DATA_LEN[0].
+use alloc::{string::String,vec::Vec,borrow::ToOwned};
 #[derive(Debug)]
 pub enum Error{
     UnsupportedRequest,
@@ -36,5 +34,21 @@ impl core::convert::From<()> for Error {
     }
 }
 
-pub const ERR_CODE_COUNT:usize = 12;
-pub static ERR_CODE_DATA_LEN:[usize;ERR_CODE_COUNT] = [0;ERR_CODE_COUNT];
+pub fn get_err_code_n_data(err:Error) -> (u8,Vec<u8>){
+    match err {
+        Error::UnsupportedRequest =>                             {(0,Vec::default())}
+        Error::InvalidPacket =>                                  {(1,Vec::default())}
+        Error::InvalidPacketName =>                              {(2,Vec::default())}
+        Error::InvalidVersionNo =>                               {(3,Vec::default())}
+        Error::CorruptData =>                                    {(4,Vec::default())}
+        Error::InvalidApid =>                                    {(5,Vec::default())}
+        Error::InvalidFuncId(f_id) =>                    {(6,f_id.to_owned().into())}
+        Error::PeripheralError =>                                {(7,Vec::default())}
+        Error::BorrowMutError(_) =>                              {(8,Vec::default())}
+        Error::NoneError =>                                      {(9,Vec::default())}
+        Error::UnitType =>                                       {(10,Vec::default())}
+        Error::InvalidArg =>                                     {(11,Vec::default())}
+        Error::CapacityError =>                                  {(12,Vec::default())}
+    }
+}
+pub const ERR_CODE_COUNT:usize = 13;

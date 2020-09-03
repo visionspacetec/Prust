@@ -3,25 +3,6 @@
 //! These builder functions returns error if it is not a valid CCSDS 133. 0-B-1 packet for TTM[1,2], TM[1,4], TM[1,8], TM[1,10].
 //! See page 483 of ECSS-E-ST-70-41C.
 use super::*;
-use crate::sp::alloc::borrow::ToOwned;
-
-pub fn get_err_code_n_data(err:Error) -> (u8,Vec<u8>){
-    match err {
-        Error::UnsupportedRequest =>                             {(0,Vec::default())}
-        Error::InvalidPacket =>                                  {(1,Vec::default())}
-        Error::InvalidPacketName =>                              {(2,Vec::default())}
-        Error::InvalidVersionNo =>                               {(3,Vec::default())}
-        Error::CorruptData =>                                    {(4,Vec::default())}
-        Error::InvalidApid =>                                    {(5,Vec::default())}
-        Error::InvalidFuncId(s) =>                       {(6,s.to_owned().into())}
-        Error::PeripheralError =>                                {(7,Vec::default())}
-        Error::BorrowMutError(_) =>                              {(8,Vec::default())}
-        Error::NoneError =>                                      {(9,Vec::default())}
-        Error::UnitType =>                                       {(10,Vec::default())}
-        Error::InvalidArg =>                                     {(11,Vec::default())}
-        Error::CapacityError =>                                  {(12,Vec::default())}
-    }
-}
 
 
 impl SpacePacket<TmPacket<ServiceFail>>{
@@ -123,10 +104,10 @@ impl SpacePacket<TmPacket<ServiceFail>>{
     /// 
     /// Errors
     /// 
-    /// if buffer.len() !=  PH_LEN (6) +  TM_HEADER_LEN (9) + REQUEST_ID_LEN (4) + PEC_LEN(2)
+    /// if buffer.len() <  PH_LEN (6) +  TM_HEADER_LEN (9) + REQUEST_ID_LEN (4) + PEC_LEN(2)
     /// or if the byte array is not compliant to TM[1,2], TM[1,4], TM[1,8], TM[1,10].
     pub fn from_bytes(buffer:&[u8]) -> Result<Self,Error> {
-        if buffer.len() < PrimaryHeader::PH_LEN + TmPacketHeader::TM_HEADER_LEN + REQ_ID_LEN + FAILURE_NOTICE_MIN_LEN + PEC_LEN{
+        if buffer.len() < PrimaryHeader::PH_LEN + TmPacketHeader::TM_HEADER_LEN + REQ_ID_LEN + FAILURE_NOTICE_MIN_LEN + PEC_LEN {
             return Err(Error::InvalidPacket);
         }
         let primary_header = PrimaryHeader::from_bytes(&buffer[..PrimaryHeader::PH_LEN])?;
@@ -153,7 +134,7 @@ impl SpacePacket<TmPacket<ServiceFail>>{
         if buffer[failure_notice_start] as usize > error::ERR_CODE_COUNT {
             return Err(Error::InvalidPacket);
         }
-        let failure_notice_len = error::ERR_CODE_DATA_LEN[buffer[failure_notice_start] as usize] + 1;
+        let failure_notice_len = buffer.len() - PEC_LEN - failure_notice_start;
         let failure_notice = FailureNotice::from_bytes(&buffer[failure_notice_start..failure_notice_start+failure_notice_len])?;
         let packet_error_control = BigEndian::read_u16(&buffer[(buffer.len()-PEC_LEN)..]);
 

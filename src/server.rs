@@ -28,7 +28,8 @@ pub fn handle_packets() -> ! {
     /* FUNCTION MAP AREA START */ 
     let funcs:HashMap<FuncId,fn(&Vec::<u8>)->Result<(),Error>> = pus::map!(
         create_func_id("turn_led") => turn_led as fn(&Vec::<u8>)->Result<(),Error>,
-        create_func_id("set_led") => set_led as fn(&Vec::<u8>)->Result<(),Error>
+        create_func_id("set_led") => set_led as fn(&Vec::<u8>)->Result<(),Error>,
+        create_func_id("new_led") => new_led as fn(&Vec::<u8>)->Result<(),Error>
     );
     /* FUNCTION MAP AREA END */
 
@@ -73,7 +74,7 @@ pub fn handle_packets() -> ! {
         let space_packet = SpacePacket::<TcPacket<Service8_1>>::from_bytes(&buffer[0..data_len]).unwrap();
         // in case of error
         if let Err(e) = space_packet.exec_func(&funcs){
-            let (err_code,err_data) = services::service_1::service_fail::get_err_code_n_data(e);
+            let (err_code,err_data) = error::get_err_code_n_data(e);
             let err_report = SpacePacket::<_>::new_service_1_8(
                 &space_packet,0,0,err_code,err_data
             ).unwrap();

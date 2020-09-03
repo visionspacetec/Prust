@@ -77,17 +77,33 @@ pub fn set_led(args:&Vec::<u8>) -> Result<(),Error>{
         }
     })
 }
+
+
+/// FuncId = "new_led"
+pub fn new_led(args:&Vec::<u8>) -> Result<(),Error>{
+    cortex_m::interrupt::free(|cs| -> Result<(),Error> {
+        if args[0] != 0 {
+            SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led5.set_high()?;
+            Ok(())
+        }
+        else {
+            SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led5.set_low()?;
+            Ok(())
+        } 
+    })
+}
 /// Change Here If An External Function Needs To Access Peripheral Data
 pub struct SharedPeripherals{
     pub led1:PA5<Output<PushPull>>,
     pub led2:PA6<Output<PushPull>>,
     pub led3:PA7<Output<PushPull>>,
     pub led4:PA8<Output<PushPull>>,
+    pub led5:PA9<Output<PushPull>>,
 } 
 
 pub fn init() -> Serial<USART2, (PA2<Alternate<AF7, Input<Floating>>>, PA3<Alternate<AF7, Input<Floating>>>)>{
+    
     let dp = stm32::Peripherals::take().unwrap(); // get the device peripheral
-
     let rcc = dp.RCC.constrain(); // get the Rcc's abstract struct
     let mut ahb2 = rcc.ahb2;
     let mut apb1r1 =rcc.apb1r1;
@@ -112,9 +128,14 @@ pub fn init() -> Serial<USART2, (PA2<Alternate<AF7, Input<Floating>>>, PA3<Alter
     let led3 = gpioa.pa7.into_push_pull_output(&mut gpioa.moder,&mut gpioa.otyper);
     let led4 = gpioa.pa8.into_push_pull_output(&mut gpioa.moder,&mut gpioa.otyper);
     
+    let led5 = gpioa.pa9.into_push_pull_output(&mut gpioa.moder,&mut gpioa.otyper);
+
     // Replacing the Shared Peripheral
+    // Also change here to if you changed SharedPeripherals
     cortex_m::interrupt::free(|cs|{
-        SHARED_PER.borrow(cs).replace(Some(SharedPeripherals{led1,led2,led3,led4}));
+        SHARED_PER.borrow(cs).replace(Some(
+            SharedPeripherals{led1,led2,led3,led4,led5}
+        ));
     });
     usart2
 }

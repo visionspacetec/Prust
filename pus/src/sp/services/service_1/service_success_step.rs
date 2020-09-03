@@ -30,7 +30,7 @@ impl SpacePacket<TmPacket<ServiceSuccessStep>>{
     ) -> Result<Self,Error>
         {
             let req_id = request.to_request();
-            let data_len = TmPacketHeader::TM_HEADER_LEN + REQ_ID_LEN + crate::sp::PEC_LEN - 1;
+            let data_len = TmPacketHeader::TM_HEADER_LEN + REQ_ID_LEN + crate::sp::PEC_LEN + STEP_ID_LEN - 1;
             let data_len = data_len as u16;
             // TODO: Implement this feature
             let packet_error_control = 0;

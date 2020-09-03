@@ -33,8 +33,7 @@ impl SpacePacket<TmPacket<ServiceFailStep>>{
     ) -> Result<Self,Error>
     {
         let req_id = request.to_request();
-        let data_len = TmPacketHeader::TM_HEADER_LEN + REQ_ID_LEN + err_data.len() + crate::sp::PEC_LEN;
-        let data_len = data_len as u16;
+        let data_len = TmPacketHeader::TM_HEADER_LEN + REQ_ID_LEN + err_data.len() + crate::sp::PEC_LEN - 1 +STEP_ID_LEN;
         // TODO: Implement this feature
         let packet_error_control = 0;
         let primary_header = PrimaryHeader::new(
@@ -44,7 +43,7 @@ impl SpacePacket<TmPacket<ServiceFailStep>>{
             req_id.apid,
             (true,true),
             packet_name,
-            data_len
+            (data_len - PrimaryHeader::PH_LEN - 1) as u16
         )?;
         let header =  TmPacketHeader::new(SERVICE_TYPE,6,destination_id)?;
         Ok(
@@ -97,7 +96,7 @@ impl SpacePacket<TmPacket<ServiceFailStep>>{
         if buffer[failure_notice_start] as usize > error::ERR_CODE_COUNT {
             return Err(Error::InvalidPacket);
         }
-        let failure_notice_len = error::ERR_CODE_DATA_LEN[buffer[failure_notice_start] as usize] + 1;
+        let failure_notice_len = buffer.len() - PEC_LEN -STEP_ID_LEN - failure_notice_start;
         let failure_notice = FailureNotice::from_bytes(&buffer[failure_notice_start..failure_notice_start+failure_notice_len])?;
         
         let range_start = failure_notice_start+failure_notice_len;

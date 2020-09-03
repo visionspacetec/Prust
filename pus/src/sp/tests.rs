@@ -159,10 +159,9 @@ fn builder_for_service_success_case(){
         vec![1]
     ).unwrap();
 
-    let tm_1_1 = SpacePacket::<TmPacket::<ServiceSuccess>>::new(
+    let tm_1_1 = SpacePacket::<TmPacket::<ServiceSuccess>>::new_service_1_7(
         &tc,
         1,
-        0,
         0
     ).unwrap();
     
@@ -198,6 +197,14 @@ fn builder_for_service_fail_case(){
     for i in 0..tm_bytes_1.len() {
         assert_eq!(tm_bytes_1[i],tm_bytes_2[i]);
     }
+}
+#[test]
+/// Case for checking the SeviceFailCase builder crudely
+fn builder_for_service_fail_case_from_bytes(){
+    use crate::sp::services::{service_1::*};
+    use crate::sp::tm::TmPacket;
+    let bytes = vec![8, 2, 192, 0, 0, 14, 32, 1, 8, 0, 0, 0, 0, 0, 0, 24, 2, 192, 12, 0, 0];
+    let _tm = SpacePacket::<TmPacket::<ServiceFail>>::from_bytes(&bytes).unwrap();
 }
 
 #[test]

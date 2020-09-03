@@ -13,9 +13,9 @@ fn main(){
     for i in &args[2..] {
         tc_args.push(i.parse().unwrap());
     }
-    let tm = SpacePacket::<TcPacket::<Service8_1>>::new(
+    let tc = SpacePacket::<TcPacket::<Service8_1>>::new(
         2,
-        0,
+        12,
         args[1].clone(),
         1,
         tc_args
@@ -33,8 +33,22 @@ fn main(){
     let mut serialport = open_with_settings(&available_ports().expect("No serial port")[0].port_name,&s)
         .expect("Failed to open serial port");
     
-
-    let mes = tm.to_bytes();
+    let error_names = [
+        "UnsupportedRequest",
+        "InvalidPacket",
+        "CorruptData",
+        "InvalidPacketName",
+        "InvalidVersionNo",
+        "InvalidApid",
+        "InvalidFuncId",
+        "PeripheralError",
+        "BorrowMutError",
+        "NoneError",
+        "UnitType",
+        "InvalidArg",
+        "CapacityError"
+    ];
+    let mes = tc.to_bytes();
     serialport.write(mes.as_slice()).unwrap();
     //sleep
     serialport.flush().unwrap();
@@ -46,26 +60,24 @@ fn main(){
     let mut buf:Vec<u8> = vec![0;1024];
     clone.read_exact(&mut buf[0..6]).unwrap();
     let ph = pus::sp::PrimaryHeader::from_bytes(&buf[0..6]).unwrap();
-    println!("{:?}",ph);
     let data_len = ph.get_data_len() + 1;
-    clone.read_exact(&mut buf[6..data_len]).unwrap();
-
+    clone.read_exact(&mut buf[6..data_len+6]).unwrap();
+    let data_len = data_len + 6;
     
-    let ser_type = pus::sp::get_service_type(&ph,&buf);
+    let ser_type = pus::sp::get_service_type(&ph,&buf[0..data_len]);
 
     if ser_type == (1,7) {
         println!("Success");
         let _res_pack = 
-        //SpacePacket::<pus::sp::tm::TmPacket<services::service_1::Service1_7>>::from_bytes(&buf[0..data_len]).unwrap();
+        SpacePacket::<pus::sp::tm::TmPacket<services::service_1::ServiceSuccess>>::from_bytes(&buf[0..data_len]).unwrap();
         println!("{:?}",ph);
-        //println!("{:?}",buf);
     } else if ser_type == (1,8){
-        println!("Failure");
+        println!("Failure"); 
+        println!("{:?}",ph);
         let res_pack = 
         SpacePacket::<pus::sp::tm::TmPacket<services::service_1::Service1_8>>::from_bytes(&buf[0..data_len]).unwrap();
-        println!("{:?}",ph);
         let (code,data) = res_pack.get_err();
-        println!("{:?},{:?}",code,data.as_slice());
+        println!("Error Type:{:?}\nError Data:{:?}",error_names[code as usize],String::from_utf8(data).unwrap());
     } else{
         println!("{:?}",buf);
     }

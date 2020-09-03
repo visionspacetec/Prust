@@ -89,10 +89,6 @@ impl FailureNotice{
         if buffer.len() < FAILURE_NOTICE_MIN_LEN || (buffer[0] as usize) >= error::ERR_CODE_COUNT {
             return Err(Error::InvalidPacket);
         };
-        let data_len = error::ERR_CODE_DATA_LEN[buffer[0] as usize];
-        if buffer.len() - 1 != data_len as usize {
-            return Err(Error::InvalidPacket);
-        }
         let err_code = buffer[0];
         let err_data = buffer[1..].to_vec();
         Ok(
@@ -102,7 +98,7 @@ impl FailureNotice{
         )
     }
     pub fn to_byte(&self) -> Vec<u8> {
-        let mut bytes = Vec::with_capacity(error::ERR_CODE_DATA_LEN[self.err_code as usize]+1);
+        let mut bytes = Vec::with_capacity(self.err_data.len()+1);
         bytes.push(self.err_code);
         bytes.extend(self.err_data.to_vec());
         bytes
