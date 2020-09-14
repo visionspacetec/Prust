@@ -199,15 +199,6 @@ fn builder_for_service_fail_case(){
     }
 }
 #[test]
-/// Case for checking the SeviceFailCase builder crudely
-fn builder_for_service_fail_case_from_bytes(){
-    use crate::sp::services::{service_1::*};
-    use crate::sp::tm::TmPacket;
-    let bytes = vec![8, 2, 192, 0, 0, 14, 32, 1, 8, 0, 0, 0, 0, 0, 0, 24, 2, 192, 12, 0, 0];
-    let _tm = SpacePacket::<TmPacket::<ServiceFail>>::from_bytes(&bytes).unwrap();
-}
-
-#[test]
 /// Case for checking the SeviceSuccesStepCase builder crudely
 fn builder_for_service_success_step_case(){
     use crate::sp::services::{service_1::*};
@@ -302,7 +293,7 @@ fn housekeeping_service_3_27_tc_space_pack_generation_case(){
     }
 }
 #[test]
-fn housekeeping_service_3_25_tc_space_pack_generation_case(){
+fn housekeeping_service_3_25_tm_space_pack_generation_case(){
     use crate::sp::services::service_3::service_3_25::Service3_25;
     use crate::sp::tm::*;
     let tm1 = SpacePacket::new_service_3_25(

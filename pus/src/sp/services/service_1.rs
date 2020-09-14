@@ -16,6 +16,7 @@ const FAILURE_NOTICE_MIN_LEN:usize = 1;
 /*---- Field Structs Of Messages Start ----*/
 
 /// To Identify which request it is. Used in all TM[1,x] packs where x = {1,2,3,4,5,6,7,8,10}.
+#[derive(Debug)]
 pub struct RequestId{
     /// first 3 bits of the LSB are used.
     pub(crate) ver_no:u8,
@@ -73,6 +74,7 @@ impl RequestId {
 }
 
 /// Failure Notice Field Struct. Used in all fail response packs. TM[1,x] packs where x = {2,4,6,8,10}.
+#[derive(Debug)]
 struct FailureNotice{
     pub(crate) err_code:u8,
     pub(crate) err_data:Vec<u8>
@@ -105,6 +107,7 @@ impl FailureNotice{
     } 
 }
 /// Step id field seen in TM[1,5] and TM[1,6]
+#[derive(Debug)]
 struct StepId{
     pub step_id:u16,
 }
@@ -132,6 +135,7 @@ impl StepId{
 /*---- Field Structs Of Messages End ----*/
 
 /*---- PUS TM[1,1], TM[1,3] and TM[1,7] Packets Declaration Start ----*/
+#[derive(Debug)]
 pub struct ServiceSuccess{
     request_id:RequestId
 }
@@ -150,6 +154,7 @@ pub type Service1_7 = ServiceSuccess;
 /*---- PUS TM[1,1], TM[1,3] and TM[1,7] Packets Declaration End ----*/
 
 /*---- PUS TM[1,2], TM[1,4], TM[1,8]and TM[1,10] Packets Declaration Start ----*/
+#[derive(Debug)]
 pub struct ServiceFail{
     request_id:RequestId,
     failure_notice:FailureNotice
@@ -171,6 +176,7 @@ pub type Service1_10 = ServiceFail;
 /*---- PUS TM[1,2], TM[1,4], TM[1,8]and TM[1,10] Packets Declaration End ----*/
 
 /*---- PUS TM[1,5] Packet Declaration Start ----*/
+#[derive(Debug)]
 pub struct ServiceSuccessStep {
     request_id:RequestId,
     step_id:StepId
@@ -184,6 +190,7 @@ pub type Service1_5 = ServiceSuccessStep;
 /*---- PUS TM[1,5] Packet Declaration End ----*/
 
 /*---- PUS TM[1,6] Packet Declaration Start ----*/
+#[derive(Debug)]
 pub struct ServiceFailStep{
     request_id:RequestId,
     step_id:StepId,

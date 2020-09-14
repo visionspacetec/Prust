@@ -2,6 +2,7 @@
 use super::*;
 use tm::{TmData, TmPacket,TmPacketHeader};
 
+#[derive(Debug)]
 pub struct Service3_25{
     pub(crate) housekeeping_id:u8,
     pub(crate) parameter_value:Vec<u8>
@@ -179,4 +180,7 @@ impl SpacePacket<TmPacket<Service3_25>>{
         )
     }
 
+    pub fn get_parameter_values(&self) -> Vec<u8>{
+        self.data.user_data.data.parameter_value.to_vec()
+    }
 }

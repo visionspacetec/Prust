@@ -3,6 +3,7 @@ use super::*;
 use tc::{TcData, TcPacket,TcPacketHeader};
 
 /// TC[3,1] data field some fields are not imlemented.
+#[derive(Debug)]
 pub struct Service3_1{
     pub(crate) housekeeping_report_id:u8,
     // not implemented
@@ -207,4 +208,11 @@ impl SpacePacket<TcPacket<Service3_1>>{
         )
     }
 
+    pub fn hk_id(&self) -> u8 {
+        self.data.user_data.data.housekeeping_report_id
+    }
+
+    pub fn get_params(&self) -> &Vec<u8> {
+        &self.data.user_data.data.parameter_ids
+    }
 }

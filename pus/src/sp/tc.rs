@@ -7,6 +7,7 @@ use crate::error::*;
 
 extern crate alloc; // link the allocator
 /// Header of the TcPackets, secondary header of a SpacePacket.
+#[derive(Debug)]
 pub struct TcPacketHeader{
     /// Only 4 least significant bits used. When creating always set to 2.
     pub(crate) pus_ver_no:u8, 
@@ -97,6 +98,7 @@ pub trait TcData{
 }
 /// Generic Telecommand packet part.
 /// This part represents packet data field of the CCSDS 133. 0-B-1 packet.
+#[derive(Debug)]
 pub struct TcPacket<T: TcData>{
     /// Secondary Header of CCSDS packet.
     pub(crate) header:TcPacketHeader,

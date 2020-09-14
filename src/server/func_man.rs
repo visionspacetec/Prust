@@ -1,8 +1,8 @@
 
 use super::*;
-use stm32::USART2;
+use stm32::{ADC1, USART2};
 use serial::Serial;
-
+use hal::adc::Adc;
 
 const BLANK_VEC:[u8;FUNC_ID_LEN] = [0 as u8;FUNC_ID_LEN];
 // A temp helper function
@@ -21,11 +21,11 @@ pub fn turn_led(args:&Vec::<u8>) -> Result<(),Error>{
     }
     cortex_m::interrupt::free(|cs| -> Result<(),Error> {
         if args[0] != 0 {
-            SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led1.set_high()?;
+            SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led1.set_high().unwrap();
             Ok(())
         }
         else {
-            SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led1.set_low()?;
+            SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led1.set_low().unwrap();
             Ok(())
         } 
     })
@@ -39,39 +39,39 @@ pub fn set_led(args:&Vec::<u8>) -> Result<(),Error>{
     cortex_m::interrupt::free(|cs| -> Result<(),Error>{
         if args[0] == 0{
             if args[1] != 0 { 
-                SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led1.set_high()?;
+                SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led1.set_high().unwrap();
                 Ok(())
             }
             else {
-                SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led1.set_low()?;
+                SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led1.set_low().unwrap();
                 Ok(())
             }  
         } else if args[0] == 1 {
             if args[1] != 0 { 
-                SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led2.set_high()?;
+                SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led2.set_high().unwrap();
                 Ok(())
             }
             else {
-                SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led2.set_low()?;
+                SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led2.set_low().unwrap();
                 Ok(())
             }    
         }else if args[0] == 2 {
             if args[1] != 0 { 
-                SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led3.set_high()?;
+                SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led3.set_high().unwrap();
                 Ok(())
             }
             else {
-                SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led3.set_low()?;
+                SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led3.set_low().unwrap();
                 Ok(())
             }     
         }
         else if args[0] == 3 {
             if args[1] != 0 { 
-                SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led4.set_high()?;
+                SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led4.set_high().unwrap();
                 Ok(())
             }
             else {
-                SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led4.set_low()?;
+                SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led4.set_low().unwrap();
                 Ok(())
             }     
         }
@@ -89,11 +89,11 @@ pub fn new_led(args:&Vec::<u8>) -> Result<(),Error>{
     }
     cortex_m::interrupt::free(|cs| -> Result<(),Error> {
         if args[0] != 0 {
-            SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led5.set_high()?;
+            SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led5.set_high().unwrap();
             Ok(())
         }
         else {
-            SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led5.set_low()?;
+            SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut()?.led5.set_low().unwrap();
             Ok(())
         } 
     })
@@ -105,24 +105,30 @@ pub struct SharedPeripherals{
     pub led3:PA7<Output<PushPull>>,
     pub led4:PA8<Output<PushPull>>,
     pub led5:PA9<Output<PushPull>>,
+    pub adc1:Adc<ADC1>,
+    pub potent:PA0<Analog>
 } 
 
 pub fn init() -> Serial<USART2, (PA2<Alternate<AF7, Input<Floating>>>, PA3<Alternate<AF7, Input<Floating>>>)>{
     
     let dp = stm32::Peripherals::take().unwrap(); // get the device peripheral
-    let rcc = dp.RCC.constrain(); // get the Rcc's abstract struct
+    let mut rcc = dp.RCC.constrain(); // get the Rcc's abstract struct
     let mut ahb2 = rcc.ahb2;
     let mut apb1r1 =rcc.apb1r1;
     let flash = dp.FLASH.constrain();
     let mut acr = flash.acr;
+    let mut pwr = dp.PWR.constrain(&mut apb1r1);
 
     let mut gpioa = dp.GPIOA.split(&mut ahb2);
 
     // Could set to 115_200.bps for debugging
     let cfg = serial::Config::default().baudrate(115_200.bps());
+    let adc_cfg = hal::adc::Config::default();
+    let common_cfg = hal::adc::CommonConfig::default();
     let clocks = rcc.cfgr.sysclk(72.mhz());
-    let clocks = clocks.freeze(&mut acr); 
+    let clocks = clocks.freeze(&mut acr,&mut pwr); 
     
+    let adc1 = hal::adc::Adc::adc1(dp.ADC1,adc_cfg,&mut ahb2,&mut rcc.ccipr);
     let usart2 = hal::serial::Serial::usart2(dp.USART2,
         (gpioa.pa2.into_af7(&mut gpioa.moder,&mut gpioa.afrl),
         gpioa.pa3.into_af7(&mut gpioa.moder,&mut gpioa.afrl)),
@@ -133,14 +139,16 @@ pub fn init() -> Serial<USART2, (PA2<Alternate<AF7, Input<Floating>>>, PA3<Alter
     let led2 = gpioa.pa6.into_push_pull_output(&mut gpioa.moder,&mut gpioa.otyper);
     let led3 = gpioa.pa7.into_push_pull_output(&mut gpioa.moder,&mut gpioa.otyper);
     let led4 = gpioa.pa8.into_push_pull_output(&mut gpioa.moder,&mut gpioa.otyper);
-    
     let led5 = gpioa.pa9.into_push_pull_output(&mut gpioa.moder,&mut gpioa.otyper);
+    let potent = gpioa.pa0.into_analog_with_adc(&mut gpioa.moder,&mut gpioa.pupdr);
+    hal::adc::adc_global_setup(common_cfg,&mut ahb2,&mut rcc.ccipr);
 
+    
     // Replacing the Shared Peripheral
     // Also change here to if you changed SharedPeripherals
     cortex_m::interrupt::free(|cs|{
         SHARED_PER.borrow(cs).replace(Some(
-            SharedPeripherals{led1,led2,led3,led4,led5}
+            SharedPeripherals{led1,led2,led3,led4,led5,adc1,potent}
         ));
     });
     usart2

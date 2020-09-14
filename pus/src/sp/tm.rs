@@ -6,6 +6,7 @@ use crate::sp::{SpacePacketDataField,TxUserData}; // Including Generic Packet
 extern crate alloc; // link the allocator
 
 /// Header of the TmPackets, secondary header of a SpacePacket.
+#[derive(Debug)]
 pub struct TmPacketHeader{
     /// Only 4 least significant bits are used. When creating always set to 2.
     pub(crate) pus_ver_no:u8,
@@ -105,12 +106,13 @@ pub trait TmData{
 }
 /// Generic Telecommand packet part.
 /// This part represents packet data field of the CCSDS 133. 0-B-1 packet.
-pub struct TmPacket<T: TmData>{
+#[derive(Debug)]
+pub struct TmPacket<T: TmData + core::fmt::Debug>{
     /// Secondary Header of CCSDS packet.
     pub(crate)header:TmPacketHeader,
     pub(crate) user_data: TxUserData<T>
 }
 
-impl<T:TmData> SpacePacketDataField for TmPacket<T>{
+impl<T:TmData + core::fmt::Debug> SpacePacketDataField for TmPacket<T>{
     /* intentionally empty*/
 }

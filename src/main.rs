@@ -1,15 +1,24 @@
 #![no_std]
 #![no_main]
 #![feature(alloc_error_handler)] // for defining alloc_error_handler
-/* #[macro_use]
-extern crate lazy_static; */
+
+// pus sp
+use pus::{*,error::*,sp::*,sp::{tm::*,tc::*,services::{service_8::*,service_3::service_3_1::*,service_3::service_3_27::*,service_3::service_3_25::*}}};
+
+// Give aliases
+type Tc3_1 =  SpacePacket::<TcPacket<Service3_1>>;
+type Tc3_27 =  SpacePacket::<TcPacket<Service3_27>>;
+type Tm3_25 =  SpacePacket::<TmPacket<Service3_25>>;
+type Tc8_1 =  SpacePacket::<TcPacket<Service8_1>>;
+
 
 extern crate alloc; // linking alloc
 // comment when debugging
-use panic_halt as _; // you can put a breakpoint on `rust_begin_unwind` to catch panics
+//use panic_halt as _; // you can put a breakpoint on `rust_begin_unwind` to catch panics
 /* Uncomment these and comment above for enabling printing to gdb terminal */
-//use panic_semihosting as _;
-//use cortex_m_semihosting::{hprintln};
+use panic_semihosting as _;
+/* #[macro_use]
+use cortex_m_semihosting; */
 
 use cortex_m_rt::entry; // for declaring main an entry point
 

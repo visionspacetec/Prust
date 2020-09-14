@@ -11,7 +11,7 @@ rustup override set nightly
 ```
 For cargo and rust dependencies you can type;
 ```
-sudo apt install pkg-config libusb-1.0-0-dev
+sudo apt install pkg-config libusb-1.0-0-dev libudev-dev libftdi1-dev
 cargo install cargo-flash
 cargo install cargo-binutils
 rustup component add llvm-tools-preview

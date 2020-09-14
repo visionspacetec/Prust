@@ -14,6 +14,7 @@ pub struct SpacePacket <T: SpacePacketDataField>{
     data:T
 }
 
+
 // SpacePacketDataField is a byte vector in general case.
 impl SpacePacketDataField for Vec<u8>{ 
     /* intentionally empty*/
@@ -238,7 +239,7 @@ impl PrimaryHeader{
     const PACKET_DATA_LEN_POS:u8 = 32;
     const _PACKET_DATA_LEN_BITS:u8 = 16;
     /* primary header length */
-    const PH_LEN:usize = 6;
+    pub const PH_LEN:usize = 6;
     /* default ver_no value for CCSDS 133. 0-B-1 packet*/
     const VER_NO:u8 = 0;
 
@@ -356,7 +357,7 @@ impl PrimaryHeader{
 #[cfg(test)]
 mod tests;
 
-/// Application 
+#[derive(Debug)]
 pub struct TxUserData<T>{
     packet_error_control:u16,
     /// Application (TC) or Source (TM) data field.

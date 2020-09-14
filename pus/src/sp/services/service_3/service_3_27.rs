@@ -184,4 +184,7 @@ impl SpacePacket<TcPacket<Service3_27>>{
         )
     }
 
+    pub fn get_hk_structures(&self) -> &Vec<u8>{
+        &self.data.user_data.data.report_ids
+    }
 }
