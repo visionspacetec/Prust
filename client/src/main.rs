@@ -26,10 +26,15 @@ const ERROR_NAMES:[&str; pus::error::ERR_CODE_COUNT]= [
 fn main(){
     // CLI Setup
     let app = App::new("client")
+        .arg(Arg::with_name("exit_after_n").short("n")
+            .number_of_values(1).default_value("2")
+            .help("Number of packets to recieve before termination")
+        )
         .subcommand(
             SubCommand::with_name("exec_func")
-                .arg(Arg::with_name("func_name").short("f").takes_value(true))
-                .arg(Arg::with_name("args").short("a").min_values(0).value_delimiter(","))
+                .about("Sends a request to execute a function defined")
+                .arg(Arg::with_name("func_name").help("func_id of the function").number_of_values(1))
+                .arg(Arg::with_name("args").min_values(0).help("arguments of the function"))
         )
         .subcommand(
             SubCommand::with_name("new_report")
@@ -44,9 +49,10 @@ fn main(){
                     .min_values(1)
                     .help("parameters that will be reported in this structure")
                 )
-        ).subcommand(
+        )
+        .subcommand(
             SubCommand::with_name("one_shot")
-            .about("sends a one shot request for the specified hk id")
+            .about("Sends a one shot request for the specified hk id")
             .arg(
                 Arg::with_name("hk_ids")
                 .min_values(1)
@@ -54,6 +60,9 @@ fn main(){
             )
         ).get_matches();
     
+    // get the loop count
+    let mut n:u16 = app.value_of("exit_after_n").unwrap().parse().unwrap();
+
     // Matching subcommands
     let mes:Vec<u8> =  match app.subcommand() {
         ("exec_func", Some(exec_matches)) => {
@@ -62,7 +71,6 @@ fn main(){
             .map(
                 |s| s.parse::<u8>().unwrap()
             ).collect();
-            println!("{:?}",args_field);
             SpacePacket::new_service_8_1(
                 42, 0, 
                 func_id.to_string(), 
@@ -121,7 +129,7 @@ fn main(){
     std::thread::sleep(std::time::Duration::from_millis(100));
     clone.flush().unwrap();
     
-    loop {
+    while n > 0{
         // Get response
         let mut buf:Vec<u8> = vec![0;1024];
         while clone.read_data_set_ready().unwrap() {};
@@ -137,12 +145,12 @@ fn main(){
         let ser_type = pus::sp::get_service_type(&ph,&buf[0..data_len]);
 
         if ser_type == (1,7) {
-            println!("Tm Success Response");
+            println!("TM SUCCESS RESPONSE");
             let res_pack = 
             SpacePacket::<pus::sp::tm::TmPacket<services::service_1::ServiceSuccess>>::from_bytes(&buf[0..data_len]).unwrap();
             println!("TM pack:\n{:#?}",res_pack);
         } else if ser_type == (1,8){
-            println!("Tm Failure Response"); 
+            println!("TM FAILURE RESPONSE"); 
             let res_pack = 
             SpacePacket::<pus::sp::tm::TmPacket<services::service_1::Service1_8>>::from_bytes(&buf[0..data_len]).unwrap();
             let (code,data) = res_pack.get_err();
@@ -160,5 +168,6 @@ fn main(){
             println!("{:?}",buf);
         }
         println!("The packet recieved (in bytes):\n{:?}",&buf[0..data_len]);
+        n-=1;
     }
 }
