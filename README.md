@@ -76,7 +76,7 @@ to send a TC packet.
 
 ## Adding a function for the function management system.
 Let's say we want to add a function which sets a pin which is connected to a led.
-First we will have to edit src/server/func_man.rs file. In there there is a function called init which looks like this:
+First, we will have to edit the src/server/func_man.rs file. In there is a function called init which looks like this:
 
 ```rust
 pub fn init() -> Serial<USART2, (PA2<Alternate<AF7, Input<Floating>>>, PA3<Alternate<AF7, Input<Floating>>>)>{
@@ -116,7 +116,7 @@ pub struct SharedPeripherals{
     pub led5:PA9<Output<PushPull>>, // new object added
 } 
 ```
-After this we should change how we crate out SHARED_PER object. Which is the object we will use to share our peripherals. Please note that the fields here are public.
+After this, we should change how we crate out SHARED_PER object. Which is the object we will use to share our peripherals. Please note that the fields here are public.
 
 ```rust
 // Replacing the Shared Peripheral
@@ -127,7 +127,7 @@ After this we should change how we crate out SHARED_PER object. Which is the obj
         ));
     });
 ```
-This is how SHARED_PER variable is initialized in the cortex_m::interrupt::free function which takes a closure. In this closure SHARED_PER is borrowed and replaced by the initial object which is an instance of the struct SharedPeripheral.  
+This is how SHARED_PER variable is initialized in the cortex_m::interrupt::free function which takes a closure. In this closure, SHARED_PER is borrowed and replaced by the initial object which is an instance of the struct SharedPeripheral.  
 
 Now that we made our peripheral object accessible we should start writing our function in func_man.rs.
 Every function that is added should have this signature;
@@ -181,10 +181,10 @@ pub fn new_led(args:&Vec::<u8>) -> Result<(),Error>{
     })
 }
 ```
-Final step is to add the function name and function pointer to the function map. In server.rs there will be a function called handle packets.
+The final step is to add the function name and a function pointer to the function map. In server.rs there will be a function called handle packets.
 The function name and pointer should be added like this:
 ``` rust
-// Function reads the packet and parses it and sends parsed packet.
+// Function reads the packet and parses it and sends the parsed packet.
 pub fn handle_packets() -> ! {
     /* FUNCTION MAP AREA START */ 
     let funcs:HashMap<FuncId,fn(&Vec::<u8>)->Result<(),Error>> = pus::map!(
@@ -199,7 +199,7 @@ pub fn handle_packets() -> ! {
 ``` 
 Here helper function "create_func_id("new_led")" function is used to create a function id from a string and new_led is casted to a function pointer type
 fn(&Vec::<u8>)->Result<(),Error>.
-These are the instructions to add a new function to the service. You can test is with the current client program. For example with this command "cargo run new_led 1" you can set the led but the client code currently only takes the funtion name and the arguments one by one as a byte array. With the current client code the output will be like this.
+These are the instructions to add a new function to the service. You can test is with the current client program. For example with this command "cargo run new_led 1" you can set the led but the client code currently only takes the function name and the arguments one by one as a byte array. With the current client code, the output will be like this.
 ```
 selman@selman-G3-3590:~/Documents/Prust/client$ cargo run new_led 0
     Finished dev [unoptimized + debuginfo] target(s) in 0.01s
