@@ -32,7 +32,7 @@ fn main(){
         )
         .subcommand(
             SubCommand::with_name("exec_func")
-                .arg(Arg::with_name("func_name").short("f").takes_value(true).help("func_id of the function"))
+                .arg(Arg::with_name("func_name").short("f").takes_value(true).help("func_id of the function").number_of_values(1))
                 .arg(Arg::with_name("args").short("a").min_values(0).value_delimiter(",").help("arguments of the function"))
                 .about("Sends a request to execute a function defined")
         )
