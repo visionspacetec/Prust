@@ -1,6 +1,6 @@
 use super::*;
 use stm32l4xx_hal as hal; // HAL alias
-use hal::{gpio::{*,gpioa::*},prelude::*,stm32,serial};
+use hal::{gpio::{*,gpioa::*,gpiod::*,gpiof::*,gpioc::*,gpiog::*},prelude::*,stm32,serial};
 
 // Data structure utilities
 use heapless::consts;
@@ -22,6 +22,9 @@ use func_man::*;
 
 // Function reads the packet and parses it and sends parsed packet.
 pub fn handle_packets() -> ! {
+    /* For testing*/
+    experiments();
+
     /* FUNCTION MAP AREA START */ 
     let funcs:HashMap<FuncId,fn(&Vec::<u8>)->Result<(),Error>> = pus::map!(
         create_func_id("turn_led") => turn_led as fn(&Vec::<u8>)->Result<(),Error>,

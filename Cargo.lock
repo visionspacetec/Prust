@@ -307,9 +307,9 @@ checksum = "a8f112729512f8e442d81f95a8a7ddf2b7c6b8a1a6f509a95864142b30cab2d3"
 
 [[package]]
 name = "stm32l4"
-version = "0.11.0"
+version = "0.12.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3f58fc9ed772b4d742ed566cc14e224497c179d15c594d6108bebddd8d6a9452"
+checksum = "a9abc2787195d7055b342be5a7934d74099fd7e92b81c0771002b3b35ccfc85b"
 dependencies = [
  "bare-metal",
  "cortex-m",
@@ -320,11 +320,11 @@ dependencies = [
 [[package]]
 name = "stm32l4xx-hal"
 version = "0.5.0"
-source = "git+https://github.com/SelmanOzleyen/stm32l4xx-hal?branch=feature/adc#020d7505da4acf6b78d0c98a93998cae85681d1d"
 dependencies = [
  "as-slice",
  "cast",
  "cortex-m",
+ "cortex-m-semihosting",
  "embedded-hal",
  "generic-array 0.13.2",
  "nb 0.1.3",

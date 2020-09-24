@@ -3,13 +3,15 @@ use byteorder::{ByteOrder,BigEndian};
 
 // Helper functions to check the bits if its ok to read from usart
 pub fn is_not_ok_to_read_usart2() -> bool {
-    let isr = unsafe { &(*hal::stm32::USART2::ptr()).isr.read() };
-    isr.rxne().bit_is_clear() && isr.ore().bit_is_clear()
+    let isr = unsafe { &(*hal::stm32::UART4::ptr()).isr.read() };
+    //isr.rxne().bit_is_clear() && isr.ore().bit_is_clear()
+    false
 }
 
 pub fn is_not_ok_to_write_usart2() -> bool {
-    let isr = unsafe { &(*hal::stm32::USART2::ptr()).isr.read() };
-    isr.txe().bit_is_clear()
+    let isr = unsafe { &(*hal::stm32::UART4::ptr()).isr.read() };
+    //isr.txe().bit_is_clear()
+    false
 }
 
 // Some debugging functions. Also to illustrate how registers are manipulated
