@@ -17,7 +17,7 @@ extern crate alloc; // linking alloc
 // use panic_halt as _; // you can put a breakpoint on `rust_begin_unwind` to catch panics
 /* Uncomment these and comment above for enabling printing to gdb terminal */
 use panic_semihosting as _;
-use cortex_m_semihosting::hprintln;
+// use cortex_m_semihosting::hprintln;
 
 use cortex_m_rt::entry; // for declaring main an entry point
 

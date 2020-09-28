@@ -7,7 +7,7 @@ readme = "README.md"
 
 [workspace]
 members = ["pus"]
-exclude = ["prust-embedded","client"]
+exclude = ["prust-embedded", "client"]
 
 
 [profile.dev]
@@ -21,7 +21,7 @@ debug = true # symbols are nice and they don't increase the size on Flash
 lto = true # better optimizations
 
 [dependencies]
-stm32l4xx-hal = {git  = "https://github.com/SelmanOzleyen/stm32l4xx-hal",features = ["rt","stm32l4x6"]}
+stm32l4xx-hal = {git  = "https://github.com/SelmanOzleyen/stm32l4xx-hal", features = ["rt","stm32l4x6"]}
 cortex-m = "0.6.0"
 cortex-m-rt = "0.6.10"
 cortex-m-semihosting = "0.3.3"
@@ -29,8 +29,8 @@ cortex-m-semihosting = "0.3.3"
 panic-semihosting = "0.5.3" # when debugging
 nb = "1.0.0"
 heapless = "0.5.5"
-byteorder = {version = "1.3.4",default-features = false }
-arrayvec = {version ="0.5.1",default-features = false}
+byteorder = {version = "1.3.4", default-features = false }
+arrayvec = {version ="0.5.1", default-features = false}
 alloc-cortex-m = "0.4.0"
 hashbrown = "0.8.2"
 pus = { path = "./pus"}
