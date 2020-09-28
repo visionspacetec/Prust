@@ -106,7 +106,7 @@ fn main(){
     }
     // Etablishing serial connetion
     let s = SerialPortSettings {
-        baud_rate: 115_200,
+        baud_rate: 57_600,
         data_bits: DataBits::Eight,
         flow_control: FlowControl::None,
         parity: Parity::None,

@@ -1,6 +1,6 @@
 use super::*;
 use stm32l4xx_hal as hal; // HAL alias
-use hal::{gpio::{*,gpioa::*},prelude::*,stm32,serial};
+use hal::{gpio::{*,gpiod::*,gpiof::*,gpioc::*,gpiog::*},prelude::*,stm32,serial};
 
 // Data structure utilities
 use heapless::consts;
@@ -22,17 +22,17 @@ use func_man::*;
 
 // Function reads the packet and parses it and sends parsed packet.
 pub fn handle_packets() -> ! {
+
     /* FUNCTION MAP AREA START */ 
     let funcs:HashMap<FuncId,fn(&Vec::<u8>)->Result<(),Error>> = pus::map!(
         create_func_id("turn_led") => turn_led as fn(&Vec::<u8>)->Result<(),Error>,
-        create_func_id("set_led") => set_led as fn(&Vec::<u8>)->Result<(),Error>,
-        create_func_id("new_led") => new_led as fn(&Vec::<u8>)->Result<(),Error>
+        create_func_id("set_led") => set_led as fn(&Vec::<u8>)->Result<(),Error>
     );
     /* FUNCTION MAP AREA END */
 
     let mut hk_reports:HashMap<u8,Tc3_1> = HashMap::new();
 
-    let mut usart2 = init(); // SharedPheriperal
+    let mut uart5 = init(); // SharedPheriperal
     
     /* Allocate a 1KB Heapless buffer*/
     let mut buffer: heapless::Vec<u8, consts::U1024> = heapless::Vec::new();
@@ -41,8 +41,8 @@ pub fn handle_packets() -> ! {
         
         // Getting primary header
         for _i in 0..6 {
-            while is_not_ok_to_read_usart2(){/*inf loop*/};
-            let byte = nb::block!(usart2.read()).unwrap(); // if err wouldblock comes try again
+            while is_not_ok_to_read_uart5(){/*inf loop*/};
+            let byte = nb::block!(uart5.read()).unwrap(); // if err wouldblock comes try again
             
             if buffer.push(byte).is_err() {
                 // buffer full
@@ -60,8 +60,8 @@ pub fn handle_packets() -> ! {
         // getting the remaining of the pack
         for _i in 0..data_len {
 
-            while is_not_ok_to_read_usart2(){/*inf loop*/};
-            let byte = nb::block!(usart2.read()).unwrap(); // if err wouldblock comes try again
+            while is_not_ok_to_read_uart5(){/*inf loop*/};
+            let byte = nb::block!(uart5.read()).unwrap(); // if err wouldblock comes try again
 
             if buffer.push(byte).is_err() {
                 // buffer full
@@ -136,8 +136,8 @@ pub fn handle_packets() -> ! {
         }
         // write the report
         for &i in report_bytes.iter(){
-            while is_not_ok_to_write_usart2() {};
-            nb::block!(usart2.write(i)).ok();
+            while is_not_ok_to_write_uart5() {};
+            nb::block!(uart5.write(i)).ok();
         }
         
     }   

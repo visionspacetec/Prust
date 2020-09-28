@@ -2,27 +2,27 @@ use super::*;
 use byteorder::{ByteOrder,BigEndian};
 
 // Helper functions to check the bits if its ok to read from usart
-pub fn is_not_ok_to_read_usart2() -> bool {
-    let isr = unsafe { &(*hal::stm32::USART2::ptr()).isr.read() };
+pub fn is_not_ok_to_read_uart5() -> bool {
+    let isr = unsafe { &(*hal::device::UART5::ptr()).isr.read() };
     isr.rxne().bit_is_clear() && isr.ore().bit_is_clear()
 }
 
-pub fn is_not_ok_to_write_usart2() -> bool {
-    let isr = unsafe { &(*hal::stm32::USART2::ptr()).isr.read() };
+pub fn is_not_ok_to_write_uart5() -> bool {
+    let isr = unsafe { &(*hal::device::UART5::ptr()).isr.read() };
     isr.txe().bit_is_clear()
 }
 
 // Some debugging functions. Also to illustrate how registers are manipulated
 pub fn _set_oversampling8() {
-    unsafe { &(*hal::stm32::USART2::ptr()).cr1.modify(|_,w| w.over8().set_bit()) };
+    unsafe { &(*hal::stm32::UART5::ptr()).cr1.modify(|_,w| w.over8().set_bit()) };
 }
 
 pub fn _is_oversampling8() -> bool {
-    *unsafe { &(*hal::stm32::USART2::ptr()).cr1.read().over8().is_oversampling8()}
+    *unsafe { &(*hal::stm32::UART5::ptr()).cr1.read().over8().is_oversampling8()}
 }
 
 pub fn _get_baudrate() -> u32 {
-    *unsafe { &(*hal::stm32::USART2::ptr()).brr.read().bits()}
+    *unsafe { &(*hal::stm32::UART5::ptr()).brr.read().bits()}
 }
 // if its tm or tc
 pub fn mes_type_from_bytes(buf:&[u8]) -> (u8,u8){
@@ -34,7 +34,7 @@ pub fn get_param_0() -> Result<u16,Error> {
         {
             let mut res:u16 = 0;
             if let Some(sp) = SHARED_PER.borrow(cs).try_borrow_mut()?.as_mut() {
-                res = sp.adc1.read(&mut sp.potent).unwrap();
+                res = sp.adc1.read(&mut sp.user4_4).unwrap();
             }
             Ok(res)
         }   

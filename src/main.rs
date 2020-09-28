@@ -14,11 +14,10 @@ type Tc8_1 =  SpacePacket::<TcPacket<Service8_1>>;
 
 extern crate alloc; // linking alloc
 // comment when debugging
-//use panic_halt as _; // you can put a breakpoint on `rust_begin_unwind` to catch panics
+// use panic_halt as _; // you can put a breakpoint on `rust_begin_unwind` to catch panics
 /* Uncomment these and comment above for enabling printing to gdb terminal */
 use panic_semihosting as _;
-/* #[macro_use]
-use cortex_m_semihosting; */
+// use cortex_m_semihosting::hprintln;
 
 use cortex_m_rt::entry; // for declaring main an entry point
 
