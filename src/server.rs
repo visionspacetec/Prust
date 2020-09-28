@@ -8,9 +8,12 @@ use alloc::{vec::Vec,string::String};
 use hashbrown::HashMap; // for storing function names
 extern crate alloc; // link the allocator
 use nb; // for non blocking operations
-//use cortex_m_semihosting::hprintln;
+use cortex_m_semihosting::hprintln;
 use core::cell::RefCell;
-use cortex_m::interrupt::Mutex; // for sharing LED
+use cortex_m::interrupt::Mutex; // for sharing PINS and resources
+use hal::interrupt;
+use hal::timer::{Event, Timer};
+
 
 static SHARED_PER: Mutex<RefCell<Option<SharedPeripherals>>> = Mutex::new(RefCell::new(None));
 
