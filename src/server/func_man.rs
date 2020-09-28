@@ -128,10 +128,9 @@ pub fn init() -> Serial<UART5, (PC12<Alternate<AF8, Input<Floating>>>, PD2<Alter
     let mut gpiof = dp.GPIOF.split(&mut ahb2);
     let mut gpiog = dp.GPIOG.split(&mut ahb2);
 
-    // Could set to 115_200.bps for debugging
+    // Could set to 57_200.bps for debugging
     let cfg = serial::Config::default().baudrate(57_600.bps());
     let adc_cfg = hal::adc::Config::default();
-    //let pll_cfg = PllConfig::new(1, 8,PllDivider::Di);
     let common_cfg = hal::adc::CommonConfig::default();
     let clocks = rcc.cfgr.sysclk(64.mhz());
     let clocks = clocks.freeze(&mut acr,&mut pwr); 
@@ -162,26 +161,14 @@ pub fn init() -> Serial<UART5, (PC12<Alternate<AF8, Input<Floating>>>, PD2<Alter
     let mut user4_4 = gpioc.pc5.into_analog_with_adc(&mut gpioc.moder,&mut gpioc.pupdr);
     let mut user3_2 = gpiob.pb1.into_analog_with_adc(&mut gpiob.moder,&mut gpiob.pupdr);
     
-    loop {
-        let res = adc1.read(&mut user3_2);
-        
-        if res.is_ok() {
-            let res:u16 = res.unwrap();
-            hprintln!("VAL:{}", res).unwrap();
-        }
-        else {
-            hprintln!("FAIL").unwrap();
-        }
-        cortex_m::asm::delay(80_000_00);
-    }
     // Replacing the Shared Peripheral
     // Also change here to if you changed SharedPeripherals
-    /* cortex_m::interrupt::free(|cs|{
+    cortex_m::interrupt::free(|cs|{
         SHARED_PER.borrow(cs).replace(Some(
             SharedPeripherals{led1,led2,led3,led4,led5,adc1,potent:user4_4}
         ));
-    }); */
-    usart2
+    });
+    uart5
 }
 
 pub fn experiments() -> !{
@@ -226,7 +213,7 @@ pub fn experiments() -> !{
     let mut user4_4 = gpioc.pc5.into_analog_with_adc(&mut gpioc.moder,&mut gpioc.pupdr);
     //let mut user3_2 = gpiob.pb1.into_analog_with_adc(&mut gpiob.moder,&mut gpiob.pupdr);
     
-    hal::adc::adc_global_setup(common_cfg,&mut ahb2,&mut rcc.ccipr);
+    stm32l4xx_hal::adc::adc_global_setup(common_cfg,&mut ahb2,&mut rcc.ccipr);
     loop {
         let res = adc1.read(&mut user4_4);
         
