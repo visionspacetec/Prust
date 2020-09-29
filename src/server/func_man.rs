@@ -1,7 +1,6 @@
 
 use super::*;
-use stm32::{ADC1,UART5};
-use serial::Serial;
+use stm32::ADC1;
 use hal::adc::Adc;
 use cortex_m::peripheral::NVIC;
 
@@ -72,7 +71,7 @@ pub struct SharedPeripherals{
     pub user4_4:PC5<Analog>,
 } 
 
-pub fn init() -> Serial<UART5, (PC12<Alternate<AF8, Input<Floating>>>, PD2<Alternate<AF8, Input<Floating>>>)>{
+pub fn init() -> (UART5Con,Timer7Type) {
     
     let dp = stm32::Peripherals::take().unwrap(); // get the device peripheral
     let mut rcc = dp.RCC.constrain(); // get the Rcc's abstract struct
@@ -111,12 +110,13 @@ pub fn init() -> Serial<UART5, (PC12<Alternate<AF8, Input<Floating>>>, PD2<Alter
     // Setting enable pins
     user4_en.set_high().unwrap();
     user1_en.set_high().unwrap();
+    // Enabling uart
     let uart5 = hal::serial::Serial::uart5(dp.UART5,
         (gpioc.pc12.into_af8(&mut gpioc.moder,&mut gpioc.afrh),
         gpiod.pd2.into_af8(&mut gpiod.moder,&mut gpiod.afrl)),
         cfg,clocks,
         &mut apb1r1);
-    
+    // Configuring used pins
     let user1_1 = gpiof.pf13.into_push_pull_output(&mut gpiof.moder,&mut gpiof.otyper).downgrade();
     let user1_2 = gpiof.pf15.into_push_pull_output(&mut gpiof.moder,&mut gpiof.otyper).downgrade();
     let user4_4 = gpioc.pc5.into_analog_with_adc(&mut gpioc.moder,&mut gpioc.pupdr);
@@ -128,7 +128,7 @@ pub fn init() -> Serial<UART5, (PC12<Alternate<AF8, Input<Floating>>>, PD2<Alter
             SharedPeripherals{user1_en,user4_en,user1_1,user1_2,adc1,user4_4}
         ));
     });
-    uart5
+    (uart5,timer)
 }
 
 #[interrupt]

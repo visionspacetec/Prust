@@ -13,7 +13,10 @@ use core::cell::RefCell;
 use cortex_m::interrupt::Mutex; // for sharing PINS and resources
 use hal::interrupt;
 use hal::timer::{Event, Timer};
-
+use stm32::UART5;
+/// Alias for the UART5 connection and
+type UART5Con = serial::Serial<UART5, (PC12<Alternate<AF8, Input<Floating>>>, PD2<Alternate<AF8, Input<Floating>>>)>;
+type Timer7Type = Timer<hal::device::TIM7>;
 
 static SHARED_PER: Mutex<RefCell<Option<SharedPeripherals>>> = Mutex::new(RefCell::new(None));
 
@@ -33,9 +36,11 @@ pub fn handle_packets() -> ! {
     );
     /* FUNCTION MAP AREA END */
 
+    // The map for report structures
     let mut hk_reports:HashMap<u8,Tc3_1> = HashMap::new();
 
-    let mut uart5 = init(); // SharedPheriperal
+    // Initializing peripheral resources
+    let (mut uart5,mut t7) = init(); // SharedPheriperal
     
     /* Allocate a 1KB Heapless buffer*/
     let mut buffer: heapless::Vec<u8, consts::U1024> = heapless::Vec::new();
