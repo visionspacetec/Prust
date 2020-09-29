@@ -308,3 +308,25 @@ fn housekeeping_service_3_25_tm_space_pack_generation_case(){
     }
 }
 
+#[test]
+fn housekeeping_service_3_5_tc_space_pack_generation_case(){
+    let tc1 = SpacePacket::new_service_3_5(
+        0,0,1,vec![1]
+    ).unwrap();
+    let tc1_bytes = tc1.to_bytes();
+    let tc2 = SpacePacket::from_bytes_service_3_5(&tc1_bytes).unwrap();
+    let tc2_bytes = tc2.to_bytes();
+    assert_eq!(tc1_bytes.len(),tc2_bytes.len());
+    for i in 0..tc1_bytes.len() {
+        assert_eq!(tc1_bytes[i],tc2_bytes[i]);
+    }
+}
+
+#[test]
+fn housekeeping_service_3_5_tc_space_pack_generation_case_err(){
+    let tc1 = SpacePacket::new_service_3_5(
+        0,0,1,vec![1]
+    ).unwrap();
+    let tc1_bytes = tc1.to_bytes();
+    let _tc2 = SpacePacket::from_bytes_service_3_6(&tc1_bytes).expect_err("Didn't check");
+}
