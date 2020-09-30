@@ -1,16 +1,16 @@
 #![feature(allow_internal_unstable)]
 #![feature(try_trait)]
 #![feature(arbitrary_enum_discriminant)]
-#![cfg_attr(not(any(test,feature="debug")),no_std)] // #![no_std] if not testing
+#![cfg_attr(not(any(test, feature = "debug")), no_std)] // #![no_std] if not testing
 #[macro_use]
 extern crate arrayref;
 use error::*;
-pub const FUNC_ID_LEN:usize = 16;
+pub const FUNC_ID_LEN: usize = 16;
 // Type alias for storing func_id
-pub type FuncId = arrayvec::ArrayString::<[u8;FUNC_ID_LEN]>;
+pub type FuncId = arrayvec::ArrayString<[u8; FUNC_ID_LEN]>;
 
 /// Macro for debugging
-/// 
+///
 #[macro_export]
 #[allow_internal_unstable(print_internals, format_args_nl)]
 macro_rules! debug {
@@ -42,9 +42,9 @@ macro_rules! map(
         };
 );
 
-/// Module for Generic CCSDS Space Packet. SpacePacket struct has only primary header and data field. 
-pub mod sp;
 /// Module for error codes
 pub mod error;
+/// Module for Generic CCSDS Space Packet. SpacePacket struct has only primary header and data field.
+pub mod sp;
 
 // TODO : Implement Own Error Types
