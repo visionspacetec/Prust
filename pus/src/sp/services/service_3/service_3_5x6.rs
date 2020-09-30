@@ -166,4 +166,7 @@ impl SpacePacket<TcPacket<Service3_5x6>>{
             }
         )
     }
+    pub fn get_report_parameter_ids(&self) -> Vec<u8>{
+        self.data.user_data.data.report_ids.to_vec()
+    }
 }

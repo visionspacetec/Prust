@@ -34,3 +34,4 @@ arrayvec = {version ="0.5.1", default-features = false}
 alloc-cortex-m = "0.4.0"
 hashbrown = "0.8.2"
 pus = { path = "./pus"}
+lazy_static = {version = "1.4.0", features = ["spin_no_std"]}

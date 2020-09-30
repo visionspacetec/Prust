@@ -30,6 +30,9 @@ use alloc::alloc::Layout; // for alloc error handler
 #[global_allocator] // set the global allocator
 static ALLOCATOR: CortexMHeap = CortexMHeap::empty();
 
+#[macro_use]
+extern crate lazy_static;
+
 #[entry] // set entry point
 fn main() -> ! {
     // initializing allocator before using it

@@ -1,7 +1,6 @@
 use super::*;
 use stm32l4xx_hal as hal; // HAL alias
 use hal::{gpio::{*,gpiod::*,gpiof::*,gpioc::*,gpiog::*},prelude::*,stm32,serial};
-
 // Data structure utilities
 use heapless::consts;
 use alloc::{vec::Vec,string::String};
@@ -10,15 +9,24 @@ extern crate alloc; // link the allocator
 use nb; // for non blocking operations
 use cortex_m_semihosting::hprintln;
 use core::cell::RefCell;
-use cortex_m::interrupt::Mutex; // for sharing PINS and resources
+use cortex_m::interrupt::{Mutex,free}; // for sharing PINS and resources
 use hal::interrupt;
 use hal::timer::{Event, Timer};
-use stm32::UART5;
+use hal::time::Hertz;
 /// Alias for the UART5 connection and
-type UART5Con = serial::Serial<UART5, (PC12<Alternate<AF8, Input<Floating>>>, PD2<Alternate<AF8, Input<Floating>>>)>;
+type UART5Con = serial::Serial<stm32::UART5, (PC12<Alternate<AF8, Input<Floating>>>, PD2<Alternate<AF8, Input<Floating>>>)>;
 type Timer7Type = Timer<hal::device::TIM7>;
 
 static SHARED_PER: Mutex<RefCell<Option<SharedPeripherals>>> = Mutex::new(RefCell::new(None));
+static UART5: Mutex<RefCell<Option<UART5Con>>> = Mutex::new(RefCell::new(None));
+// REPORT_ID -> (PACKET,PERIODIC_REPORT_ENABLED)
+lazy_static!{
+    pub static ref HK_REPORTS: Mutex<RefCell<HashMap<u8,(Tc3_1,bool)>>> = Mutex::new(RefCell::new(HashMap::new()));
+
+}
+// NOTE: Right now we have one min sample collection interval  
+const MIN_SAMPL_DIV: u32 = 100; 
+const SYS_FREQ:Hertz = Hertz{0:72_000_000};
 
 /// Utility module for the temporary problem
 pub mod utils;
@@ -36,51 +44,67 @@ pub fn handle_packets() -> ! {
     );
     /* FUNCTION MAP AREA END */
 
-    // The map for report structures
-    let mut hk_reports:HashMap<u8,Tc3_1> = HashMap::new();
 
-    // Initializing peripheral resources
-    let (mut uart5,mut t7) = init(); // SharedPheriperal
+    // Initializing peripheral and internal resources
+    let mut timer7 = init();
     
     /* Allocate a 1KB Heapless buffer*/
     let mut buffer: heapless::Vec<u8, consts::U1024> = heapless::Vec::new();
+    let mut data_len:usize = 0;
     loop {
         buffer.clear();
         
-        // Getting primary header
-        for _i in 0..6 {
-            while is_not_ok_to_read_uart5(){/*inf loop*/};
-            let byte = nb::block!(uart5.read()).unwrap(); // if err wouldblock comes try again
-            
-            if buffer.push(byte).is_err() {
-                // buffer full
-                panic!("buffer_full");
+        // Writing to uart in Critical Section.
+        let result = cortex_m::interrupt::free(
+            |cs| -> Result<(),()>{
+                if let Some (uart5) = UART5.borrow(cs).try_borrow_mut().unwrap().as_mut(){
+                    // Getting primary header
+                    for _i in 0..6 {
+                        while is_not_ok_to_read_uart5(){/*inf loop*/};
+                        let byte = nb::block!(uart5.read()).unwrap(); // if err wouldblock comes try again
+                        
+                        if buffer.push(byte).is_err() {
+                            // buffer full
+                            panic!("buffer_full");
+                        }
+                    };
+                    // If invalid packet ignore
+                    let ph = match  sp::PrimaryHeader::from_bytes(&buffer[0..6]){
+                        Ok(p) => {p}
+                        Err(_) => {return Err(());}
+                    };
+
+                    data_len = ph.get_data_len() + 1;
+                    
+                    // getting the remaining of the pack
+                    for _i in 0..data_len {
+
+                        while is_not_ok_to_read_uart5(){/*inf loop*/};
+                        let byte = nb::block!(uart5.read()).unwrap(); // if err wouldblock comes try again
+
+                        if buffer.push(byte).is_err() {
+                            // buffer full
+                            panic!("buffer_full");
+                        }
+                    };
+                    return Ok(())
+                }
+                else{
+                    return Err(())
+                }
+                
             }
-        };
-        // If invalid packet ignore
-        let ph = match  sp::PrimaryHeader::from_bytes(&buffer[0..6]){
-            Ok(p) => {p}
-            Err(_) => {continue;}
-        };
-
-        let data_len = ph.get_data_len() + 1;
-        
-        // getting the remaining of the pack
-        for _i in 0..data_len {
-
-            while is_not_ok_to_read_uart5(){/*inf loop*/};
-            let byte = nb::block!(uart5.read()).unwrap(); // if err wouldblock comes try again
-
-            if buffer.push(byte).is_err() {
-                // buffer full
-                panic!("buffer_full");
-            }
+        );
+        if result.is_err(){
+            continue;
         }
+        
         let data_len = data_len + 6;
 
         let mut report_bytes:Vec<u8> = Vec::new() ;
         let mes_type =  mes_type_from_bytes(&buffer[0..data_len]);
         if mes_type == (8,1){
+
             /* TC[8,1] PERFORM A FUNCTION START */
 
             // checking if the packet given is in correct format or not
@@ -105,7 +129,9 @@ pub fn handle_packets() -> ! {
             }
 
             /* TC[8,1] PERFORM A FUNCTION END */
+
         } else if mes_type == (3,1) {
+
             /* TC[3,1] CREATE A HOUSEKEEPING PARAMETER REPORT STRUCTURE START */
             
             let space_packet = match Tc3_1::from_bytes(&buffer[0..data_len]){
@@ -118,12 +144,18 @@ pub fn handle_packets() -> ! {
                 0,
             ).unwrap();
             // TODO: Give error in case of duplicate
-            hk_reports.insert(space_packet.hk_id(), space_packet);
+            free(| cs|{
+                if let Ok(mut hk)= HK_REPORTS.borrow(cs).try_borrow_mut(){
+                    hk.insert(space_packet.hk_id(), (space_packet,false));
+                }
+            });
 
             report_bytes.extend(exec_report.to_bytes().iter());
 
-            /* TC[3,1] CREATE A HOUSEKEEPING PARAMETER REPORT STRUCTURE END*/ 
+            /* TC[3,1] CREATE A HOUSEKEEPING PARAMETER REPORT STRUCTURE END*/
+
         } else if mes_type == (3,27) {
+
             /* TC[3,27] GENERATE A ONE SHOT REPORT FOR HOUSEKEEPING PARAMETER REPORT STRUCTURES START*/
 
             let space_packet = match Tc3_27::from_bytes(&buffer[0..data_len]){
@@ -131,9 +163,9 @@ pub fn handle_packets() -> ! {
                 Err(_) => {continue;}
             };
             
-            generate_one_shot_report(&space_packet,&hk_reports,&mut report_bytes);
+            generate_one_shot_report(&space_packet,&mut report_bytes);
 
-            let exec_report = SpacePacket::<_>::new_service_1_7(
+            let exec_report = SpacePacket::new_service_1_7(
                 &space_packet,
                 42,
                 0,
@@ -141,12 +173,55 @@ pub fn handle_packets() -> ! {
             report_bytes.extend(exec_report.to_bytes().iter());
 
             /* TC[3,27] GENERATE A ONE SHOT REPORT FOR HOUSEKEEPING PARAMETER REPORT STRUCTURES END*/
+
+        } else if mes_type == (3,5) || mes_type == (3,6){
+            /* TC[3,5/6] ENABLE OR DISABLE PERIODIC GENERATION OF THE HOUSEKEEPING PARAMETER REPORT*/
+            let space_packet = match SpacePacket::from_bytes_service_3_5(&buffer[0..data_len]){
+                Ok(sp) => {sp}
+                Err(_) => {continue;}
+            };
+            let hk_params = space_packet.get_report_parameter_ids();
+            free(|cs|{
+                let mut hk_reports = HK_REPORTS.borrow(cs).try_borrow_mut().unwrap();
+                for i in hk_params.iter() {
+                    if let Some(ent) = hk_reports.get_mut(i){
+                        ent.1 = mes_type.1 == 5;
+                    }
+                }
+            });
+            // if enabled listen to timer
+            if mes_type.1 == 5 {
+                timer7.listen(Event::TimeOut);   
+            } else {
+                timer7.unlisten(Event::TimeOut)
+            }
+            
+        } else{
+            continue;
         }
-        // write the report
-        for &i in report_bytes.iter(){
-            while is_not_ok_to_write_uart5() {};
-            nb::block!(uart5.write(i)).ok();
-        }
-        
+
+        // Writing to uart in Critical Section.
+        cortex_m::interrupt::free(
+            |cs| {
+                if let Some( uart5) = UART5.borrow(cs).try_borrow_mut().unwrap().as_mut(){
+                    // write the report
+                    for &i in report_bytes.iter(){
+                        while is_not_ok_to_write_uart5() {};
+                        nb::block!(uart5.write(i)).ok();
+                    }
+                }
+                
+            }
+        );
     }   
+}
+#[interrupt]
+fn TIM7(){
+    static mut COUNT: u32 = 0;
+    *COUNT += 1;
+
+    if *COUNT % MIN_SAMPL_DIV == 0 {
+        hprintln!("Hello !").unwrap();
+        *COUNT = 0;
+    }
 }

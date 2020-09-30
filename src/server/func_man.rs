@@ -62,7 +62,7 @@ pub fn set_led(args:&Vec::<u8>) -> Result<(),Error>{
 }
 
 /// Change Here If An External Function Needs To Access Peripheral Data
-pub struct SharedPeripherals{
+pub struct SharedPeripherals {
     pub user1_en:PCx<Output<PushPull>>,
     pub user4_en:PGx<Output<PushPull>>,
     pub user1_1:PFx<Output<PushPull>>,
@@ -71,7 +71,7 @@ pub struct SharedPeripherals{
     pub user4_4:PC5<Analog>,
 } 
 
-pub fn init() -> (UART5Con,Timer7Type) {
+pub fn init() -> Timer7Type{
     
     let dp = stm32::Peripherals::take().unwrap(); // get the device peripheral
     let mut rcc = dp.RCC.constrain(); // get the Rcc's abstract struct
@@ -95,13 +95,12 @@ pub fn init() -> (UART5Con,Timer7Type) {
     // Could set to 57_200.bps for debugging
     let cfg = serial::Config::default().baudrate(57_600.bps());
     let adc_cfg = hal::adc::Config::default();
-    let clocks = rcc.cfgr.sysclk(72.mhz());
+    let clocks = rcc.cfgr.sysclk(SYS_FREQ);
     let clocks = clocks.freeze(&mut acr,&mut pwr); 
 
     // Enabling timer
     unsafe { NVIC::unmask(hal::stm32::Interrupt::TIM7) };
-    let mut timer = Timer::tim7(dp.TIM7, 1.hz(), clocks, &mut apb1r1);
-    timer.listen(Event::TimeOut);
+    let timer = Timer::tim7(dp.TIM7, (SYS_FREQ.0/100).hz(), clocks, &mut apb1r1);
 
     // Setting ADC1
     let adc1 = hal::adc::Adc::adc1(dp.ADC1,adc_cfg,&mut ahb2,&mut rcc.ccipr);
@@ -128,10 +127,12 @@ pub fn init() -> (UART5Con,Timer7Type) {
             SharedPeripherals{user1_en,user4_en,user1_1,user1_2,adc1,user4_4}
         ));
     });
-    (uart5,timer)
-}
 
-#[interrupt]
-fn TIM7(){
-    hprintln!("Hello !").unwrap();
+    // Initializing UART5 global variable
+    cortex_m::interrupt::free(|cs|{
+        UART5.borrow(cs).replace(Some(
+            uart5
+        ));
+    });
+    timer
 }
