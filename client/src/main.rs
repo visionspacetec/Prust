@@ -56,9 +56,26 @@ fn main(){
             .arg(
                 Arg::with_name("hk_ids")
                 .min_values(1)
-                .help("Housekeeping structure to be reported")
+                .help("Housekeeping structure id to be reported")
             )
-        ).get_matches();
+        )
+        .subcommand(
+            SubCommand::with_name("periodic_en")
+            .about("Enables peridic report of parameters of the given struct ids")
+            .arg(
+                Arg::with_name("structure_ids").min_values(1)
+                .help("Housekeeping structure id to be configured")
+            )
+        )
+        .subcommand(
+            SubCommand::with_name("periodic_dis")
+            .about("Disables peridic report of parameters of the given struct ids")
+            .arg(
+                Arg::with_name("structure_ids").min_values(1)
+                .help("Housekeeping structure id to be configured")
+            )
+        )
+        .get_matches();
     
     // get the loop count
     let mut n:u16 = app.value_of("exit_after_n").unwrap().parse().unwrap();
@@ -88,6 +105,18 @@ fn main(){
                 report_id, 0, 
                 params.len() as u8,params
             ).unwrap().to_bytes()
+        }
+        ("periodic_en",Some(ids)) => {
+            let ids:Vec<u8> = ids.values_of("structure_ids").unwrap().map(
+                |s| s.parse::<u8>().unwrap()
+            ).collect();
+            SpacePacket::new_service_3_5(42, 0, ids.len() as u8,ids).unwrap().to_bytes()
+        }
+        ("periodic_dis",Some(ids)) => {
+            let ids:Vec<u8> = ids.values_of("structure_ids").unwrap().map(
+                |s| s.parse::<u8>().unwrap()
+            ).collect();
+            SpacePacket::new_service_3_6(42, 0, ids.len() as u8,ids).unwrap().to_bytes()
         }
         ("one_shot",Some(shot_matches)) => {
             let params:Vec<u8> = shot_matches.values_of("hk_ids").unwrap()
@@ -136,7 +165,11 @@ fn main(){
         if clone.read_exact(&mut buf[0..6]).is_err(){
             continue;
         };
-        let ph = pus::sp::PrimaryHeader::from_bytes(&buf[0..6]).unwrap();
+        let ph = match  pus::sp::PrimaryHeader::from_bytes(&buf[0..6]) {
+            Ok(p) => {p}
+            Err(_) => {continue;}
+        };
+        
         let data_len = ph.get_data_len() + 1;
         if clone.read_exact(&mut buf[6..data_len+6]).is_err(){
             continue;

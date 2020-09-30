@@ -102,7 +102,7 @@ pub struct SharedPeripherals {
     pub user4_4: PC5<Analog>,
 }
 
-pub fn init() -> Timer7Type {
+pub fn init() -> UART5RXType {
     let dp = stm32::Peripherals::take().unwrap(); // get the device peripheral
     let mut rcc = dp.RCC.constrain(); // get the Rcc's abstract struct
     let mut ahb2 = rcc.ahb2;
@@ -127,9 +127,8 @@ pub fn init() -> Timer7Type {
     let clocks = clocks.freeze(&mut acr, &mut pwr);
 
     // Enabling timer
-    unsafe { NVIC::unmask(hal::stm32::Interrupt::TIM7) };
-    let timer = Timer::tim7(dp.TIM7, (SYS_FREQ.0 / 100).hz(), clocks, &mut apb1r1);
-
+    unsafe { NVIC::unmask(hal::stm32::Interrupt::TIM2) };
+    let timer = Timer::tim2(dp.TIM2, 1.hz(), clocks, &mut apb1r1);
     // Setting ADC1
     let adc1 = hal::adc::Adc::adc1(dp.ADC1, adc_cfg, &mut ahb2, &mut rcc.ccipr);
     let mut user4_en = gpiog
@@ -154,6 +153,7 @@ pub fn init() -> Timer7Type {
         clocks,
         &mut apb1r1,
     );
+    let (tx,rx) = uart5.split();
     // Configuring used pins
     let user1_1 = gpiof
         .pf13
@@ -182,7 +182,11 @@ pub fn init() -> Timer7Type {
 
     // Initializing UART5 global variable
     cortex_m::interrupt::free(|cs| {
-        UART5.borrow(cs).replace(Some(uart5));
+        UART5TX.borrow(cs).replace(Some(tx));
     });
-    timer
+    // Initializing TIMER7 global variable
+    cortex_m::interrupt::free(|cs| {
+        TIMER2.borrow(cs).replace(Some(timer));
+    });
+    rx
 }

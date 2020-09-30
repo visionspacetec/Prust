@@ -330,6 +330,9 @@ impl PrimaryHeader {
         // read the data len directly as bytes since it is 2 bytes
         let data_len_: u16 = BigEndian::read_u16(&packet[4..6]);
         // return the created struct
+        if ver_no_ != 0{
+            return Err(Error::InvalidVersionNo);
+        } 
         Ok(PrimaryHeader {
             ver_no: ver_no_,
             type_flag: type_flag_,

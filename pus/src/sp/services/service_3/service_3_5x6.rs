@@ -116,7 +116,7 @@ impl SpacePacket<TcPacket<Service3_5x6>> {
         bytes
     }
 
-    pub(crate) fn from_bytes_service_3_5x6(buffer: &[u8]) -> Result<Self, Error> {
+    pub fn from_bytes_service_3_5x6(buffer: &[u8]) -> Result<Self, Error> {
         if buffer.len() < CONST_LEN_TOT {
             return Err(Error::InvalidPacket);
         }

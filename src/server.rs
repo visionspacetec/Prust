@@ -18,21 +18,25 @@ use hal::time::Hertz;
 use hal::timer::{Event, Timer};
 use nb; // for non blocking operations
 /// Alias for the UART5 connection and
-type UART5Con = serial::Serial<
+/* type UART5Con = serial::Serial<
     stm32::UART5,
     (
         PC12<Alternate<AF8, Input<Floating>>>,
         PD2<Alternate<AF8, Input<Floating>>>,
     ),
->;
-type Timer7Type = Timer<hal::device::TIM7>;
+>; */
+type UART5TXType = serial::Tx<stm32::UART5>;
+type UART5RXType = serial::Rx<stm32::UART5>;
+type Timer2Type = Timer<hal::device::TIM2>;
 
 static SHARED_PER: Mutex<RefCell<Option<SharedPeripherals>>> = Mutex::new(RefCell::new(None));
-static UART5: Mutex<RefCell<Option<UART5Con>>> = Mutex::new(RefCell::new(None));
+static UART5TX: Mutex<RefCell<Option<UART5TXType>>> = Mutex::new(RefCell::new(None));
+static TIMER2: Mutex<RefCell<Option<Timer2Type>>> = Mutex::new(RefCell::new(None));
 // REPORT_ID -> (PACKET,PERIODIC_REPORT_ENABLED)
 lazy_static! {
     pub static ref HK_REPORTS: Mutex<RefCell<HashMap<u8, (Tc3_1, bool)>>> =
         Mutex::new(RefCell::new(HashMap::new()));
+    
 }
 // NOTE: Right now we have one min sample collection interval
 const MIN_SAMPL_DIV: u32 = 100;
@@ -54,21 +58,21 @@ pub fn handle_packets() -> ! {
     /* FUNCTION MAP AREA END */
 
     // Initializing peripheral and internal resources
-    let mut timer7 = init();
+    let mut rx = init();
 
     /* Allocate a 1KB Heapless buffer*/
     let mut buffer: heapless::Vec<u8, consts::U1024> = heapless::Vec::new();
-    let mut data_len: usize = 0;
+    let mut data_len;
     loop {
         buffer.clear();
 
         // Writing to uart in Critical Section.
-        let result = cortex_m::interrupt::free(|cs| -> Result<(), ()> {
-            if let Some(uart5) = UART5.borrow(cs).try_borrow_mut().unwrap().as_mut() {
+        //let result = cortex_m::interrupt::free(|cs| -> Result<(), ()> {
+          //  if let Some(uart5) = UART5TX.borrow(cs).try_borrow_mut().unwrap().as_mut() {
                 // Getting primary header
                 for _i in 0..6 {
                     while is_not_ok_to_read_uart5() { /*inf loop*/ }
-                    let byte = nb::block!(uart5.read()).unwrap(); // if err wouldblock comes try again
+                    let byte = nb::block!(rx.read()).unwrap(); // if err wouldblock comes try again
 
                     if buffer.push(byte).is_err() {
                         // buffer full
@@ -79,7 +83,7 @@ pub fn handle_packets() -> ! {
                 let ph = match sp::PrimaryHeader::from_bytes(&buffer[0..6]) {
                     Ok(p) => p,
                     Err(_) => {
-                        return Err(());
+                        continue;
                     }
                 };
 
@@ -88,21 +92,21 @@ pub fn handle_packets() -> ! {
                 // getting the remaining of the pack
                 for _i in 0..data_len {
                     while is_not_ok_to_read_uart5() { /*inf loop*/ }
-                    let byte = nb::block!(uart5.read()).unwrap(); // if err wouldblock comes try again
+                    let byte = nb::block!(rx.read()).unwrap(); // if err wouldblock comes try again
 
                     if buffer.push(byte).is_err() {
                         // buffer full
                         panic!("buffer_full");
                     }
                 }
-                return Ok(());
+        /*         return Ok(());
             } else {
                 return Err(());
             }
-        });
-        if result.is_err() {
+        }); */
+        /* if result.is_err() {
             continue;
-        }
+        } */
 
         let data_len = data_len + 6;
 
@@ -169,9 +173,10 @@ pub fn handle_packets() -> ! {
         /* TC[3,27] GENERATE A ONE SHOT REPORT FOR HOUSEKEEPING PARAMETER REPORT STRUCTURES END*/
         } else if mes_type == (3, 5) || mes_type == (3, 6) {
             /* TC[3,5/6] ENABLE OR DISABLE PERIODIC GENERATION OF THE HOUSEKEEPING PARAMETER REPORT*/
-            let space_packet = match SpacePacket::from_bytes_service_3_5(&buffer[0..data_len]) {
+            let space_packet = match SpacePacket::from_bytes_service_3_5x6(&buffer[0..data_len]) {
                 Ok(sp) => sp,
                 Err(_) => {
+                    hprintln!("nonono").unwrap();
                     continue;
                 }
             };
@@ -181,14 +186,31 @@ pub fn handle_packets() -> ! {
                 for i in hk_params.iter() {
                     if let Some(ent) = hk_reports.get_mut(i) {
                         ent.1 = mes_type.1 == 5;
+                    } else {
+                        hprintln!("huhu").unwrap();
                     }
                 }
             });
             // if enabled listen to timer
             if mes_type.1 == 5 {
-                timer7.listen(Event::TimeOut);
+                // Listening to timer in critical section
+                cortex_m::interrupt::free(|cs| {
+                    if let Some(timer2) = TIMER2.borrow(cs).try_borrow_mut().unwrap().as_mut() {
+                        hprintln!("in here").unwrap();
+                        // write the report
+                        timer2.listen(Event::TimeOut);
+                        
+                    }
+                });
             } else {
-                timer7.unlisten(Event::TimeOut)
+                // Unlistening to timer in critical section
+                cortex_m::interrupt::free(|cs| {
+                    if let Some(timer2) = TIMER2.borrow(cs).try_borrow_mut().unwrap().as_mut() {
+                        // write the report
+                        hprintln!("not in here").unwrap();
+                        timer2.unlisten(Event::TimeOut);
+                    }
+                });
             }
         } else {
             continue;
@@ -196,7 +218,7 @@ pub fn handle_packets() -> ! {
 
         // Writing to uart in Critical Section.
         cortex_m::interrupt::free(|cs| {
-            if let Some(uart5) = UART5.borrow(cs).try_borrow_mut().unwrap().as_mut() {
+            if let Some(uart5) = UART5TX.borrow(cs).try_borrow_mut().unwrap().as_mut() {
                 // write the report
                 for &i in report_bytes.iter() {
                     while is_not_ok_to_write_uart5() {}
@@ -207,12 +229,31 @@ pub fn handle_packets() -> ! {
     }
 }
 #[interrupt]
-fn TIM7() {
+fn TIM2() {
     static mut COUNT: u32 = 0;
-    *COUNT += 1;
+    static mut PERIODIC_BUF:Vec<u8> = Vec::new();
 
+    *COUNT += 1;
     if *COUNT % MIN_SAMPL_DIV == 0 {
-        hprintln!("Hello !").unwrap();
+        //hprintln!("Hello !{}",*COUNT).unwrap();
         *COUNT = 0;
-    }
+    };
+    generate_periodic_report( PERIODIC_BUF);
+
+    free(|cs| {
+        if let Some(uart5) = UART5TX.borrow(cs).try_borrow_mut().unwrap().as_mut(){
+            // write the report
+            for &i in PERIODIC_BUF.iter() {
+                while is_not_ok_to_write_uart5() {}
+                nb::block!(uart5.write(i)).ok();
+            }
+        }
+        PERIODIC_BUF.clear();
+        if let Some (tim2) = TIMER2.borrow(cs).try_borrow_mut().unwrap().as_mut(){
+            //tim2.clear_interrupt(Event::TimeOut);
+            
+            tim2.clear_update_interrupt_flag();
+            //tim2.unlisten(Event::TimeOut);
+        }
+    });
 }
