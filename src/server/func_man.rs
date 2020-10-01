@@ -50,7 +50,7 @@ pub fn init() -> UART5RXType {
 
     // Enabling timer
     unsafe { NVIC::unmask(hal::stm32::Interrupt::TIM2) };
-    let timer = Timer::tim2(dp.TIM2, 1.hz(), clocks, &mut apb1r1);
+    let timer = Timer::tim2(dp.TIM2, MIN_SAMPL_DIV.hz(), clocks, &mut apb1r1);
     // Setting ADC1
     let adc1 = hal::adc::Adc::adc1(dp.ADC1, adc_cfg, &mut ahb2, &mut rcc.ccipr);
     let mut user4_en = gpiog
