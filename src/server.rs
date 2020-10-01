@@ -39,15 +39,15 @@ const SYS_FREQ: Hertz = Hertz { 0: 72_000_000 };
 pub mod func_man;
 /// Utility module for the temporary problem
 pub mod utils;
-use func_man::*;
+use func_man::{*,functions::*};
 use utils::*;
 
 // Function reads the packet and parses it and sends parsed packet.
 pub fn handle_packets() -> ! {
     /* FUNCTION MAP AREA START */
     let funcs: HashMap<FuncId, fn(&Vec<u8>) -> Result<(), Error>> = pus::map!(
-        create_func_id("turn_led") => turn_led as fn(&Vec::<u8>)->Result<(),Error>,
-        create_func_id("set_led") => set_led as fn(&Vec::<u8>)->Result<(),Error>
+        create_func_id("turn_led") => pre_turn_led as fn(&Vec::<u8>)->Result<(),Error>,
+        create_func_id("set_led") => pre_set_led as fn(&Vec::<u8>)->Result<(),Error>
     );
     /* FUNCTION MAP AREA END */
 

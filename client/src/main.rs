@@ -102,7 +102,7 @@ fn main(){
             ).collect();
             SpacePacket::new_service_3_1(
                 42, 0, 
-                report_id, 0, 
+                report_id, 1, 
                 params.len() as u8,params
             ).unwrap().to_bytes()
         }
