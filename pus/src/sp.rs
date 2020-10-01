@@ -411,14 +411,15 @@ impl<T: SpacePacketDataField> Request for SpacePacket<T> {
     }
 }
 
-pub fn get_service_type(header: &PrimaryHeader, buf: &[u8]) -> (u8, u8) {
-    if header.type_flag {
-        (0, 0)
+pub fn get_service_type(buf: &[u8]) -> Result<(u8, u8), ()> {
+    // unsupported
+    if buf.len() <= PrimaryHeader::PH_LEN + sp::tc::TcPacketHeader::TC_HEADER_LEN {
+        Err(())
     } else {
-        (
+        Ok((
             buf[PrimaryHeader::PH_LEN + 1],
             buf[PrimaryHeader::PH_LEN + 2],
-        )
+        ))
     }
 }
 

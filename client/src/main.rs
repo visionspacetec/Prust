@@ -27,7 +27,7 @@ fn main(){
     // CLI Setup
     let app = App::new("client")
         .arg(Arg::with_name("exit_after_n").short("n")
-            .number_of_values(1).default_value("2")
+            .number_of_values(1).default_value("-1")
             .help("Number of packets to recieve before termination")
         )
         .subcommand(
@@ -78,7 +78,7 @@ fn main(){
         .get_matches();
     
     // get the loop count
-    let mut n:u16 = app.value_of("exit_after_n").unwrap().parse().unwrap();
+    let mut n:i32 = app.value_of("exit_after_n").unwrap().parse().unwrap();
 
     // Matching subcommands
     let mes:Vec<u8> =  match app.subcommand() {
@@ -158,7 +158,7 @@ fn main(){
     std::thread::sleep(std::time::Duration::from_millis(100));
     clone.flush().unwrap();
     
-    while n > 0{
+    while n > 0 || n < 0{
         // Get response
         let mut buf:Vec<u8> = vec![0;1024];
         while clone.read_data_set_ready().unwrap() {};
@@ -171,12 +171,15 @@ fn main(){
         };
         
         let data_len = ph.get_data_len() + 1;
-        if clone.read_exact(&mut buf[6..data_len+6]).is_err(){
+        // if it exceeds the buffer ignore
+        if data_len + 6 > 1024 || clone.read_exact(&mut buf[6..data_len+6]).is_err(){
             continue;
         }
         let data_len = data_len + 6;
-        let ser_type = pus::sp::get_service_type(&ph,&buf[0..data_len]);
-
+        let ser_type = match pus::sp::get_service_type(&buf[0..data_len]){
+            Ok(res) => res,
+            _ => continue
+        };
         if ser_type == (1,7) {
             println!("TM SUCCESS RESPONSE");
             let res_pack = 
@@ -197,10 +200,12 @@ fn main(){
             println!("TM pack:\n{:#?}",res_pack);
             // Just for the demo
         } else{
-            println!("Other");
-            println!("{:?}",buf);
+            // if unrecognized ignore
+            continue;
         }
         println!("The packet recieved (in bytes):\n{:?}",&buf[0..data_len]);
-        n-=1;
+        if n > 0 {
+            n-=1;
+        }
     }
 }

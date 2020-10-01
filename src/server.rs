@@ -13,7 +13,8 @@ use heapless::consts; // for storing function names
 extern crate alloc; // link the allocator
 use core::cell::RefCell;
 use cortex_m::interrupt::{free, Mutex}; // for sharing PINS and resources
-use cortex_m_semihosting::hprintln;
+
+// use cortex_m_semihosting::hprintln;
 use hal::interrupt;
 use hal::time::Hertz;
 use hal::timer::{Event, Timer};
@@ -39,7 +40,7 @@ const SYS_FREQ: Hertz = Hertz { 0: 72_000_000 };
 pub mod func_man;
 /// Utility module for the temporary problem
 pub mod utils;
-use func_man::{*,functions::*};
+use func_man::{functions::*, *};
 use utils::*;
 
 // Function reads the packet and parses it and sends parsed packet.
@@ -62,18 +63,22 @@ pub fn handle_packets() -> ! {
 
         for _i in 0..6 {
             while is_not_ok_to_read_uart5() { /*inf loop*/ }
-            let byte = nb::block!(rx.read()).unwrap(); // if err wouldblock comes try again
+            let byte = match nb::block!(rx.read()) {
+                Ok(b) => b,
+                Err(_) => {
+                    continue; // TODO: Give warning
+                }
+            }; // if err wouldblock comes try again
 
             if buffer.push(byte).is_err() {
-                // buffer full
-                panic!("buffer_full");
+                continue; // TODO: Give warning
             }
         }
         // If invalid packet ignore
         let ph = match sp::PrimaryHeader::from_bytes(&buffer[0..6]) {
             Ok(p) => p,
             Err(_) => {
-                continue;
+                continue; // TODO: Give warning
             }
         };
 
@@ -81,12 +86,15 @@ pub fn handle_packets() -> ! {
 
         // getting the remaining of the pack
         for _i in 0..data_len {
-            while is_not_ok_to_read_uart5() { /*inf loop*/ }
-            let byte = nb::block!(rx.read()).unwrap(); // if err wouldblock comes try again
+            let byte = match nb::block!(rx.read()) {
+                Ok(b) => b,
+                Err(_) => {
+                    continue; // TODO: Give warning
+                }
+            }; // if err wouldblock comes try again
 
             if buffer.push(byte).is_err() {
-                // buffer full
-                panic!("buffer_full");
+                continue; // TODO: Give warning
             }
         }
 
@@ -104,15 +112,20 @@ pub fn handle_packets() -> ! {
                     continue;
                 }
             };
-            // in case of error
+            // in case of error after executing the func
             if let Err(e) = space_packet.exec_func(&funcs) {
                 let (err_code, err_data) = error::get_err_code_n_data(e);
                 let err_report =
-                    SpacePacket::<_>::new_service_1_8(&space_packet, 0, 0, err_code, err_data)
-                        .unwrap();
+                    match SpacePacket::new_service_1_8(&space_packet, 0, 0, err_code, err_data) {
+                        Ok(s) => s,
+                        Err(_) => continue, // TODO: Give a warning
+                    };
                 report_bytes.extend(err_report.to_bytes().iter());
             } else {
-                let exec_report = SpacePacket::<_>::new_service_1_7(&space_packet, 42, 0).unwrap();
+                let exec_report = match SpacePacket::new_service_1_7(&space_packet, 42, 0) {
+                    Ok(s) => s,
+                    Err(_) => continue, // TODO: Give warning
+                };
                 report_bytes.extend(exec_report.to_bytes().iter());
             }
 
@@ -122,9 +135,7 @@ pub fn handle_packets() -> ! {
 
             let space_packet = match Tc3_1::from_bytes(&buffer[0..data_len]) {
                 Ok(sp) => sp,
-                Err(_) => {
-                    continue;
-                }
+                Err(_) => continue, // TODO: Give warning
             };
             let exec_report = SpacePacket::<_>::new_service_1_7(&space_packet, 42, 0).unwrap();
             // TODO: Give error in case of duplicate
@@ -142,9 +153,7 @@ pub fn handle_packets() -> ! {
 
             let space_packet = match Tc3_27::from_bytes(&buffer[0..data_len]) {
                 Ok(sp) => sp,
-                Err(_) => {
-                    continue;
-                }
+                Err(_) => continue, // TODO: Give warning
             };
 
             generate_one_shot_report(&space_packet, &mut report_bytes);
@@ -157,10 +166,7 @@ pub fn handle_packets() -> ! {
             /* TC[3,5/6] ENABLE OR DISABLE PERIODIC GENERATION OF THE HOUSEKEEPING PARAMETER REPORT*/
             let space_packet = match SpacePacket::from_bytes_service_3_5x6(&buffer[0..data_len]) {
                 Ok(sp) => sp,
-                Err(_) => {
-                    hprintln!("nonono").unwrap();
-                    continue;
-                }
+                Err(_) => continue, // TODO: Give warning
             };
             let hk_params = space_packet.get_report_parameter_ids();
             free(|cs| {
@@ -168,8 +174,6 @@ pub fn handle_packets() -> ! {
                 for i in hk_params.iter() {
                     if let Some(ent) = hk_reports.get_mut(i) {
                         ent.1 = mes_type.1 == 5;
-                    } else {
-                        hprintln!("huhu").unwrap();
                     }
                 }
             });
@@ -178,8 +182,7 @@ pub fn handle_packets() -> ! {
                 // Listening to timer in critical section
                 cortex_m::interrupt::free(|cs| {
                     if let Some(timer2) = TIMER2.borrow(cs).try_borrow_mut().unwrap().as_mut() {
-                        hprintln!("in here").unwrap();
-                        // write the report
+                        // enable timer
                         timer2.listen(Event::TimeOut);
                     }
                 });
@@ -187,8 +190,7 @@ pub fn handle_packets() -> ! {
                 // Unlistening to timer in critical section
                 cortex_m::interrupt::free(|cs| {
                     if let Some(timer2) = TIMER2.borrow(cs).try_borrow_mut().unwrap().as_mut() {
-                        // write the report
-                        hprintln!("not in here").unwrap();
+                        // disable timer
                         timer2.unlisten(Event::TimeOut);
                     }
                 });
@@ -203,7 +205,9 @@ pub fn handle_packets() -> ! {
                 // write the report
                 for &i in report_bytes.iter() {
                     while is_not_ok_to_write_uart5() {}
-                    nb::block!(uart5.write(i)).ok();
+                    if let Err(_) = nb::block!(uart5.write(i)) {
+                        continue;
+                    }
                 }
             }
         });
@@ -213,19 +217,21 @@ pub fn handle_packets() -> ! {
 fn TIM2() {
     static mut PERIODIC_BUF: Vec<u8> = Vec::new();
 
+    PERIODIC_BUF.clear();
     generate_periodic_report(PERIODIC_BUF);
     // get in critical section
     free(|cs| {
-        if let Some(uart5) = UART5TX.borrow(cs).try_borrow_mut().unwrap().as_mut() {
-            // write the report
-            for &i in PERIODIC_BUF.iter() {
-                while is_not_ok_to_write_uart5() {}
-                nb::block!(uart5.write(i)).ok();
-            }
-        }
-        PERIODIC_BUF.clear();
         if let Some(tim2) = TIMER2.borrow(cs).try_borrow_mut().unwrap().as_mut() {
             tim2.clear_update_interrupt_flag();
+            if let Some(uart5) = UART5TX.borrow(cs).try_borrow_mut().unwrap().as_mut() {
+                // write the report
+                for &i in PERIODIC_BUF.iter() {
+                    while is_not_ok_to_write_uart5() {}
+                    if let Err(_) = nb::block!(uart5.write(i)) {
+                        return; // If error writing exit the interrupt handler after clearing the interrupt
+                    };
+                }
+            }
         }
     });
 }
