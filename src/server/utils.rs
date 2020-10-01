@@ -103,7 +103,7 @@ pub fn generate_periodic_report(report: &mut Vec<u8>) {
         for ent in hk_reports.iter() {
             // TODO: Doesn't check if invalid id
             match ent {
-                (struct_id,(sp, true)) => {
+                (struct_id, (sp, true)) => {
                     let mut res = Vec::<u8>::new();
                     for &p in sp.get_params().iter() {
                         // PAREMETERS ARE MATCHED HERE
@@ -121,9 +121,7 @@ pub fn generate_periodic_report(report: &mut Vec<u8>) {
                         }
                     }
 
-                    let tm3_25 = Tm3_25::new_service_3_25(
-                        42, 0, *struct_id, res.to_vec()
-                    );
+                    let tm3_25 = Tm3_25::new_service_3_25(42, 0, *struct_id, res.to_vec());
                     match tm3_25 {
                         Err(e) => {
                             let (err_code, err_data) = error::get_err_code_n_data(e);

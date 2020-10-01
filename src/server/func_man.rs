@@ -153,7 +153,7 @@ pub fn init() -> UART5RXType {
         clocks,
         &mut apb1r1,
     );
-    let (tx,rx) = uart5.split();
+    let (tx, rx) = uart5.split();
     // Configuring used pins
     let user1_1 = gpiof
         .pf13
