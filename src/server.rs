@@ -5,7 +5,8 @@ use hal::{
     serial, stm32,
 };
 use stm32l4xx_hal as hal; // HAL alias
-                          // Data structure utilities
+
+// Data structure utilities
 use alloc::{string::String, vec::Vec};
 use hashbrown::HashMap;
 use heapless::consts; // for storing function names
@@ -17,14 +18,8 @@ use hal::interrupt;
 use hal::time::Hertz;
 use hal::timer::{Event, Timer};
 use nb; // for non blocking operations
-/// Alias for the UART5 connection and
-/* type UART5Con = serial::Serial<
-    stm32::UART5,
-    (
-        PC12<Alternate<AF8, Input<Floating>>>,
-        PD2<Alternate<AF8, Input<Floating>>>,
-    ),
->; */
+
+// Type aliases
 type UART5TXType = serial::Tx<stm32::UART5>;
 type UART5RXType = serial::Rx<stm32::UART5>;
 type Timer2Type = Timer<hal::device::TIM2>;
@@ -65,10 +60,6 @@ pub fn handle_packets() -> ! {
     loop {
         buffer.clear();
 
-        // Writing to uart in Critical Section.
-        //let result = cortex_m::interrupt::free(|cs| -> Result<(), ()> {
-        //  if let Some(uart5) = UART5TX.borrow(cs).try_borrow_mut().unwrap().as_mut() {
-        // Getting primary header
         for _i in 0..6 {
             while is_not_ok_to_read_uart5() { /*inf loop*/ }
             let byte = nb::block!(rx.read()).unwrap(); // if err wouldblock comes try again
@@ -98,14 +89,6 @@ pub fn handle_packets() -> ! {
                 panic!("buffer_full");
             }
         }
-        /*         return Ok(());
-            } else {
-                return Err(());
-            }
-        }); */
-        /* if result.is_err() {
-            continue;
-        } */
 
         let data_len = data_len + 6;
 
@@ -228,16 +211,10 @@ pub fn handle_packets() -> ! {
 }
 #[interrupt]
 fn TIM2() {
-    static mut COUNT: u32 = 0;
     static mut PERIODIC_BUF: Vec<u8> = Vec::new();
 
-    *COUNT += 1;
-    if *COUNT % MIN_SAMPL_DIV == 0 {
-        //hprintln!("Hello !{}",*COUNT).unwrap();
-        *COUNT = 0;
-    };
     generate_periodic_report(PERIODIC_BUF);
-
+    // get in critical section
     free(|cs| {
         if let Some(uart5) = UART5TX.borrow(cs).try_borrow_mut().unwrap().as_mut() {
             // write the report
@@ -248,10 +225,7 @@ fn TIM2() {
         }
         PERIODIC_BUF.clear();
         if let Some(tim2) = TIMER2.borrow(cs).try_borrow_mut().unwrap().as_mut() {
-            //tim2.clear_interrupt(Event::TimeOut);
-
             tim2.clear_update_interrupt_flag();
-            //tim2.unlisten(Event::TimeOut);
         }
     });
 }
