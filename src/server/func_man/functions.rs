@@ -10,8 +10,7 @@ pub fn pre_turn_led(args: &Vec<u8>) -> Result<(), Error> {
     }
 }
 
-/// FuncId = "turn_led"
-/// Input = bool
+/// Uses user1_1 from SHARED_PER global variable.
 pub fn turn_led(turn: bool) -> Result<(), Error> {
     cortex_m::interrupt::free(|cs| -> Result<(), Error> {
         if turn {
@@ -44,8 +43,7 @@ pub fn pre_set_led(args: &Vec<u8>) -> Result<(), Error> {
         set_led(args[0], args[1] != 0)
     }
 }
-/// FuncId = "set_led"
-/// Input = u8,bool
+/// Uses user1_1, user1_2 from SHARED_PER global variable.
 pub fn set_led(led_no: u8, turn: bool) -> Result<(), Error> {
     cortex_m::interrupt::free(|cs| -> Result<(), Error> {
         if led_no == 0 {
