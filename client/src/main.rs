@@ -27,7 +27,7 @@ fn main(){
     // CLI Setup
     let app = App::new("client")
         .arg(Arg::with_name("exit_after_n").short("n")
-            .number_of_values(1).default_value("2")
+            .number_of_values(1).default_value("-1")
             .help("Number of packets to recieve before termination")
         )
         .subcommand(
@@ -56,12 +56,29 @@ fn main(){
             .arg(
                 Arg::with_name("hk_ids")
                 .min_values(1)
-                .help("Housekeeping structure to be reported")
+                .help("Housekeeping structure id to be reported")
             )
-        ).get_matches();
+        )
+        .subcommand(
+            SubCommand::with_name("periodic_en")
+            .about("Enables peridic report of parameters of the given struct ids")
+            .arg(
+                Arg::with_name("structure_ids").min_values(1)
+                .help("Housekeeping structure id to be configured")
+            )
+        )
+        .subcommand(
+            SubCommand::with_name("periodic_dis")
+            .about("Disables peridic report of parameters of the given struct ids")
+            .arg(
+                Arg::with_name("structure_ids").min_values(1)
+                .help("Housekeeping structure id to be configured")
+            )
+        )
+        .get_matches();
     
     // get the loop count
-    let mut n:u16 = app.value_of("exit_after_n").unwrap().parse().unwrap();
+    let mut n:i32 = app.value_of("exit_after_n").unwrap().parse().unwrap();
 
     // Matching subcommands
     let mes:Vec<u8> =  match app.subcommand() {
@@ -85,9 +102,21 @@ fn main(){
             ).collect();
             SpacePacket::new_service_3_1(
                 42, 0, 
-                report_id, 0, 
+                report_id, 1, 
                 params.len() as u8,params
             ).unwrap().to_bytes()
+        }
+        ("periodic_en",Some(ids)) => {
+            let ids:Vec<u8> = ids.values_of("structure_ids").unwrap().map(
+                |s| s.parse::<u8>().unwrap()
+            ).collect();
+            SpacePacket::new_service_3_5(42, 0, ids.len() as u8,ids).unwrap().to_bytes()
+        }
+        ("periodic_dis",Some(ids)) => {
+            let ids:Vec<u8> = ids.values_of("structure_ids").unwrap().map(
+                |s| s.parse::<u8>().unwrap()
+            ).collect();
+            SpacePacket::new_service_3_6(42, 0, ids.len() as u8,ids).unwrap().to_bytes()
         }
         ("one_shot",Some(shot_matches)) => {
             let params:Vec<u8> = shot_matches.values_of("hk_ids").unwrap()
@@ -129,21 +158,28 @@ fn main(){
     std::thread::sleep(std::time::Duration::from_millis(100));
     clone.flush().unwrap();
     
-    while n > 0{
+    while n > 0 || n < 0{
         // Get response
         let mut buf:Vec<u8> = vec![0;1024];
         while clone.read_data_set_ready().unwrap() {};
         if clone.read_exact(&mut buf[0..6]).is_err(){
             continue;
         };
-        let ph = pus::sp::PrimaryHeader::from_bytes(&buf[0..6]).unwrap();
+        let ph = match  pus::sp::PrimaryHeader::from_bytes(&buf[0..6]) {
+            Ok(p) => {p}
+            Err(_) => {continue;}
+        };
+        
         let data_len = ph.get_data_len() + 1;
-        if clone.read_exact(&mut buf[6..data_len+6]).is_err(){
+        // if it exceeds the buffer ignore
+        if data_len + 6 > 1024 || clone.read_exact(&mut buf[6..data_len+6]).is_err(){
             continue;
         }
         let data_len = data_len + 6;
-        let ser_type = pus::sp::get_service_type(&ph,&buf[0..data_len]);
-
+        let ser_type = match pus::sp::get_service_type(&buf[0..data_len]){
+            Ok(res) => res,
+            _ => continue
+        };
         if ser_type == (1,7) {
             println!("TM SUCCESS RESPONSE");
             let res_pack = 
@@ -164,10 +200,12 @@ fn main(){
             println!("TM pack:\n{:#?}",res_pack);
             // Just for the demo
         } else{
-            println!("Other");
-            println!("{:?}",buf);
+            // if unrecognized ignore
+            continue;
         }
         println!("The packet recieved (in bytes):\n{:?}",&buf[0..data_len]);
-        n-=1;
+        if n > 0 {
+            n-=1;
+        }
     }
 }

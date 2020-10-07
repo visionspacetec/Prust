@@ -1,5 +1,5 @@
 use super::*;
-use alloc::{string::String,vec::Vec};
+use alloc::{string::String, vec::Vec};
 // Each packet transporting a request verification report shall be of service type 1.
 pub mod service_1;
 // Each packet transporting a housekeeping message shall be of service type 3.
