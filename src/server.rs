@@ -58,7 +58,7 @@ pub fn handle_packets() -> ! {
     /* Allocate a 1KB Heapless buffer*/
     let mut buffer: heapless::Vec<u8, consts::U1024> = heapless::Vec::new();
     let mut data_len;
-    loop {
+    'main: loop {
         buffer.clear();
 
         for _i in 0..6 {
@@ -66,12 +66,12 @@ pub fn handle_packets() -> ! {
             let byte = match nb::block!(rx.read()) {
                 Ok(b) => b,
                 Err(_) => {
-                    continue; // TODO: Give warning
+                    continue 'main; // TODO: Give warning
                 }
             }; // if err wouldblock comes try again
 
             if buffer.push(byte).is_err() {
-                continue; // TODO: Give warning
+                continue 'main; // TODO: Give warning
             }
         }
         // If invalid packet ignore
@@ -89,19 +89,23 @@ pub fn handle_packets() -> ! {
             let byte = match nb::block!(rx.read()) {
                 Ok(b) => b,
                 Err(_) => {
-                    continue; // TODO: Give warning
+                    continue 'main; // TODO: Give warning
                 }
             }; // if err wouldblock comes try again
 
             if buffer.push(byte).is_err() {
-                continue; // TODO: Give warning
+                continue 'main; // TODO: Give warning
             }
         }
 
         let data_len = data_len + 6;
 
         let mut report_bytes: Vec<u8> = Vec::new();
-        let mes_type = mes_type_from_bytes(&buffer[0..data_len]);
+        let mes_type = match pus::sp::get_service_type(&buffer[0..data_len]) {
+            Ok(m) => m,
+            _ => continue, // TODO: Give warning
+        };
+
         if mes_type == (8, 1) {
             /* TC[8,1] PERFORM A FUNCTION START */
 
@@ -169,29 +173,31 @@ pub fn handle_packets() -> ! {
                 Err(_) => continue, // TODO: Give warning
             };
             let hk_params = space_packet.get_report_parameter_ids();
+            let mut toggled_timer = false;
             free(|cs| {
                 let mut hk_reports = HK_REPORTS.borrow(cs).try_borrow_mut().unwrap();
                 for i in hk_params.iter() {
                     if let Some(ent) = hk_reports.get_mut(i) {
-                        ent.1 = mes_type.1 == 5;
+                        if ent.1 != (mes_type.1 == 5) {
+                            // toggle if you have to else do nothing
+                            ent.1 = mes_type.1 == 5;
+                            toggled_timer = true;
+                        }
                     }
                 }
             });
             // if enabled listen to timer
-            if mes_type.1 == 5 {
-                // Listening to timer in critical section
+            if toggled_timer {
+                // Listening or Unlistening to timer in critical section
                 cortex_m::interrupt::free(|cs| {
                     if let Some(timer2) = TIMER2.borrow(cs).try_borrow_mut().unwrap().as_mut() {
-                        // enable timer
-                        timer2.listen(Event::TimeOut);
-                    }
-                });
-            } else {
-                // Unlistening to timer in critical section
-                cortex_m::interrupt::free(|cs| {
-                    if let Some(timer2) = TIMER2.borrow(cs).try_borrow_mut().unwrap().as_mut() {
-                        // disable timer
-                        timer2.unlisten(Event::TimeOut);
+                        if mes_type.1 == 5 {
+                            // enable timer
+                            timer2.listen(Event::TimeOut);
+                        } else {
+                            // disable timer
+                            timer2.unlisten(Event::TimeOut);
+                        }
                     }
                 });
             }

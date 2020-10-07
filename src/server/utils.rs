@@ -34,13 +34,6 @@ pub fn _is_oversampling8() -> bool {
 pub fn _get_baudrate() -> u32 {
     *unsafe { &(*hal::stm32::UART5::ptr()).brr.read().bits() }
 }
-// if its tm or tc
-pub fn mes_type_from_bytes(buf: &[u8]) -> (u8, u8) {
-    (
-        buf[PrimaryHeader::PH_LEN + 1],
-        buf[PrimaryHeader::PH_LEN + 2],
-    )
-}
 
 pub fn get_param_0() -> Result<u16, Error> {
     cortex_m::interrupt::free(|cs| -> Result<u16, Error> {
