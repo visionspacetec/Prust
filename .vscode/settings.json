@@ -1,0 +1,16 @@
+{
+   
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/*/**": true,
+        "**/target/*/**":true,
+        "**/prust-embedded*/**":true
+    },
+    "rust-client.engine":"rust-analyzer",
+    "rust-analyzer.cargo.target": "thumbv7em-none-eabihf",
+    "rust-analyzer.checkOnSave.allTargets": false,
+    "rust-analyzer.cargo.loadOutDirsFromCheck": true,
+    "rust-analyzer.procMacro.enable": true,
+}
+

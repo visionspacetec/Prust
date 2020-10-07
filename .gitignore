@@ -1,6 +1,5 @@
 /target
 /src/bin/play.rs
-/.vscode
 /.idea
 /packet.bin
 /prust-embedded/echo-stm32l476
