@@ -34,7 +34,7 @@ lazy_static! {
         Mutex::new(RefCell::new(HashMap::new()));
 }
 // NOTE: Right now we have one min sample collection interval
-const MIN_SAMPL_DIV: u32 = 100;
+const MIN_SAMPL_DIV: u32 = 20;
 const SYS_FREQ: Hertz = Hertz { 0: 72_000_000 };
 
 pub mod func_man;

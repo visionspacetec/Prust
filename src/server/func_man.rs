@@ -1,6 +1,6 @@
 use super::*;
 use cortex_m::peripheral::NVIC;
-use hal::adc::Adc;
+use hal::adc::{OversamplingShift,RegularOversampling,Adc};
 use stm32::ADC1;
 
 const BLANK_VEC: [u8; FUNC_ID_LEN] = [0 as u8; FUNC_ID_LEN];
@@ -52,7 +52,9 @@ pub fn init() -> UART5RXType {
     unsafe { NVIC::unmask(hal::stm32::Interrupt::TIM2) };
     let timer = Timer::tim2(dp.TIM2, MIN_SAMPL_DIV.hz(), clocks, &mut apb1r1);
     // Setting ADC1
-    let adc1 = hal::adc::Adc::adc1(dp.ADC1, adc_cfg, &mut ahb2, &mut rcc.ccipr);
+    let mut adc1 = hal::adc::Adc::adc1(dp.ADC1, adc_cfg, &mut ahb2, &mut rcc.ccipr);
+    adc1.set_oversampling_shift(OversamplingShift::S0);
+    adc1.set_regular_oversampling(RegularOversampling::On);
     let mut user4_en = gpiog
         .pg12
         .into_push_pull_output(&mut gpiog.moder, &mut gpiog.otyper)

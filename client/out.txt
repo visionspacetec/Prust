@@ -1,0 +1,6650 @@
+TM SUCCESS RESPONSE
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 14,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 1,
+            message_subtype: 7,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: ServiceSuccess {
+                request_id: RequestId {
+                    ver_no: 0,
+                    packet_type: true,
+                    sec_header_flag: true,
+                    apid: 42,
+                    seq_flags: (
+                        true,
+                        true,
+                    ),
+                    packet_seq_count: 0,
+                },
+            },
+        },
+    },
+}
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 14, 32, 1, 7, 0, 0, 0, 42, 0, 0, 24, 42, 192, 0, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    19,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:531
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 19, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    18,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:530
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 18, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    16,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:528
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 16, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    13,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:525
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 13, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    18,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:530
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 18, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    13,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:525
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 13, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    21,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:533
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 21, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    19,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:531
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 19, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    20,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:532
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 20, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    22,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:534
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 22, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    12,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:524
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 12, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    18,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:530
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 18, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    27,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:539
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 27, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    16,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:528
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 16, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    17,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:529
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 17, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    20,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:532
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 20, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    16,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:528
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 16, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    12,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:524
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 12, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    21,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:533
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 21, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    19,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:531
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 19, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    13,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:525
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 13, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    17,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:529
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 17, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    16,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:528
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 16, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    19,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:531
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 19, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    18,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:530
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 18, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    21,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:533
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 21, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    18,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:530
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 18, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    15,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:527
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 15, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    21,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:533
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 21, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    25,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:537
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 25, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    19,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:531
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 19, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    18,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:530
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 18, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    19,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:531
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 19, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    24,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:536
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 24, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    16,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:528
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 16, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    15,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:527
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 15, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    25,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:537
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 25, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    19,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:531
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 19, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    15,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:527
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 15, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    18,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:530
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 18, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    16,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:528
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 16, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    24,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:536
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 24, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    17,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:529
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 17, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    23,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:535
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 23, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    27,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:539
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 27, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    15,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:527
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 15, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    20,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:532
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 20, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    19,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:531
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 19, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    21,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:533
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 21, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    21,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:533
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 21, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    18,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:530
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 18, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    15,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:527
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 15, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    26,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:538
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 26, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    20,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:532
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 20, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    19,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:531
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 19, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    23,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:535
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 23, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    15,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:527
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 15, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    13,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:525
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 13, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    15,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:527
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 15, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    12,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:524
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 12, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    25,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:537
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 25, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    20,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:532
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 20, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    21,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:533
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 21, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    21,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:533
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 21, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    26,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:538
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 26, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    24,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:536
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 24, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    21,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:533
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 21, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    25,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:537
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 25, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    9,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:521
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 9, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    16,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:528
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 16, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    15,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:527
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 15, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    20,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:532
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 20, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    23,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:535
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 23, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    27,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:539
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 27, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    16,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:528
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 16, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    12,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:524
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 12, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    15,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:527
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 15, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    25,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:537
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 25, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    23,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:535
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 23, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    23,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:535
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 23, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    25,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:537
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 25, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    23,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:535
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 23, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    20,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:532
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 20, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    19,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:531
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 19, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    15,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:527
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 15, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    15,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:527
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 15, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    20,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:532
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 20, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    16,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:528
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 16, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    16,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:528
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 16, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    30,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:542
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 30, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    16,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:528
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 16, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    19,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:531
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 19, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    25,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:537
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 25, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    20,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:532
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 20, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    21,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:533
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 21, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    16,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:528
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 16, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    15,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:527
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 15, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    17,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:529
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 17, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    25,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:537
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 25, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    30,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:542
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 30, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    14,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:526
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 14, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    19,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:531
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 19, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    23,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:535
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 23, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    14,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:526
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 14, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    25,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:537
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 25, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    26,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:538
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 26, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    17,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:529
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 17, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    21,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:533
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 21, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    24,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:536
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 24, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    23,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:535
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 23, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    19,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:531
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 19, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    30,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:542
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 30, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    29,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:541
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 29, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    13,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:525
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 13, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    17,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:529
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 17, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    26,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:538
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 26, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    20,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:532
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 20, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    26,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:538
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 26, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    15,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:527
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 15, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    26,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:538
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 26, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    32,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:544
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 32, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    22,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:534
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 22, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    29,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:541
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 29, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    15,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:527
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 15, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    27,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:539
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 27, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    19,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:531
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 19, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    21,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:533
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 21, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    19,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:531
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 19, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    22,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:534
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 22, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    25,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:537
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 25, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    23,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:535
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 23, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    20,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:532
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 20, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    31,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:543
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 31, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    18,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:530
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 18, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    26,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:538
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 26, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    24,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:536
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 24, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    17,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:529
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 17, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    20,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:532
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 20, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    14,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:526
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 14, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    16,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:528
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 16, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    20,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:532
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 20, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    21,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:533
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 21, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    29,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:541
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 29, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    24,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:536
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 24, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    19,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:531
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 19, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    25,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:537
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 25, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    14,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:526
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 14, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    24,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:536
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 24, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    24,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:536
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 24, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    16,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:528
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 16, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    24,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:536
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 24, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    24,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:536
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 24, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    18,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:530
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 18, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    14,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:526
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 14, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    19,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:531
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 19, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    19,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:531
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 19, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    23,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:535
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 23, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    23,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:535
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 23, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    21,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:533
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 21, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    18,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:530
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 18, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    19,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:531
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 19, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    22,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:534
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 22, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    28,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:540
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 28, 0, 0]
+Tm Parameter Response
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 13,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 3,
+            message_subtype: 25,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: Service3_25 {
+                housekeeping_id: 0,
+                parameter_value: [
+                    2,
+                    20,
+                ],
+            },
+        },
+    },
+}
+PERIPHERAL VALUE RECIEVED:532
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 13, 32, 3, 25, 0, 0, 0, 42, 0, 0, 0, 2, 20, 0, 0]
+TM SUCCESS RESPONSE
+TM pack:
+SpacePacket {
+    primary_header: PrimaryHeader {
+        ver_no: 0,
+        type_flag: false,
+        sec_header_flag: true,
+        apid: 42,
+        seq_flags: (
+            true,
+            true,
+        ),
+        packet_name: 0,
+        data_len: 14,
+    },
+    data: TmPacket {
+        header: TmPacketHeader {
+            pus_ver_no: 2,
+            time_ref_status: 0,
+            service_type: 1,
+            message_subtype: 7,
+            message_type_counter: 0,
+            destination_id: 42,
+            abs_time: 0,
+        },
+        user_data: TxUserData {
+            packet_error_control: 0,
+            data: ServiceSuccess {
+                request_id: RequestId {
+                    ver_no: 0,
+                    packet_type: true,
+                    sec_header_flag: true,
+                    apid: 42,
+                    seq_flags: (
+                        true,
+                        true,
+                    ),
+                    packet_seq_count: 0,
+                },
+            },
+        },
+    },
+}
+The packet recieved (in bytes):
+[8, 42, 192, 0, 0, 14, 32, 1, 7, 0, 0, 0, 42, 0, 0, 24, 42, 192, 0, 0, 0]
