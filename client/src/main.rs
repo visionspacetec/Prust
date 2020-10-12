@@ -7,10 +7,12 @@ use std::string::String;
 use std::thread;
 use std::time::Duration;
 extern crate clap;
-use clap::{App, Arg, SubCommand};
+use clap::{App, AppSettings, Arg, SubCommand};
 use std::fs::File;
 use std::io::prelude::*;
 use std::path::Path;
+use rustyline::{config::Configurer, error::ReadlineError};
+use rustyline::Editor;
 
 const ERROR_NAMES: [&str; pus::error::ERR_CODE_COUNT] = [
     "UnsupportedRequest",
@@ -29,17 +31,20 @@ const ERROR_NAMES: [&str; pus::error::ERR_CODE_COUNT] = [
 ];
 fn main() {
     // CLI Setup
-    let app = App::new("tc")
+    let app = App::new("tc").global_setting(AppSettings::NoBinaryName)
+        .subcommand(
+            SubCommand::with_name("q").about("quit")
+        )
         .subcommand(
             SubCommand::with_name("exec_func")
                 .about("Sends a request to execute a function defined")
                 .arg(
-                    Arg::with_name("func_name")
+                    Arg::with_name("func_name").required(true)
                         .help("func_id of the function")
                         .number_of_values(1),
                 )
                 .arg(
-                    Arg::with_name("args")
+                    Arg::with_name("args").required(true)
                         .min_values(0)
                         .help("arguments of the function"),
                 ),
@@ -49,11 +54,11 @@ fn main() {
                 .about("Creates new housekeeping report structure")
                 .arg(
                     Arg::with_name("hk_id")
-                        .number_of_values(1)
+                        .number_of_values(1).required(true)
                         .help("housekeeping structure id"),
                 )
                 .arg(
-                    Arg::with_name("param_ids")
+                    Arg::with_name("param_ids").required(true)
                         .min_values(1)
                         .help("parameters that will be reported in this structure"),
                 ),
@@ -62,7 +67,7 @@ fn main() {
             SubCommand::with_name("one_shot")
                 .about("Sends a one shot request for the specified hk id")
                 .arg(
-                    Arg::with_name("hk_ids")
+                    Arg::with_name("hk_ids").required(true)
                         .min_values(1)
                         .help("Housekeeping structure id to be reported"),
                 ),
@@ -71,8 +76,8 @@ fn main() {
             SubCommand::with_name("periodic_en")
                 .about("Enables peridic report of parameters of the given struct ids")
                 .arg(
-                    Arg::with_name("structure_ids")
-                        .min_values(1)
+                    Arg::with_name("structure_ids").required(true)
+                        .min_values(1).required(true)
                         .help("Housekeeping structure id to be configured"),
                 ),
         )
@@ -80,13 +85,16 @@ fn main() {
             SubCommand::with_name("periodic_dis")
                 .about("Disables peridic report of parameters of the given struct ids")
                 .arg(
-                    Arg::with_name("structure_ids")
+                    Arg::with_name("structure_ids").required(true)
                         .min_values(1)
                         .help("Housekeeping structure id to be configured"),
                 ),
         );
 
-    
+    let mut rl = Editor::<()>::new();
+    rl.set_auto_add_history(true);
+
+
     // Etablishing serial connetion
     let s = SerialPortSettings {
         baud_rate: 57_600,
@@ -194,14 +202,37 @@ fn main() {
 
     // send tc
     loop {
-        print!("> ");
-        std::io::stdout().flush().expect("Couldn't flush stdout");
-        let mut input = String::new();
-        std::io::stdin()
-            .read_line(&mut input)
-            .expect("Error reading input.");
+        //print!("> ");
+        //std::io::stdout().flush().expect("Couldn't flush stdout");
+        //let mut input = String::new();
+        // std::io::stdin()
+        //    .read_line(&mut input)
+        //    .expect("Error reading input.");
+        let input = match rl.readline(">> ") 
+         {
+            Ok(l) => l,
+            Err(ReadlineError::Interrupted) => {
+                println!("CTRL-C");
+                std::process::exit(0x0000)
+            },
+            Err(ReadlineError::Eof) => {
+                println!("CTRL-D");
+                std::process::exit(0x0000)
+            },
+            Err(err) => {
+                println!("Error: {:?}", err);
+                std::process::exit(0x0100)
+            }
+
+         };
         let args: Vec<&str> = input.split_ascii_whitespace().collect();
-        let matc = app.clone().get_matches_from(args);
+        let matc = match app.clone().get_matches_from_safe(args){
+            Ok(m)=> m,
+            Err(e) => {
+                println!("{}",e.message); 
+                continue
+            }
+        };
 
         // Matching subcommands
         let mes: Vec<u8> = match matc.subcommand() {
@@ -209,7 +240,7 @@ fn main() {
                 let func_id = exec_matches.value_of("func_name").unwrap();
                 let args_field: Vec<u8> = exec_matches
                     .values_of("args")
-                    .unwrap()
+                    .unwrap_or_default()
                     .map(|s| s.parse::<u8>().unwrap())
                     .collect();
                 SpacePacket::new_service_8_1(
@@ -266,6 +297,9 @@ fn main() {
                 SpacePacket::new_service_3_27(42, 0, params.len() as u8, params)
                     .unwrap()
                     .to_bytes()
+            }
+            ("q",_) => {
+                std::process::exit(0x0000)
             }
             _ => Vec::new(),
         };

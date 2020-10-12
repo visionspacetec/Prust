@@ -18,7 +18,7 @@ pub fn turn_led(turn: bool) -> Result<(), Error> {
                 .borrow(cs)
                 .try_borrow_mut()?
                 .as_mut()?
-                .user1_1
+                .leds[0]
                 .set_high()
                 .unwrap();
             Ok(())
@@ -27,7 +27,7 @@ pub fn turn_led(turn: bool) -> Result<(), Error> {
                 .borrow(cs)
                 .try_borrow_mut()?
                 .as_mut()?
-                .user1_1
+                .leds[0]
                 .set_low()
                 .unwrap();
             Ok(())
@@ -37,7 +37,7 @@ pub fn turn_led(turn: bool) -> Result<(), Error> {
 
 /// Parses the arguments for turn_led
 pub fn pre_set_led(args: &Vec<u8>) -> Result<(), Error> {
-    if args.len() != 2 {
+    if args.len() != 2 && usize::from(args[1]) < LED_COUNT{
         return Err(Error::InvalidArg);
     } else {
         set_led(args[0], args[1] != 0)
@@ -46,48 +46,25 @@ pub fn pre_set_led(args: &Vec<u8>) -> Result<(), Error> {
 /// Uses user1_1, user1_2 from SHARED_PER global variable.
 pub fn set_led(led_no: u8, turn: bool) -> Result<(), Error> {
     cortex_m::interrupt::free(|cs| -> Result<(), Error> {
-        if led_no == 0 {
-            if turn {
-                SHARED_PER
-                    .borrow(cs)
-                    .try_borrow_mut()?
-                    .as_mut()?
-                    .user1_1
-                    .set_high()
-                    .unwrap();
-                Ok(())
-            } else {
-                SHARED_PER
-                    .borrow(cs)
-                    .try_borrow_mut()?
-                    .as_mut()?
-                    .user1_1
-                    .set_low()
-                    .unwrap();
-                Ok(())
-            }
-        } else if led_no == 1 {
-            if turn {
-                SHARED_PER
-                    .borrow(cs)
-                    .try_borrow_mut()?
-                    .as_mut()?
-                    .user1_2
-                    .set_high()
-                    .unwrap();
-                Ok(())
-            } else {
-                SHARED_PER
-                    .borrow(cs)
-                    .try_borrow_mut()?
-                    .as_mut()?
-                    .user1_2
-                    .set_low()
-                    .unwrap();
-                Ok(())
-            }
+
+        if turn {
+            SHARED_PER
+                .borrow(cs)
+                .try_borrow_mut()?
+                .as_mut()?
+                .leds[led_no as usize]
+                .set_high()
+                .unwrap();
+            Ok(())
         } else {
-            Err(Error::InvalidArg)
+            SHARED_PER
+                .borrow(cs)
+                .try_borrow_mut()?
+                .as_mut()?
+                .leds[led_no as usize]
+                .set_low()
+                .unwrap();
+            Ok(())
         }
     })
 }

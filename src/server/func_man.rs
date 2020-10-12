@@ -14,12 +14,12 @@ pub fn create_func_id(name: &str) -> FuncId {
 
 pub mod functions;
 
+const LED_COUNT:usize = 3;
 /// Change Here If An External Function Needs To Access Peripheral Data
 pub struct SharedPeripherals {
     pub user1_en: PCx<Output<PushPull>>,
     pub user4_en: PGx<Output<PushPull>>,
-    pub user1_1: PFx<Output<PushPull>>,
-    pub user1_2: PFx<Output<PushPull>>,
+    pub leds: [PFx<Output<PushPull>>;LED_COUNT],
     pub adc1: Adc<ADC1>,
     pub user4_4: PC5<Analog>,
 }
@@ -55,6 +55,10 @@ pub fn init() -> UART5RXType {
     let mut adc1 = hal::adc::Adc::adc1(dp.ADC1, adc_cfg, &mut ahb2, &mut rcc.ccipr);
     adc1.set_oversampling_shift(OversamplingShift::S0);
     adc1.set_regular_oversampling(RegularOversampling::On);
+    let mut user3_en = gpiog
+        .pg15
+        .into_push_pull_output(&mut gpiog.moder, &mut gpiog.otyper)
+        .downgrade();
     let mut user4_en = gpiog
         .pg12
         .into_push_pull_output(&mut gpiog.moder, &mut gpiog.otyper)
@@ -66,6 +70,7 @@ pub fn init() -> UART5RXType {
     // Setting enable pins
     user4_en.set_high().unwrap();
     user1_en.set_high().unwrap();
+    user3_en.set_high().unwrap();
     // Enabling uart
     let uart5 = hal::serial::Serial::uart5(
         dp.UART5,
@@ -86,19 +91,24 @@ pub fn init() -> UART5RXType {
     let user1_2 = gpiof
         .pf15
         .into_push_pull_output(&mut gpiof.moder, &mut gpiof.otyper)
+        .downgrade();  
+    let user3_1 = gpiof
+        .pf12
+        .into_push_pull_output(&mut gpiof.moder, &mut gpiof.otyper)
         .downgrade();
+
+    let leds = [user1_1, user1_2, user3_1];
+
     let user4_4 = gpioc
         .pc5
         .into_analog_with_adc(&mut gpioc.moder, &mut gpioc.pupdr);
-
     // Replacing the Shared Peripheral
     // Also change here to if you changed SharedPeripherals
     cortex_m::interrupt::free(|cs| {
         SHARED_PER.borrow(cs).replace(Some(SharedPeripherals {
             user1_en,
             user4_en,
-            user1_1,
-            user1_2,
+            leds,
             adc1,
             user4_4,
         }));
