@@ -304,7 +304,7 @@ fn main() {
             _ => Vec::new(),
         };
         if mes.len() == 0 {
-            panic!("Enter a valid subcommand");
+            continue;
         }
         // printing the message send
         println!("The packet send:\n{:?}", mes);
