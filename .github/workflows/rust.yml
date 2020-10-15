@@ -1,0 +1,31 @@
+name: Rust
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: |
+        sudo apt-get install snapd pkg-config libusb-1.0-0-dev libudev-dev libftdi1-dev
+        sudo snap install rustup --classic
+        rustup override set nightly
+        cargo install cargo-flash
+        cargo install cargo-binutils
+        rustup component add llvm-tools-preview
+        rustup target add thumbv7em-none-eabihf
+    - name: Build
+      run: cargo build --verbose
+    - name: Run tests
+      run: cargo utest --verbose
