@@ -2,6 +2,8 @@
    <img src="https://www.visionspace.com/img/VISIONSPACE_HZ_BLACK_HR.png" alt="visionspace logo" title="visionspace_cicd" align="right" height="25px" />
 </a>
 
+Prust is a contraction of **P**US and **Rust**, and is the codename for the [PUS-C](https://ecss.nl/standard/ecss-e-st-70-41c-space-engineering-telemetry-and-telecommand-packet-utilization-15-april-2016/) implementation in the reliable [Rust](https://www.rust-lang.org/) programming language. 
+
 # Prust
 There is a github wiki provided with explanations about how to use this project please refer to the links below for more information;
 * [How To Run This Project](https://github.com/visionspacetec/Prust/wiki/How-to-Run-This-Project)
