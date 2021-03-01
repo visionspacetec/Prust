@@ -4,20 +4,21 @@
 
 Prust is a contraction of **P**US and **Rust**, and is the codename for the [PUS-C](https://ecss.nl/standard/ecss-e-st-70-41c-space-engineering-telemetry-and-telecommand-packet-utilization-15-april-2016/) implementation in the reliable [Rust](https://www.rust-lang.org/) programming language. 
 
-# Prust
 <!-- There is a github wiki provided with explanations about how to use this project please refer to the links below for more information;
 * [How To Run This Project](https://github.com/visionspacetec/Prust/wiki/How-to-Run-This-Project)
 * [How to Use the Client Crate](https://github.com/visionspacetec/Prust/wiki/How-to-Use-the-Client-Crate)
 * [How to Add a Function](https://github.com/visionspacetec/Prust/wiki/How-to-Add-a-Function) -->
 PUS packets as Rust data-structures. Used by Prust-Test and Prust-Core. Can be used to interpret tc/tm packets. 
-Requires this.
-```
-rustup target add thumbv7em-none-eabihf
-```
-It's built like this.
-```
-cargo build --target thumbv7em-none-eabihf
-```
+Here are the modules and submodules for Prust:
+
+- [Prust](https://github.com/visionspacetec/Prust): This module. PUS-C data structures.  
+- [Prust-Test](https://github.com/visionspacetec/Prust-Test): To test the whole project.
+- [Prust-RTOS-Gen](https://github.com/visionspacetec/Prust-RTOS-Gen): Complete project as Stm32CubeIde project.
+- [Prust-RTOS](https://github.com/visionspacetec/Prust-RTOS): RTOS application part.
+
+# Build
+
+See [Prust-RTOS-Gen](https://github.com/visionspacetec/Prust-RTOS-Gen) to build the complete project.
 
 
 ## Contributing
