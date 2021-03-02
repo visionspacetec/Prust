@@ -8,17 +8,15 @@ Prust is a contraction of **P**US and **Rust**, and is the codename for the [PUS
 * [How To Run This Project](https://github.com/visionspacetec/Prust/wiki/How-to-Run-This-Project)
 * [How to Use the Client Crate](https://github.com/visionspacetec/Prust/wiki/How-to-Use-the-Client-Crate)
 * [How to Add a Function](https://github.com/visionspacetec/Prust/wiki/How-to-Add-a-Function) -->
-PUS packets as Rust data-structures. Used by Prust-Test and Prust-Core. Can be used to interpret tc/tm packets. 
-Here are the modules and submodules for Prust:
-
+PUS packets as Rust data-structures. Can be used to interpret tc/tm packets.   
+Here are the modules and submodules for Prust:  
 - [Prust](https://github.com/visionspacetec/Prust): This module. PUS-C data structures.  
 - [Prust-Test](https://github.com/visionspacetec/Prust-Test): To test the whole project.
 - [Prust-RTOS-Gen](https://github.com/visionspacetec/Prust-RTOS-Gen): Complete project as Stm32CubeIde project.
 - [Prust-RTOS](https://github.com/visionspacetec/Prust-RTOS): RTOS application part.
 
-# Build
-
-See [Prust-RTOS-Gen](https://github.com/visionspacetec/Prust-RTOS-Gen) to build the complete project.
+# Example
+An example usage can be found in [Prust-RTOS-Gen](https://github.com/visionspacetec/Prust-RTOS-Gen) for the [VST104](https://github.com/visionspacetec/VST104-Sierra)
 
 
 ## Contributing
