@@ -12,7 +12,7 @@ PUS packets as Rust data-structures. Can be used to interpret tc/tm packets.
 Here are the modules and submodules for Prust:  
 - [Prust](https://github.com/visionspacetec/Prust): This module. PUS-C data structures.  
 - [Prust-Test](https://github.com/visionspacetec/Prust-Test): To test the whole project.
-- [Prust-RTOS-Gen](https://github.com/visionspacetec/Prust-RTOS-Gen): Complete project as Stm32CubeIde project.
+- [Prust-RTOS-Gen](https://github.com/visionspacetec/Prust-RTOS-Gen): Complete project as Stm32CubeIDE project.
 - [Prust-RTOS](https://github.com/visionspacetec/Prust-RTOS): RTOS application part.
 
 # Example
