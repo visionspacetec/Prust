@@ -16,7 +16,8 @@ Here are the modules and submodules for Prust:
 - [Prust-RTOS](https://github.com/visionspacetec/Prust-RTOS): RTOS application part.
 
 # Example
-An example usage can be found in [Prust-RTOS-Gen](https://github.com/visionspacetec/Prust-RTOS-Gen) for the [VST104](https://github.com/visionspacetec/VST104-Sierra)
+An example usage can be found in [Prust-RTOS-Gen](https://github.com/visionspacetec/Prust-RTOS-Gen) for the [VST104](https://github.com/visionspacetec/VST104-Sierra).  
+The document of the process can also be bound on the wiki: [How I Built This On VST104](https://github.com/visionspacetec/Prust/wiki/How-I-Built-This-On-VST104)
 
 
 ## Contributing
