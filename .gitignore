@@ -1,7 +1,0 @@
-/target
-/src/bin/play.rs
-/.idea
-/packet.bin
-/prust-embedded/echo-stm32l476
-/client/target/
-pus/target/
