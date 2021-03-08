@@ -17,7 +17,7 @@ Here are the modules and submodules for Prust:
 - [Prust-FreeRTOS](https://github.com/visionspacetec/Prust-FreeRTOS): Complete project as Stm32CubeIDE project.
 - [Prust-App](https://github.com/visionspacetec/Prust-App): RTOS application part.
 
-# Example
+## Example
 An example usage can be found in [Prust-FreeRTOS](https://github.com/visionspacetec/Prust-FreeRTOS) for the [VST104](https://github.com/visionspacetec/VST104-Sierra).  
 The document of the process can also be bound on the wiki: [How To Build This On VST104](https://github.com/visionspacetec/Prust/wiki/How-To-Build-This-On-VST104)
 
